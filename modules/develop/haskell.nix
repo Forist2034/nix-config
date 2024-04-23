@@ -29,6 +29,12 @@
                 default = [ ];
               };
             };
+            profiles = firefox.profile.mkOption {
+              enable = mkEnableOption "Haskell firefox";
+              search = {
+                hackage = options.mkDisableOption "Hackages search engine";
+              };
+            };
           };
         };
       };
@@ -39,9 +45,9 @@
       home.packages = lib.mkIf cfg.env.cabal.enable
         (with pkgs; [ ghc cabal-install haskell-language-server ]);
 
-      programs.firefox.policies = let ffCfg = cfg.browser.firefox;
+      programs.firefox = let ffCfg = cfg.browser.firefox;
       in lib.mkIf ffCfg.enable {
-        ManagedBookmarks = lib.mkMerge [
+        policies.ManagedBookmarks = lib.mkMerge [
           (lib.mkIf ffCfg.bookmarks.ghc.enable [{
             name = "GHC Documentation";
             url = "${pkgs.ghc.doc}/share/doc/ghc/html/index.html";
@@ -54,6 +60,22 @@
             }) ffCfg.bookmarks.packages;
           }]
         ];
+        profiles = firefox.profile.mkConfig (value:
+          lib.mkIf value.enable {
+            search.engines = {
+              "Hackage" = lib.mkIf value.search.hackage {
+                description = "Search for Haskell packages on Hackage";
+                urls = [{
+                  template = "https://hackage.haskell.org/packages/search";
+                  params = [{
+                    name = "terms";
+                    value = "{searchTerms}";
+                  }];
+                }];
+                definedAliases = [ "@hackage" ];
+              };
+            };
+          }) ffCfg.profiles;
       };
 
       programs.vscode = lib.mkIf cfg.editor.vscode.enable {
