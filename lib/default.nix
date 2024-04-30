@@ -20,6 +20,7 @@ with lib; {
       mkOption = options:
         lib.mkOption {
           type = types.attrsOf (types.submodule { inherit options; });
+          default = { };
         };
 
       mkConfig = fun: config: builtins.mapAttrs (name: value: fun value) config;
