@@ -12,6 +12,7 @@
       enable = true;
       userName = "Jose Lane";
       userEmail = "dariankline@outlook.com";
+      signing = { key = "714C3CCC60466A93"; };
     };
   };
 

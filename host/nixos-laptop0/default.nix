@@ -118,6 +118,8 @@
 
         accounts.email.accounts = { outlook = { thunderbird.enable = true; }; };
 
+        programs.git = { signing.signByDefault = true; };
+
         home.stateVersion = "23.11";
       };
       test = { ... }: { home.stateVersion = "23.11"; };
