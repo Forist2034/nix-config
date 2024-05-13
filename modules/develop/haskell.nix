@@ -33,6 +33,7 @@
               enable = mkEnableOption "Haskell firefox";
               search = {
                 hackage = options.mkDisableOption "Hackages search engine";
+                hoogle = options.mkDisableOption "Hoogle search";
               };
             };
           };
@@ -73,6 +74,17 @@
                   }];
                 }];
                 definedAliases = [ "@hackage" ];
+              };
+              "Hoogle" = lib.mkIf value.search.hoogle {
+                description = "Haskell API Search";
+                urls = [{
+                  template = "https://hoogle.haskell.org/";
+                  params = [{
+                    name = "hoogle";
+                    value = "{searchTerms}";
+                  }];
+                }];
+                definedAliases = [ "@hoogle" ];
               };
             };
           }) ffCfg.profiles;
