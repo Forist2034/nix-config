@@ -32,6 +32,8 @@ let
       "browser.privatebrowsing.autostart" = true;
 
       "signon.rememberSignons" = false;
+
+      "browser.tabs.warnOnClose" = true;
     };
   };
 in {
@@ -40,15 +42,18 @@ in {
   default = { pkgs, ... }@args: {
     programs.firefox = {
       enable = true;
-      profiles.default = {
-        settings = profile.base;
-        search = let gbing = search.bing_global args;
-        in {
-          engines = { ${gbing.name} = gbing.value; };
-          force = true;
-          default = gbing.name;
+      profiles = {
+        default = {
+          settings = profile.base;
+          search = let gbing = search.bing_global args;
+          in {
+            engines = { ${gbing.name} = gbing.value; };
+            force = true;
+            default = gbing.name;
+          };
+          isDefault = true;
         };
-        isDefault = true;
+        test = { id = 1; };
       };
     };
   };
