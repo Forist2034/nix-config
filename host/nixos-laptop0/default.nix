@@ -64,11 +64,15 @@
 
   users = {
     mutableUsers = false;
+    groups = {
+      share-main.gid = 2001;
+      share-test.gid = 2002;
+    };
     users = let passFile = name: "/nix/secrets/passwords/${name}";
     in {
       reid = {
         hashedPasswordFile = passFile "reid";
-        extraGroups = [ "networkmanager" ];
+        extraGroups = [ "networkmanager" "share-main" ];
       };
     };
   };
