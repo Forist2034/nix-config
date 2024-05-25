@@ -34,6 +34,8 @@ let
       "signon.rememberSignons" = false;
 
       "browser.tabs.warnOnClose" = true;
+
+      "browser.bookmarks.max_backups" = -1; # unlimited number of backups
     };
   };
 in {
