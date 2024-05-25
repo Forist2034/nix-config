@@ -45,7 +45,7 @@
     files = [ "/etc/machine-id" ];
     users = {
       reid = {
-        directories = [ "Documents" "Source" ];
+        directories = [ "Documents" "Source" "Shared/main" ];
         firefox = {
           enable = true;
           profiles.default.enable = true;
