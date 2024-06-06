@@ -2,23 +2,24 @@ let
   base = { ... }: {
     programs.nixvim = {
       plugins = {
-        nvim-cmp = {
+        cmp = {
           enable = true;
-          mapping = let select_opts = "{behavior = cmp.SelectBehavior.Select}";
-          in {
-            "<C-b>" = "cmp.mapping.scroll_docs(-4)";
-            "<C-f>" = "cmp.mapping.scroll_docs(4)";
+          settings.mapping =
+            let select_opts = "{behavior = cmp.SelectBehavior.Select}";
+            in {
+              "<C-b>" = "cmp.mapping.scroll_docs(-4)";
+              "<C-f>" = "cmp.mapping.scroll_docs(4)";
 
-            "<Up>" = "cmp.mapping.select_prev_item(${select_opts})";
-            "<Down>" = "cmp.mapping.select_next_item(${select_opts})";
+              "<Up>" = "cmp.mapping.select_prev_item(${select_opts})";
+              "<Down>" = "cmp.mapping.select_next_item(${select_opts})";
 
-            "<C-p>" = "cmp.mapping.select_prev_item(${select_opts})";
-            "<C-n>" = "cmp.mapping.select_next_item(${select_opts})";
+              "<C-p>" = "cmp.mapping.select_prev_item(${select_opts})";
+              "<C-n>" = "cmp.mapping.select_next_item(${select_opts})";
 
-            "<C-e>" = "cmp.mapping.abort()";
+              "<C-e>" = "cmp.mapping.abort()";
 
-            "<CR>" = "cmp.mapping.confirm({ select = true })";
-          };
+              "<CR>" = "cmp.mapping.confirm({ select = true })";
+            };
         };
       };
     };
@@ -28,9 +29,12 @@ let
     programs.nixvim = {
       plugins = {
         luasnip = { enable = true; };
-        nvim-cmp = {
-          snippet.expand = "luasnip";
-          sources = [{ name = "luasnip"; }];
+        cmp.settings = {
+          snippet.expand = ''
+            function(args)
+              require('luasnip').lsp_expand(args.body)
+            end
+          '';
         };
       };
     };
@@ -57,15 +61,16 @@ let
         lsp-format.enable = true;
         nvim-lightbulb = { # show code actions
           enable = true;
-          sign.enabled = false;
-          virtualText.enabled = true;
-          autocmd.enabled = true;
+          settings = {
+            sign.enabled = false;
+            virtualText.enabled = true;
+            autocmd.enabled = true;
+          };
         };
 
         # highlight symbol
         illuminate.enable = true;
 
-        nvim-cmp.sources = [{ name = "nvim_lsp"; }];
         cmp-nvim-lsp.enable = true;
       };
 
@@ -113,21 +118,11 @@ let
   };
 
   path = { ... }: {
-    programs.nixvim = {
-      plugins = {
-        cmp-path.enable = true;
-        nvim-cmp.sources = [{ name = "path"; }];
-      };
-    };
+    programs.nixvim = { plugins = { cmp-path.enable = true; }; };
   };
 
   buffer = { ... }: {
-    programs.nixvim = {
-      plugins = {
-        cmp-buffer.enable = true;
-        nvim-cmp.sources = [{ name = "buffer"; }];
-      };
-    };
+    programs.nixvim = { plugins = { cmp-buffer.enable = true; }; };
   };
 in {
   inherit base luasnip lsp none-ls path buffer with-icons;

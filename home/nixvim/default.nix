@@ -66,7 +66,7 @@ in {
     ];
 
     programs.nixvim = {
-      colorschemes.catppuccin = {
+      colorschemes.catppuccin.settings = {
         integrations = {
           cmp = true;
           gitsigns = true;
