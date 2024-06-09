@@ -231,6 +231,28 @@
         "type": "github"
       }
     },
+    "local_cdn": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1717936154,
+        "narHash": "sha256-ZOh9buajfKjc7hfzJ/fKUhKw3NJG2TpYwoXMlBeUSX4=",
+        "ref": "refs/heads/master",
+        "rev": "9d2f480ea197b72fdb97666935b1fdb72627312c",
+        "revCount": 10,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Forist2034/local_cdn"
+      },
+      "original": {
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Forist2034/local_cdn"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -321,6 +343,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "impermanence": "impermanence",
+        "local_cdn": "local_cdn",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim"

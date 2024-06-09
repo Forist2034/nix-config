@@ -18,6 +18,8 @@
     system.modules.firefox
     system.modules.thunderbird
     system.modules.tools
+
+    ./local_cdn.nix
   ];
 
   boot.loader = { systemd-boot.enable = true; };
@@ -41,6 +43,7 @@
       "/var/lib/systemd/timers"
       "/var/log"
       "/etc/NetworkManager/system-connections"
+      "/var/cache/local_cdn/proxy"
     ];
     files = [ "/etc/machine-id" ];
     users = {
