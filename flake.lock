@@ -238,11 +238,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1717944976,
-        "narHash": "sha256-aNRv6TVsNCD/pBYdmDd4gg+hhkinEZLfYxkzicNR2N0=",
+        "lastModified": 1717985708,
+        "narHash": "sha256-1EvyELOmC5lm7uND1NJnxlTS9u/QJwdQOpMBffCWJEk=",
         "ref": "refs/heads/master",
-        "rev": "6207f22ccb0fccc711617e86351e65d776ccd29e",
-        "revCount": 12,
+        "rev": "0dba394257dd7384f74fe0644eee2dcdefa7f246",
+        "revCount": 13,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Forist2034/local_cdn"
