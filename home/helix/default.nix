@@ -1,17 +1,22 @@
 let
-  base = { ... }: {
-    programs.helix = {
-      enable = true;
-      settings = {
-        theme = "catppuccin_frappe";
-        editor = {
-          cursor-shape = { insert = "bar"; };
-          rulers = [ 80 ];
+  base =
+    { ... }:
+    {
+      programs.helix = {
+        enable = true;
+        settings = {
+          theme = "catppuccin_frappe";
+          editor = {
+            cursor-shape = {
+              insert = "bar";
+            };
+            rulers = [ 80 ];
+          };
         };
       };
     };
-  };
-in {
+in
+{
   inherit base;
 
   default = base;

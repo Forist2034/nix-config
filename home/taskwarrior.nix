@@ -1,1 +1,6 @@
-{ ... }: { programs.taskwarrior = { enable = true; }; }
+{ ... }:
+{
+  programs.taskwarrior = {
+    enable = true;
+  };
+}

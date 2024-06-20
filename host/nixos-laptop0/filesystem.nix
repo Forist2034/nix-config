@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   boot.initrd.luks.devices."encrypted-root" = {
     device = "/dev/disk/by-uuid/52e2c5ac-ca52-4fc9-9193-4395bd422561";
     allowDiscards = true;
@@ -18,17 +19,22 @@
     "/" = {
       device = "tmpfs";
       fsType = "tmpfs";
-      options = [ "size=2G" "mode=755" ];
+      options = [
+        "size=2G"
+        "mode=755"
+      ];
     };
   };
 
-  swapDevices = [{
-    device = "/dev/disk/by-partuuid/598db4cd-b3e0-4887-9a4f-a227b2af78c1";
-    randomEncryption = {
-      enable = true;
-      allowDiscards = true;
-    };
-  }];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-partuuid/598db4cd-b3e0-4887-9a4f-a227b2af78c1";
+      randomEncryption = {
+        enable = true;
+        allowDiscards = true;
+      };
+    }
+  ];
 
   # fscrypt configuration
   environment.systemPackages = [ pkgs.fscrypt-experimental ];

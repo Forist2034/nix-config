@@ -1,5 +1,4 @@
-lib:
-with lib; {
+lib: with lib; {
   inherit lib;
 
   modules = {
@@ -7,7 +6,8 @@ with lib; {
   };
 
   options = {
-    mkDisableOption = description:
+    mkDisableOption =
+      description:
       lib.mkOption {
         type = lib.types.bool;
         default = true;
@@ -17,7 +17,8 @@ with lib; {
 
   firefox = {
     profile = {
-      mkOption = options:
+      mkOption =
+        options:
         lib.mkOption {
           type = types.attrsOf (types.submodule { inherit options; });
           default = { };
@@ -28,31 +29,41 @@ with lib; {
   };
 
   persist = {
-    user = let
-      mkOption = options:
-        lib.mkOption {
-          type = types.attrsOf (types.submodule {
-            options.users = lib.mkOption {
-              type = types.attrsOf (types.submodule { inherit options; });
-            };
-          });
-        };
-      mkConfig = fun: config:
-        builtins.mapAttrs (path: value: {
-          users = builtins.mapAttrs (user: value: fun value) value.users;
-        }) config.persistence;
-    in {
-      inherit mkOption mkConfig;
-
-      mkModule = { name, options, config }@mod:
-        { config, lib, ... }@input: {
-          options = { persistence = mkOption { ${name} = options; }; };
-          config = {
-            environment.persistence =
-              mkConfig (value: mod.config (input // { value = value.${name}; }))
-              config;
+    user =
+      let
+        mkOption =
+          options:
+          lib.mkOption {
+            type = types.attrsOf (
+              types.submodule {
+                options.users = lib.mkOption { type = types.attrsOf (types.submodule { inherit options; }); };
+              }
+            );
           };
-        };
-    };
+        mkConfig =
+          fun: config:
+          builtins.mapAttrs (path: value: {
+            users = builtins.mapAttrs (user: value: fun value) value.users;
+          }) config.persistence;
+      in
+      {
+        inherit mkOption mkConfig;
+
+        mkModule =
+          {
+            name,
+            options,
+            config,
+          }@mod:
+          { config, lib, ... }@input:
+          {
+            options = {
+              persistence = mkOption { ${name} = options; };
+            };
+            config = {
+              environment.persistence = mkConfig (value: mod.config (input // { value = value.${name}; })) config;
+            };
+          };
+      };
   };
 }

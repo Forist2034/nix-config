@@ -1,4 +1,15 @@
-{ pkgs, system, graphical, modules, home, inputs, user, info, ... }: {
+{
+  pkgs,
+  system,
+  graphical,
+  modules,
+  home,
+  inputs,
+  user,
+  info,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./filesystem.nix
@@ -22,7 +33,9 @@
     ./local_cdn.nix
   ];
 
-  boot.loader = { systemd-boot.enable = true; };
+  boot.loader = {
+    systemd-boot.enable = true;
+  };
 
   networking = {
     hostName = "nixos-laptop0";
@@ -48,7 +61,11 @@
     files = [ "/etc/machine-id" ];
     users = {
       reid = {
-        directories = [ "Documents" "Source" "Shared/main" ];
+        directories = [
+          "Documents"
+          "Source"
+          "Shared/main"
+        ];
         firefox = {
           enable = true;
           profiles.default.enable = true;
@@ -71,13 +88,19 @@
       share-main.gid = 2001;
       share-test.gid = 2002;
     };
-    users = let passFile = name: "/nix/secrets/passwords/${name}";
-    in {
-      reid = {
-        hashedPasswordFile = passFile "reid";
-        extraGroups = [ "networkmanager" "share-main" ];
+    users =
+      let
+        passFile = name: "/nix/secrets/passwords/${name}";
+      in
+      {
+        reid = {
+          hashedPasswordFile = passFile "reid";
+          extraGroups = [
+            "networkmanager"
+            "share-main"
+          ];
+        };
       };
-    };
   };
 
   services.xserver.enable = true;
@@ -105,31 +128,60 @@
     useGlobalPkgs = true;
     extraSpecialArgs = {
       inherit inputs;
-      inherit home user info modules;
+      inherit
+        home
+        user
+        info
+        modules
+        ;
     };
     sharedModules = [
-      ({ home, ... }: {
-        imports = [
-          home.kde.default
-          home.kde.bluedevil
-          home.firefox.default
-          home.starship
-        ];
+      (
+        { home, ... }:
+        {
+          imports = [
+            home.kde.default
+            home.kde.bluedevil
+            home.firefox.default
+            home.starship
+          ];
 
-        programs.bash.enable = true;
-      })
+          programs.bash.enable = true;
+        }
+      )
     ];
     users = {
-      reid = { pkgs, home, user, ... }: {
-        imports = [ user.reid.git user.reid.email ./home.nix ];
+      reid =
+        {
+          pkgs,
+          home,
+          user,
+          ...
+        }:
+        {
+          imports = [
+            user.reid.git
+            user.reid.email
+            ./home.nix
+          ];
 
-        accounts.email.accounts = { outlook = { thunderbird.enable = true; }; };
+          accounts.email.accounts = {
+            outlook = {
+              thunderbird.enable = true;
+            };
+          };
 
-        programs.git = { signing.signByDefault = true; };
+          programs.git = {
+            signing.signByDefault = true;
+          };
 
-        home.stateVersion = "23.11";
-      };
-      test = { ... }: { home.stateVersion = "23.11"; };
+          home.stateVersion = "23.11";
+        };
+      test =
+        { ... }:
+        {
+          home.stateVersion = "23.11";
+        };
     };
   };
 

@@ -1,26 +1,30 @@
 let
   search = {
-    bing_global = { pkgs, ... }: {
-      name = "Bing Global";
-      value = {
-        description = "Bing Global";
-        urls = [{
-          template = "https://global.bing.com/search";
-          params = [
+    bing_global =
+      { pkgs, ... }:
+      {
+        name = "Bing Global";
+        value = {
+          description = "Bing Global";
+          urls = [
             {
-              name = "q";
-              value = "{searchTerms}";
-            }
-            {
-              name = "mkt";
-              value = "en-US";
+              template = "https://global.bing.com/search";
+              params = [
+                {
+                  name = "q";
+                  value = "{searchTerms}";
+                }
+                {
+                  name = "mkt";
+                  value = "en-US";
+                }
+              ];
             }
           ];
-        }];
-        icon = "https://global.bing.com/sa/simg/favicon-trans-bg-blue-mg.ico";
-        definedAliases = [ "@gbing" ];
+          icon = "https://global.bing.com/sa/simg/favicon-trans-bg-blue-mg.ico";
+          definedAliases = [ "@gbing" ];
+        };
       };
-    };
   };
 
   profile = {
@@ -38,25 +42,35 @@ let
       "browser.bookmarks.max_backups" = -1; # unlimited number of backups
     };
   };
-in {
+in
+{
   inherit search profile;
 
-  default = { pkgs, ... }@args: {
-    programs.firefox = {
-      enable = true;
-      profiles = {
-        default = {
-          settings = profile.base;
-          search = let gbing = search.bing_global args;
-          in {
-            engines = { ${gbing.name} = gbing.value; };
-            force = true;
-            default = gbing.name;
+  default =
+    { pkgs, ... }@args:
+    {
+      programs.firefox = {
+        enable = true;
+        profiles = {
+          default = {
+            settings = profile.base;
+            search =
+              let
+                gbing = search.bing_global args;
+              in
+              {
+                engines = {
+                  ${gbing.name} = gbing.value;
+                };
+                force = true;
+                default = gbing.name;
+              };
+            isDefault = true;
           };
-          isDefault = true;
+          test = {
+            id = 1;
+          };
         };
-        test = { id = 1; };
       };
     };
-  };
 }

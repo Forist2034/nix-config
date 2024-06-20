@@ -29,7 +29,13 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, impermanence, ... }@inputs:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      impermanence,
+      ...
+    }@inputs:
     let
       libs = (import ./lib) nixpkgs.lib;
       graphical = import ./graphical;
@@ -37,14 +43,23 @@
       home = import ./home;
       user = import ./user;
       modules = (import ./modules) libs;
-    in {
+    in
+    {
       nixosConfigurations = {
         nixos-laptop0 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs;
-            inherit graphical system user home modules;
-            info = { system = "x86_64-linux"; };
+            inherit
+              graphical
+              system
+              user
+              home
+              modules
+              ;
+            info = {
+              system = "x86_64-linux";
+            };
           };
           modules = [
             home-manager.nixosModules.home-manager
@@ -54,6 +69,6 @@
         };
       };
 
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
     };
 }
