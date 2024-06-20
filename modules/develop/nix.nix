@@ -143,7 +143,7 @@
           programs.vscode = lib.mkIf cfg.editor.vscode.nix-ide.enable {
             extensions = [ pkgs.vscode-extensions.jnoortheen.nix-ide ];
             userSettings = {
-              "nix.formatterPath" = "${pkgs.nixfmt}/bin/nixfmt";
+              "nix.formatterPath" = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
             };
           };
 
@@ -153,7 +153,9 @@
                 {
                   name = "nix";
                   auto-format = true;
-                  formatter = lib.mkIf cfg.editor.helix.formatter.enable { command = "${pkgs.nixfmt}/bin/nixfmt"; };
+                  formatter = lib.mkIf cfg.editor.helix.formatter.enable {
+                    command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+                  };
                 }
               ];
             };
@@ -167,7 +169,10 @@
               plugins = {
                 none-ls.sources = {
                   formatting = {
-                    nixfmt = lib.mkIf cfgVim.formatter.enable { enable = true; };
+                    nixfmt = lib.mkIf cfgVim.formatter.enable {
+                      enable = true;
+                      package = pkgs.nixfmt-rfc-style;
+                    };
                   };
                 };
               };
