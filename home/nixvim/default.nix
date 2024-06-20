@@ -15,7 +15,7 @@ let
         };
         colorschemes.catppuccin = {
           enable = true;
-          transparentBackground = true;
+          settings.transparent_background = true;
         };
       };
     };

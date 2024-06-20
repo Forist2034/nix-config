@@ -83,6 +83,7 @@ let
           illuminate.enable = true;
 
           cmp-nvim-lsp.enable = true;
+          cmp.settings.sources = [ { name = "nvim_lsp"; } ];
         };
 
         # TODO: use neovim native inlay hint when api becomes stable
@@ -93,15 +94,13 @@ let
         keymaps = [
           {
             key = "<Leader>cl";
-            action = "vim.lsp.codelens.run";
+            action.__raw = "vim.lsp.codelens.run";
             mode = [ "n" ];
-            lua = true;
           }
           {
             key = "<Leader>do";
-            action = "vim.diagnostic.open_float";
+            action.__raw = "vim.diagnostic.open_float";
             mode = [ "n" ];
-            lua = true;
           }
         ];
         autoCmd = [
@@ -153,6 +152,7 @@ let
       programs.nixvim = {
         plugins = {
           cmp-path.enable = true;
+          cmp.settings.sources = [ { name = "path"; } ];
         };
       };
     };
@@ -163,6 +163,7 @@ let
       programs.nixvim = {
         plugins = {
           cmp-buffer.enable = true;
+          cmp.settings.sources = [ { name = "buffer"; } ];
         };
       };
     };

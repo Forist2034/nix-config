@@ -67,7 +67,6 @@
                           "n"
                           "i"
                         ];
-                        lua = false;
                       };
                     in
                     [
