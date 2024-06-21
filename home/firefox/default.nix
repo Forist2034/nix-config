@@ -1,73 +1,100 @@
 let
   search = {
-    bing_global =
-      { pkgs, ... }:
-      {
-        name = "Bing Global";
-        value = {
-          description = "Bing Global";
-          urls = [
-            {
-              template = "https://global.bing.com/search";
-              params = [
-                {
-                  name = "q";
-                  value = "{searchTerms}";
-                }
-                {
-                  name = "mkt";
-                  value = "en-US";
-                }
-              ];
-            }
-          ];
-          icon = "https://global.bing.com/sa/simg/favicon-trans-bg-blue-mg.ico";
-          definedAliases = [ "@gbing" ];
-        };
+    bing_global = {
+      name = "Bing Global";
+      value = {
+        description = "Bing Global";
+        urls = [
+          {
+            template = "https://global.bing.com/search";
+            params = [
+              {
+                name = "q";
+                value = "{searchTerms}";
+              }
+              {
+                name = "mkt";
+                value = "en-US";
+              }
+            ];
+          }
+        ];
+        icon = "https://global.bing.com/sa/simg/favicon-trans-bg-blue-mg.ico";
+        definedAliases = [ "@gbing" ];
       };
-  };
-
-  profile = {
-    base = {
-      "browser.download.useDownloadDir" = false;
-      "browser.download.start_downloads_in_tmp_dir" = true;
-
-      "network.cookie.lifetimePolicy" = 2; # delete cookies when closed
-      "browser.privatebrowsing.autostart" = true;
-
-      "signon.rememberSignons" = false;
-
-      "browser.tabs.warnOnClose" = true;
-
-      "browser.bookmarks.max_backups" = -1; # unlimited number of backups
     };
   };
+
+  settings = {
+    base = {
+      "privacy.history.custom" = true;
+      "privacy.sanitize.sanitizeOnShutdown" = true;
+      "privacy.clearOnShutdown.cache" = false;
+      "privacy.clearOnShutdown.history" = false;
+      "privacy.clearOnShutdown.cookies" = true;
+      "privacy.clearOnShutdown.sessions" = true;
+    };
+  };
+
+  policies = {
+    base = {
+      PromptForDownloadLocation = true;
+      DisableFormHistory = true;
+      OfferToSaveLogins = false;
+      Preferences =
+        let
+          user = v: {
+            Value = v;
+            Status = "user";
+          };
+        in
+        {
+          "browser.tabs.warnOnClose" = user true;
+          "browser.bookmarks.max_backups" = user (-1); # unlimited number of backups
+          # allow override in user settings
+          "browser.download.start_downloads_in_tmp_dir" = user true;
+        };
+    };
+  };
+
+  profiles =
+    let
+      base = {
+        search = {
+          engines = {
+            ${search.bing_global.name} = search.bing_global.value;
+          };
+          force = true;
+          default = search.bing_global.name;
+        };
+      };
+    in
+    {
+      inherit base;
+      default = base // {
+        settings = settings.base;
+      };
+    };
 in
 {
-  inherit search profile;
+  inherit
+    search
+    settings
+    policies
+    profiles
+    ;
 
   default =
     { pkgs, ... }@args:
     {
       programs.firefox = {
         enable = true;
+        policies = policies.base;
         profiles = {
-          default = {
-            settings = profile.base;
-            search =
-              let
-                gbing = search.bing_global args;
-              in
-              {
-                engines = {
-                  ${gbing.name} = gbing.value;
-                };
-                force = true;
-                default = gbing.name;
-              };
+          default = profiles.default // {
             isDefault = true;
           };
-          test = {
+          test = profiles.base // {
             id = 1;
           };
         };
