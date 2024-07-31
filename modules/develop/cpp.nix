@@ -38,13 +38,9 @@
             ];
 
           programs.vscode = lib.mkIf cfg.editor.vscode.enable {
-            extensions = with pkgs.vscode-extensions; [
-              llvm-vs-code-extensions.vscode-clangd
-              xaver.clang-format
-            ];
+            extensions = with pkgs.vscode-extensions; [ llvm-vs-code-extensions.vscode-clangd ];
             userSettings = {
               "clangd.path" = "${pkgs.clang-tools}/bin/clangd";
-              "clang-format.executable" = "${pkgs.clang-tools}/bin/clang-format";
             };
           };
 
