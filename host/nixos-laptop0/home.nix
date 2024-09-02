@@ -32,6 +32,8 @@
     };
   };
 
+  services.gpg-agent.pinentryPackage = pkgs.pinentry-all;
+
   home.packages = with pkgs; [ gopass ];
 
   programs.bash.enable = true;
