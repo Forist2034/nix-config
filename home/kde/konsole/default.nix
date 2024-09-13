@@ -13,26 +13,13 @@ let
         xdg.dataFile."konsole/DefaultDark.profile".text = lib.generators.toINI { } {
           Appearance = {
             ColorScheme = "DarkOneNuanced";
-            Font = "Cascadia Code PL,10,-1,5,50,0,0,0,0,0";
+            Font = "Cascadia Code NF,10,-1,5,50,0,0,0,0,0";
           };
           "Cursor Options".CursorShape = 1; # I-beam
           General = {
             Name = "Default Dark";
             Parent = "FALLBACK/";
           };
-          Scrolling.HistorySize = 5000;
-        };
-      };
-    nerdDark =
-      { lib, ... }:
-      {
-        xdg.dataFile."konsole/NerdDark.profile".text = lib.generators.toINI { } {
-          Appearance = {
-            ColorScheme = "DarkOneNuanced";
-            Font = "CaskaydiaCove Nerd Font,10,-1,5,50,0,0,0,0,0";
-          };
-          "Cursor Options".CursorShape = 1;
-          General.Name = "Nerd Dark";
           Scrolling.HistorySize = 5000;
         };
       };
