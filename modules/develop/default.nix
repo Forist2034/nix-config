@@ -13,6 +13,7 @@ let
         ./nix.nix
         ./ocaml.nix
         ./rust.nix
+        ./scala.nix
         ./toml.nix
         ./typescript.nix
         ./typst.nix
