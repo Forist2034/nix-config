@@ -17,6 +17,7 @@ let
         ./toml.nix
         ./typescript.nix
         ./typst.nix
+        ./verilog.nix
       ];
 in
 {
