@@ -34,7 +34,11 @@
 
   services.gpg-agent.pinentryPackage = pkgs.pinentry-all;
 
-  home.packages = with pkgs; [ gopass ];
+  home.packages = with pkgs; [
+    git-annex
+
+    gopass
+  ];
 
   programs.nixvim = {
     autoCmd = [
