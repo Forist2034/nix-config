@@ -36,5 +36,15 @@
 
   home.packages = with pkgs; [ gopass ];
 
+  programs.nixvim = {
+    autoCmd = [
+      {
+        event = [ "VimLeave" ];
+        pattern = [ "*" ];
+        command = "set guicursor=a:ver25";
+      }
+    ];
+  };
+
   programs.bash.enable = true;
 }
