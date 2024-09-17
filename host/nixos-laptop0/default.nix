@@ -30,6 +30,8 @@
     system.modules.thunderbird
     system.modules.tools
 
+    system.dict
+
     ./local_cdn.nix
   ];
 
