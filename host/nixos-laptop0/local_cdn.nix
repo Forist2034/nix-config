@@ -28,6 +28,11 @@ in
     };
   };
 
+  networking.hosts."127.0.0.1" = [
+    "googletagmanager.com"
+
+  ];
+
   containers.local-cdn = {
     autoStart = true;
     bindMounts = {
