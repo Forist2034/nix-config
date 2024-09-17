@@ -124,6 +124,10 @@
 
   time.timeZone = "Asia/Shanghai";
 
+  services.displayManager.sddm.settings = {
+    Users.HideUsers = "test";
+  };
+
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = {
