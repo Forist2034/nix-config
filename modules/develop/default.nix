@@ -7,6 +7,7 @@ let
         ./coq.nix
         ./cpp.nix
         ./dhall.nix
+        ./graphql.nix
         ./haskell.nix
         ./latex.nix
         ./lean.nix
