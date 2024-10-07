@@ -10,6 +10,7 @@ let
         ./haskell.nix
         ./latex.nix
         ./lua.nix
+        ./nickel.nix
         ./nix.nix
         ./ocaml.nix
         ./rust.nix
