@@ -9,6 +9,7 @@ let
         ./dhall.nix
         ./haskell.nix
         ./latex.nix
+        ./lean.nix
         ./lua.nix
         ./nickel.nix
         ./nix.nix
