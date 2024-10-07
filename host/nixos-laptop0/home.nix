@@ -50,5 +50,12 @@
     ];
   };
 
+  programs.firefox.profiles = {
+    # no local cdn proxy, for account login
+    upstream-cdn = home.firefox.profiles.base // {
+      id = 2;
+    };
+  };
+
   programs.bash.enable = true;
 }
