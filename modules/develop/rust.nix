@@ -119,16 +119,9 @@
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {
-              lsp.servers.rust-analyzer = {
+              rustaceanvim = {
                 enable = true;
-                installCargo = false;
-                installRustc = false;
               };
-
-              # TODO: use https://github.com/mrcjkb/rustaceanvim
-              # rust-tools = {
-              #   enable = true;
-              # };
             };
           };
         };
