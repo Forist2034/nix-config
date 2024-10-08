@@ -36,11 +36,7 @@
             extensions = [ pkgs.vscode-extensions.james-yu.latex-workshop ];
           };
 
-          programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.texlab = {
-              command = "${pkgs.texlab}/bin/texlab";
-            };
-          };
+          programs.helix = lib.mkIf cfg.editor.helix.enable { extraPackages = [ pkgs.texlab ]; };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {

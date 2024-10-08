@@ -40,11 +40,7 @@
             };
           };
 
-          programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.nls = {
-              command = "${pkgs.nls}/bin/nls";
-            };
-          };
+          programs.helix = lib.mkIf cfg.editor.helix.enable { extraPackages = [ pkgs.nls ]; };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {

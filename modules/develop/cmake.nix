@@ -35,9 +35,7 @@
           };
 
           programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.cmake-language-server = {
-              command = "${pkgs.cmake-language-server}/bin/cmake-language-server";
-            };
+            extraPackages = [ pkgs.cmake-language-server ];
           };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {

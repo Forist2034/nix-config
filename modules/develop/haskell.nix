@@ -144,9 +144,7 @@
           };
 
           programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.haskell-language-server-wrapper = {
-              command = "${pkgs.haskell-language-server}/bin/haskell-language-server-wrapper";
-            };
+            extraPackages = [ pkgs.haskell-language-server ];
           };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {

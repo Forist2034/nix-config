@@ -29,11 +29,7 @@
             extensions = [ pkgs.vscode-extensions.tamasfe.even-better-toml ];
           };
 
-          programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.taplo = {
-              command = "${pkgs.taplo}/bin/taplo";
-            };
-          };
+          programs.helix = lib.mkIf cfg.editor.helix.enable { extraPackages = [ pkgs.taplo ]; };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {

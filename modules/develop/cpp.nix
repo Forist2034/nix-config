@@ -44,11 +44,7 @@
             };
           };
 
-          programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.clangd = {
-              command = "${pkgs.clang-tools}/bin/clangd";
-            };
-          };
+          programs.helix = lib.mkIf cfg.editor.helix.enable { extraPackages = [ pkgs.clang-tools ]; };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {

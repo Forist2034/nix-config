@@ -54,9 +54,7 @@
             };
 
           programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.typescript-language-server = {
-              command = "${pkgs.nodePackages.typescript-language-server}/bin/typescript-language-server";
-            };
+            extraPackages = [ pkgs.nodePackages.typescript-language-server ];
           };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {

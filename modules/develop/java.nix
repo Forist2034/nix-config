@@ -74,11 +74,7 @@
             };
           };
 
-          programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.jdtls = {
-              command = "${pkgs.jdt-language-server}/bin/jdtls";
-            };
-          };
+          programs.helix = lib.mkIf cfg.editor.helix.enable { extraPackages = [ pkgs.jdt-language-server ]; };
         };
     };
 }

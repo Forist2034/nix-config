@@ -46,11 +46,7 @@
             };
           };
 
-          programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.lua-language-server = {
-              command = "${pkgs.lua-language-server}/bin/lua-language-server";
-            };
-          };
+          programs.helix = lib.mkIf cfg.editor.helix.enable { extraPackages = [ pkgs.lua-language-server ]; };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {

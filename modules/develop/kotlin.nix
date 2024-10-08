@@ -56,9 +56,7 @@
           };
 
           programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.kotlin-language-server = {
-              command = "${pkgs.kotlin-language-server}/bin/kotlin-language-server";
-            };
+            extraPackages = [ pkgs.kotlin-language-server ];
           };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {

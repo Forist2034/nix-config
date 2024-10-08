@@ -46,11 +46,7 @@
             };
           };
 
-          programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.dhall-lsp-server = {
-              command = "${pkgs.dhall-lsp-server}/bin/dhall-lsp-server";
-            };
-          };
+          programs.helix = lib.mkIf cfg.editor.helix.enable { extraPackages = [ pkgs.dhall-lsp-server ]; };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {

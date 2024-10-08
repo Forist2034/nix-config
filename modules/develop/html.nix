@@ -39,11 +39,7 @@
             };
           };
 
-          programs.helix = lib.mkIf cfg.enable {
-            languages.language-server.vscode-html-language-server = {
-              command = "${pkgs.vscode-langservers-extracted}/bin/vscode-html-language-server";
-            };
-          };
+          programs.helix = lib.mkIf cfg.enable { extraPackages = [ pkgs.vscode-langservers-extracted ]; };
 
           programs.nixvim = lib.mkIf cfg.enable {
             plugins = {
