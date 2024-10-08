@@ -4,4 +4,5 @@ libs: {
   modules = (import ./modules) libs;
   dict = import ./dict.nix;
   mobile-sync = import ./mobile-sync.nix;
+  smart = import ./smart.nix;
 }

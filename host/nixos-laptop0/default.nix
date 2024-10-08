@@ -31,6 +31,7 @@
     system.modules.tools
 
     system.dict
+    system.smart
 
     ./local_cdn.nix
   ];
