@@ -100,6 +100,7 @@
           hashedPasswordFile = passFile "reid";
           extraGroups = [
             "networkmanager"
+            "wireshark"
             "share-main"
           ];
         };
@@ -130,6 +131,29 @@
   services.displayManager.sddm.settings = {
     Users.HideUsers = "test";
   };
+
+  environment.systemPackages = with pkgs; [
+    dnsutils
+    usbutils
+
+    man-pages
+    man-pages-posix
+
+    fq
+    cbor-diag
+
+    squashfsTools
+    squashfs-tools-ng
+    squashfuse
+
+    unar # for unzip files with correct encoding
+  ];
+
+  documentation = {
+    dev.enable = true;
+  };
+
+  programs.wireshark.enable = true;
 
   home-manager = {
     useGlobalPkgs = true;

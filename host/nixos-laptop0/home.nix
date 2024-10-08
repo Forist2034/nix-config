@@ -38,6 +38,14 @@
     git-annex
 
     gopass
+
+    wireshark
+
+    wl-clipboard
+    xsel
+    xclip
+
+    nss.tools # for firefox certificate
   ];
 
   programs.nixvim = {
