@@ -41,6 +41,11 @@
 
             yarn.enable = options.mkDisableOption "Yarn package manager";
           };
+
+          editor = {
+            vscode.enable = mkEnableOption "VSCode JavaScript support";
+            nixvim.enable = mkEnableOption "Nixvim JavaScript support";
+          };
         };
       };
 
@@ -53,6 +58,30 @@
             pkgs.nodejs
             (lib.mkIf cfg.env.yarn.enable pkgs.yarn)
           ];
+
+          develop.prettier =
+            let
+              editor = cfg.editor;
+            in
+            {
+              enable = editor.vscode.enable || editor.nixvim.enable;
+              editor = {
+                vscode = lib.mkIf editor.vscode.enable {
+                  enable = true;
+                  languages = {
+                    javascript = true;
+                    javascriptreact = true;
+                  };
+                };
+                nixvim = lib.mkIf editor.nixvim.enable {
+                  enable = true;
+                  languages = {
+                    javascript = true;
+                    javascriptreact = true;
+                  };
+                };
+              };
+            };
         };
     };
 }

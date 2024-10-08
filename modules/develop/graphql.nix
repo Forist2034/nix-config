@@ -32,6 +32,24 @@
             ];
           };
 
+          develop.prettier =
+            let
+              editor = cfg.editor;
+            in
+            {
+              enable = editor.vscode.enable || editor.helix.enable || editor.nixvim.enable;
+              editor = {
+                vscode = lib.mkIf editor.vscode.enable {
+                  enable = true;
+                  languages.graphql = true;
+                };
+                nixvim = lib.mkIf editor.nixvim.enable {
+                  enable = true;
+                  languages.graphql = true;
+                };
+              };
+            };
+
           programs.helix = lib.mkIf cfg.editor.helix.enable {
             languages.language-server.graphql-lsp = {
               command = "${pkgs.nodePackages.graphql-language-service-cli}/bin/graphql-lsp";

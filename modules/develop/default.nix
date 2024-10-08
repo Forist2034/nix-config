@@ -18,6 +18,7 @@ let
         ./nickel.nix
         ./nix.nix
         ./ocaml.nix
+        ./prettier.nix
         ./python.nix
         ./rust.nix
         ./scala.nix
