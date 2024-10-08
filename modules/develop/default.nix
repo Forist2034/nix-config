@@ -11,6 +11,7 @@ let
         ./haskell.nix
         ./java.nix
         ./javascript.nix
+        ./kotlin.nix
         ./latex.nix
         ./lean.nix
         ./lua.nix
