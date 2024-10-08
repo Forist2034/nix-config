@@ -49,6 +49,9 @@
     xclip
 
     nss.tools # for firefox certificate
+
+    vlc
+    rsibreak
   ];
 
   programs.nixvim = {
