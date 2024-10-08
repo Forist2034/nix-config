@@ -30,7 +30,8 @@ in
 
   networking.hosts."127.0.0.1" = [
     "googletagmanager.com"
-
+    "ajax.googleapis.com"
+    "fonts.googleapis.com"
   ];
 
   containers.local-cdn = {
@@ -105,6 +106,8 @@ in
             servers = {
               "cdn.sstatic.net" = { };
               "github.githubassets.com" = { };
+              "cdn.jsdelivr.net" = { };
+              "cdnjs.cloudflare.com" = { };
             };
           };
         };
@@ -134,6 +137,16 @@ in
             wants = depends;
             after = depends;
           };
+
+        systemd.targets.local_cdn-proxy-all = {
+          wants = [
+            "local_cdn-proxy@cdn.sstatic.net.service"
+            "local_cdn-proxy@github.githubassets.com.service"
+            "local_cdn-proxy@cdn.jsdelivr.net.service"
+            "local_cdn-proxy@cdnjs.cloudflare.com.service"
+          ];
+          wantedBy = [ "multi-user.target" ];
+        };
 
         system.stateVersion = "23.11";
       };
@@ -234,6 +247,8 @@ in
                 }
                 (cacheProxy "github.githubassets.com" cloudflare)
                 (cacheProxy "cdn.sstatic.net" cloudflare)
+                (cacheProxy "cdn.jsdelivr.net" aliyun)
+                (cacheProxy "cdnjs.cloudflare.com" aliyun)
                 {
                   domains = [
                     "recaptcha.net."
@@ -242,6 +257,16 @@ in
                     "gstatic.cn."
                     "cdn.jsdelivr.net."
                     "cdnjs.cloudflare.com."
+                  ];
+                  action.forward = {
+                    upstream = aliyun;
+                  };
+                }
+                {
+                  domains = [
+                    "baidu.com."
+                    "bdstatic.com." # baidu data
+                    "cn."
                   ];
                   action.forward = {
                     upstream = aliyun;
