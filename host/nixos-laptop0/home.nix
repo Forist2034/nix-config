@@ -16,7 +16,8 @@
     modules.develop.home
 
     inputs.nixvim.homeManagerModules.nixvim
-    home.nixvim.base
+    home.nixvim.full
+    home.nixvim.complete.with-icons
   ];
 
   develop = {
@@ -24,6 +25,7 @@
       enable = true;
       editor = {
         vscode.nix-ide.enable = true;
+        nixvim.enable = true;
       };
       browser.firefox = {
         enable = true;
