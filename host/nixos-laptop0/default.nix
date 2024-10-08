@@ -81,6 +81,7 @@
         ssh.enable = true;
         gopass.enable = true;
         gh.enable = true;
+        taskwarrior.enable = true;
       };
     };
   };

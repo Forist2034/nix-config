@@ -12,6 +12,7 @@
     home.gpg
     home.gh
     home.thunderbird
+    home.taskwarrior
 
     modules.develop.home
 
