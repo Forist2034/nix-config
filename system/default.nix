@@ -3,4 +3,5 @@ libs: {
   tools = import ./tools;
   modules = (import ./modules) libs;
   dict = import ./dict.nix;
+  mobile-sync = import ./mobile-sync.nix;
 }
