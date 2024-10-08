@@ -3,6 +3,7 @@ let
   modules =
     libs.modules.importWithLibs (libs // { mkHomeModule = (import ./mkHomeModule.nix) libs; })
       [
+        ./agda.nix
         ./cmake.nix
         ./coq.nix
         ./cpp.nix
