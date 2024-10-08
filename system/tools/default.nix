@@ -47,7 +47,6 @@ in
         eza
         fd
         ripgrep
-        jq
         duf
         du-dust
         zellij

@@ -6,11 +6,14 @@ let
         ./cmake.nix
         ./coq.nix
         ./cpp.nix
+        ./css.nix
         ./dhall.nix
         ./graphql.nix
         ./haskell.nix
+        ./html.nix
         ./java.nix
         ./javascript.nix
+        ./json.nix
         ./kotlin.nix
         ./latex.nix
         ./lean.nix
