@@ -9,6 +9,7 @@ let
         ./dhall.nix
         ./graphql.nix
         ./haskell.nix
+        ./java.nix
         ./javascript.nix
         ./latex.nix
         ./lean.nix
