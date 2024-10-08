@@ -51,7 +51,7 @@
             };
 
           programs.helix = lib.mkIf cfg.editor.helix.enable {
-            languages.language-server.graphql-lsp = {
+            languages.language-server.graphql-language-service = {
               command = "${pkgs.nodePackages.graphql-language-service-cli}/bin/graphql-lsp";
             };
           };
