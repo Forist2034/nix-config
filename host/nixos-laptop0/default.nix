@@ -148,6 +148,8 @@
     squashfuse
 
     unar # for unzip files with correct encoding
+
+    rdfind # deduplication
   ];
 
   documentation = {
