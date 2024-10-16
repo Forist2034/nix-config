@@ -78,6 +78,7 @@ let
               autocmd.enabled = true;
             };
           };
+          fidget.enable = true; # show lsp notices and progress
 
           # highlight symbol
           illuminate.enable = true;
