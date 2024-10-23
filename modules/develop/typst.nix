@@ -10,7 +10,7 @@
     options = {
       enable = lib.mkEnableOption "Typst";
     };
-    config = { value, ... }: lib.mkIf value.enable { directories = [ ".cache/typst" ]; };
+    config = { value, ... }: lib.mkIf value.enable { directories = [ ".cache/typst/packages" ]; };
   };
   home =
     {

@@ -11,7 +11,16 @@
     options = {
       cabal.enable = lib.mkEnableOption "Cabal for haskell";
     };
-    config = { value, ... }: lib.mkIf value.cabal.enable { directories = [ ".cabal" ]; };
+    config =
+      { value, ... }:
+      # mount separately allow files to be shared
+      lib.mkIf value.cabal.enable {
+        files = [ ".cabal/config" ];
+        directories = [
+          ".cabal/packages"
+          ".cabal/store"
+        ];
+      };
   };
 
   home =
