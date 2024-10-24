@@ -21,7 +21,9 @@
   home =
     {
       config,
+      inputs,
       pkgs,
+      info,
       lib,
       ...
     }:
@@ -61,14 +63,19 @@
           ];
 
           programs.vscode = lib.mkIf cfg.editor.vscode.enable {
-            extensions = with pkgs.vscode-extensions; [
-              redhat.java
-              vscjava.vscode-java-debug
-              vscjava.vscode-java-test
-              vscjava.vscode-java-dependency
-              (lib.mkIf cfg.editor.vscode.gradle.enable vscjava.vscode-gradle)
-              (lib.mkIf cfg.editor.vscode.maven.enable vscjava.vscode-maven)
-            ];
+            extensions =
+              let
+                market = inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace;
+              in
+              with pkgs.vscode-extensions;
+              [
+                redhat.java
+                vscjava.vscode-java-debug
+                vscjava.vscode-java-test
+                vscjava.vscode-java-dependency
+                (lib.mkIf cfg.editor.vscode.gradle.enable market.vscjava.vscode-gradle)
+                (lib.mkIf cfg.editor.vscode.maven.enable vscjava.vscode-maven)
+              ];
             userSettings = {
               "java.jdt.ls.java.home" = "${pkgs.jdk}/lib/openjdk";
             };
