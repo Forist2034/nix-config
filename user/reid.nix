@@ -32,6 +32,10 @@
           realName = "Jose Lane";
           userName = "dariankline@outlook.com";
           flavor = "outlook.office365.com";
+
+          thunderbird.settings = id: {
+            "mail.server.server_${id}.authMethod" = 10; # oauth2
+          };
         };
       };
     };

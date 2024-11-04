@@ -8,7 +8,8 @@
       };
     };
     settings = {
-      "network.cookie.cookieBehavior" = 2; # disable cookies
+      # only allow cookies from visited site, for oauth2 login
+      "network.cookie.cookieBehavior" = 3;
       "places.history.enabled" = false; # disable history
     };
   };
