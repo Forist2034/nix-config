@@ -76,18 +76,19 @@
                             url = "${pkgs.nix.doc}/share/doc/nix/manual/index.html";
                           }
                         ])
-                        (lib.mkIf cfgFF.bookmarks.nixpkgs.enable [
-                          {
-                            name = "Nixpkgs manual";
-                            url = "${inputs.nixpkgs.htmlDocs.nixpkgsManual}/share/doc/nixpkgs/manual.html";
-                          }
-                        ])
-                        (lib.mkIf cfgFF.bookmarks.nixos.enable [
-                          {
-                            name = "NixOS Manual";
-                            url = "${inputs.nixpkgs.htmlDocs.nixosManual}/share/doc/nixos/index.html";
-                          }
-                        ])
+                        # TODO: fix nixpkgs and nixos manual
+                        #     (lib.mkIf cfgFF.bookmarks.nixpkgs.enable [
+                        #       {
+                        #         name = "Nixpkgs manual";
+                        #         url = "${inputs.nixpkgs.htmlDocs.nixpkgsManual}/share/doc/nixpkgs/manual.html";
+                        #       }
+                        #     ])
+                        #     (lib.mkIf cfgFF.bookmarks.nixos.enable [
+                        #       {
+                        #         name = "NixOS Manual";
+                        #         url = "${inputs.nixpkgs.htmlDocs.nixosManual}/share/doc/nixos/index.html";
+                        #       }
+                        #     ])
                       ];
                     }
                   ]

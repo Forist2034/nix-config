@@ -4,7 +4,7 @@ let
     {
       programs.nixvim = {
         enable = true;
-        options = {
+        opts = {
           number = true;
           expandtab = true;
           tabstop = 2;

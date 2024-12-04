@@ -105,7 +105,7 @@
             };
 
           programs.vscode = lib.mkIf cfg.editor.vscode.enable {
-            extensions = [ pkgs.vscode-extensions.matklad.rust-analyzer ];
+            extensions = [ pkgs.vscode-extensions.rust-lang.rust-analyzer ];
             userSettings = {
               "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
             };

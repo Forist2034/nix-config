@@ -30,7 +30,8 @@
         lib.mkIf cfg.enable {
           home.packages = lib.mkIf cfg.env.enable [
             pkgs.agda
-            pkgs.agda-pkg
+            # unmaintained
+            # pkgs.agda-pkg
           ];
 
           programs.vscode = lib.mkIf cfg.editor.vscode.enable {
