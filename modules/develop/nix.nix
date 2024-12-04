@@ -40,6 +40,7 @@
                 nixpkgs.enable = options.mkDisableOption "Nixpkgs manual";
                 nixos.enable = options.mkDisableOption "Nixos manual";
                 home-manager.enable = options.mkDisableOption "Home Manager doc";
+                nixvim.enable = options.mkDisableOption "Nixvim doc";
               };
               profiles = firefox.profile.mkOption {
                 enable = mkEnableOption "Nix firefox";
@@ -96,6 +97,22 @@
                       name = "Home Manager Manual";
                       url = "${inputs.home-manager.packages.${info.system}.docs-html}/share/doc/home-manager/index.xhtml";
                     }
+                  ])
+                  (lib.mkIf cfgFF.bookmarks.nixvim.enable [
+                    (
+                      let
+                        docs = inputs.nixvim.packages.${info.system}.docs.overrideAttrs (
+                          final: prev: {
+                            # avoid depends on gcc which is contained in environments
+                            buildPhase = prev.buildPhase + "rm $dest/env-vars\n";
+                          }
+                        );
+                      in
+                      {
+                        name = "Nixvim docs";
+                        url = "${docs}/share/doc/index.html";
+                      }
+                    )
                   ])
                 ];
               };
