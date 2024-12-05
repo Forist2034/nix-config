@@ -58,14 +58,21 @@
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins.none-ls.sources.formatting.prettierd = {
               enable = true;
-              # TODO: set settings when supported
-              # settings = {
-              #   filetypes = lib.mkMerge (
-              #     builtins.attrValues (
-              #       builtins.mapAttrs (id: enable: lib.mkIf enable [ id ]) cfg.editor.nixvim.languages
-              #     )
-              #   );
-              # };
+              disableTsServerFormatter =
+                let
+                  langs = cfg.editor.nixvim.languages;
+                in
+                (langs.typescript or false)
+                || (langs.typescriptreact or false)
+                || (langs.javascript or false)
+                || (langs.javascriptreact or false);
+              settings = {
+                filetypes = builtins.concatLists (
+                  builtins.attrValues (
+                    builtins.mapAttrs (id: enable: if enable then [ id ] else [ ]) cfg.editor.nixvim.languages
+                  )
+                );
+              };
             };
           };
         };
