@@ -45,8 +45,7 @@
               maven.enable = options.mkDisableOption "VSCode Maven support";
             };
             helix.enable = mkEnableOption "Helix Java support";
-            # TODO: enable nixvim when jdt-language-server is supported
-            # nixvim.enable = mkEnableOption "Nixvim Java support";
+            nixvim.enable = mkEnableOption "Nixvim Java support";
           };
         };
       };
@@ -82,6 +81,20 @@
           };
 
           programs.helix = lib.mkIf cfg.editor.helix.enable { extraPackages = [ pkgs.jdt-language-server ]; };
+
+          programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+            plugins = {
+              nvim-jdtls =
+                let
+                  home = config.home.homeDirectory;
+                in
+                {
+                  enable = true;
+                  configuration = "${home}/.cache/jdtls/config";
+                  data = "${home}/.cache/jdtls/workspace";
+                };
+            };
+          };
         };
     };
 }
