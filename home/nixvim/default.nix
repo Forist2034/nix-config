@@ -84,6 +84,23 @@ let
       };
     };
 
+  # fuzzy finder
+  finder =
+    { pkgs, ... }:
+    {
+      programs.nixvim = {
+        plugins = {
+          fzf-lua = {
+            enable = true;
+            fzfPackage = pkgs.skim;
+            settings = {
+              fzf_bin = "sk";
+            };
+          };
+        };
+      };
+    };
+
   complete = import ./complete.nix;
 in
 {
@@ -108,6 +125,7 @@ in
         explorer
         git
         tree-sitter
+        finder
         complete.default
       ];
 
