@@ -55,6 +55,7 @@ let
         plugins = {
           lsp = {
             enable = true;
+            inlayHints = true;
             keymaps.lspBuf = {
               K = "hover";
               S = "signature_help";
@@ -86,10 +87,6 @@ let
           cmp-nvim-lsp.enable = true;
           cmp.settings.sources = [ { name = "nvim_lsp"; } ];
         };
-
-        # TODO: use neovim native inlay hint when api becomes stable
-        extraPlugins = [ pkgs.vimPlugins.lsp-inlayhints-nvim ];
-        extraConfigLuaPost = builtins.readFile ./inlay-hints.lua;
 
         # code lens
         keymaps = [
