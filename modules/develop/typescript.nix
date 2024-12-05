@@ -59,7 +59,7 @@
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {
-              lsp.servers.tsserver = {
+              lsp.servers.ts_ls = {
                 enable = true;
               };
             };

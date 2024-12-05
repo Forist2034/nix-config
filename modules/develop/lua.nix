@@ -50,7 +50,7 @@
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {
-              lsp.servers.lua-ls = {
+              lsp.servers.lua_ls = {
                 enable = true;
               };
             };

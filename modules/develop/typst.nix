@@ -52,7 +52,7 @@
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {
-              lsp.servers.typst-lsp = {
+              lsp.servers.typst_lsp = {
                 enable = true;
               };
               typst-vim = {

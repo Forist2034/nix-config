@@ -50,7 +50,7 @@
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {
-              lsp.servers.dhall-lsp-server = {
+              lsp.servers.dhall_lsp_server = {
                 enable = true;
               };
             };

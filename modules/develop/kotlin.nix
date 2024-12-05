@@ -61,7 +61,7 @@
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {
-              lsp.servers.kotlin-language-server = {
+              lsp.servers.kotlin_language_server = {
                 enable = true;
               };
             };
