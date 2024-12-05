@@ -43,11 +43,11 @@
           programs.helix = lib.mkIf cfg.editor.helix.enable { extraPackages = [ pkgs.nls ]; };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+            extraPlugins = [ pkgs.vimPlugins.vim-nickel ];
             plugins = {
-              # TODO: enable nickel-ls when supported
-              # lsp.servers.nickel-ls = {
-              #   enable = true;
-              # };
+              lsp.servers.nickel_ls = {
+                enable = true;
+              };
 
               treesitter.grammarPackages = [ pkgs.tree-sitter-grammars.tree-sitter-nickel ];
             };
