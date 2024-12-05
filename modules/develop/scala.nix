@@ -31,6 +31,7 @@
 
           editor = {
             vscode.enable = mkEnableOption "VSCode scala support";
+            nixvim.enable = mkEnableOption "Neovim scala support";
           };
         };
       };
@@ -68,6 +69,15 @@
                 "**/.bloop" = true;
                 "**/.metals" = true;
                 "**/.ammonite" = true;
+              };
+            };
+          };
+
+          programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+            extraPlugins = [ pkgs.vimPlugins.nvim-metals ];
+            plugins = {
+              lsp.servers.metals = {
+                enable = true;
               };
             };
           };
