@@ -160,10 +160,7 @@
             plugins = {
               lsp.servers.hls = {
                 enable = true;
-                cmd = [
-                  "haskell-language-server-wrapper"
-                  "--lsp"
-                ];
+                installGhc = false;
               };
             };
           };
