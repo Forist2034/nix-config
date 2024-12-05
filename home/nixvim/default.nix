@@ -34,8 +34,11 @@ let
       { ... }:
       {
         programs.nixvim = {
-          plugins.neo-tree = {
-            enable = true;
+          plugins = {
+            neo-tree = {
+              enable = true;
+            };
+            web-devicons.enable = true;
           };
         };
       };
