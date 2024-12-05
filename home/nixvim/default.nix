@@ -29,30 +29,25 @@ let
       };
     };
 
-  explorer = {
-    neo-tree =
-      { ... }:
-      {
-        programs.nixvim = {
-          plugins = {
-            neo-tree = {
-              enable = true;
-            };
-            web-devicons.enable = true;
-          };
-        };
-      };
-
-    nvim-tree =
-      { ... }:
-      {
-        programs.nixvim = {
-          plugins.nvim-tree = {
+  explorer =
+    { ... }:
+    {
+      programs.nixvim = {
+        plugins = {
+          neo-tree = {
             enable = true;
+            # TODO: use default document_symbols when stablized
+            sources = [
+              "filesystem"
+              "buffers"
+              "git_status"
+              "document_symbols"
+            ];
           };
+          web-devicons.enable = true;
         };
       };
-  };
+    };
 
   git =
     { ... }:
@@ -110,7 +105,7 @@ in
       imports = [
         base
         status.lualine
-        explorer.neo-tree
+        explorer
         git
         tree-sitter
         complete.default
