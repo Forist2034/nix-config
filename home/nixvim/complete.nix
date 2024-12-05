@@ -81,6 +81,14 @@ let
           };
           fidget.enable = true; # show lsp notices and progress
 
+          # breadcrumb
+          barbecue.enable = true;
+          navbuddy = {
+            enable = true;
+            useDefaultMapping = true;
+            lsp.autoAttach = true;
+          };
+
           # highlight symbol
           illuminate.enable = true;
 
