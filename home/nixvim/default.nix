@@ -77,6 +77,10 @@ let
           treesitter = {
             enable = true;
             grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars;
+            settings = {
+              highlight.enable = true;
+              ident.enable = true;
+            };
           };
           treesitter-context = {
             enable = true;
