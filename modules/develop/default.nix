@@ -19,6 +19,7 @@ let
         ./latex.nix
         ./lean.nix
         ./lua.nix
+        ./markdown.nix
         ./meson.nix
         ./nickel.nix
         ./nix.nix
