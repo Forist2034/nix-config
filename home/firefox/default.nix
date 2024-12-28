@@ -41,6 +41,7 @@ let
       PromptForDownloadLocation = true;
       DisableFormHistory = true;
       OfferToSaveLogins = false;
+      HttpsOnlyMode = "enabled";
       Preferences =
         let
           user = v: {
