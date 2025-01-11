@@ -255,8 +255,6 @@ in
                     "google.cn."
                     "googleapis.cn."
                     "gstatic.cn."
-                    "cdn.jsdelivr.net."
-                    "cdnjs.cloudflare.com."
                   ];
                   action.forward = {
                     upstream = aliyun;
