@@ -12,6 +12,13 @@
         disabled = false;
         threshold = 1;
       };
+      status = {
+        disabled = false;
+        pipestatus = true;
+        map_symbol = true;
+        format = "[$symbol $int $common_meaning(SIGNAL $signal_name\\($signal_number\\))]($style) ";
+        pipestatus_format = "\\[$pipestatus\\] => [$symbol $int $common_meaning(SIGNAL $signal_name\\($signal_number\\))]($style) ";
+      };
     };
   };
 }
