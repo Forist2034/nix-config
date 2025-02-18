@@ -92,10 +92,11 @@ let
         plugins = {
           fzf-lua = {
             enable = true;
-            fzfPackage = pkgs.skim;
-            settings = {
-              fzf_bin = "sk";
-            };
+            # TODO: use skim when problem fixed
+            # fzfPackage = pkgs.skim;
+            # settings = {
+            #   fzf_bin = "sk";
+            # };
           };
         };
       };
