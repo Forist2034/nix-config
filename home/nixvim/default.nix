@@ -86,17 +86,25 @@ let
 
   # fuzzy finder
   finder =
-    { pkgs, ... }:
+    {
+      pkgs,
+      inputs,
+      info,
+      ...
+    }:
     {
       programs.nixvim = {
         plugins = {
           fzf-lua = {
             enable = true;
-            # TODO: use skim when problem fixed
-            # fzfPackage = pkgs.skim;
-            # settings = {
-            #   fzf_bin = "sk";
-            # };
+            # TODO: use stable when nixpkgs updated
+            package =
+              let
+                unstable-pkgs = inputs.nixpkgs-unstable.legacyPackages.${info.system};
+              in
+              unstable-pkgs.vimPlugins.fzf-lua;
+            fzfPackage = pkgs.skim;
+            profile = "skim";
           };
         };
       };

@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -31,6 +32,7 @@
   outputs =
     {
       nixpkgs,
+      nixpkgs-unstable,
       home-manager,
       impermanence,
       ...
@@ -45,27 +47,31 @@
     in
     {
       nixosConfigurations = {
-        nixos-laptop0 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-            inherit
-              graphical
-              system
-              user
-              home
-              modules
-              ;
+        nixos-laptop0 =
+          let
             info = {
               system = "x86_64-linux";
             };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit (info) system;
+            specialArgs = {
+              inherit inputs;
+              inherit
+                graphical
+                system
+                user
+                home
+                modules
+                info
+                ;
+            };
+            modules = [
+              home-manager.nixosModules.home-manager
+              impermanence.nixosModules.impermanence
+              ./host/nixos-laptop0
+            ];
           };
-          modules = [
-            home-manager.nixosModules.home-manager
-            impermanence.nixosModules.impermanence
-            ./host/nixos-laptop0
-          ];
-        };
       };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
