@@ -72,6 +72,33 @@
               ./host/nixos-laptop0
             ];
           };
+        nixos-desktop0 =
+          let
+            info = {
+              info = {
+                system = "x86_64-linux";
+              };
+            };
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit (info) system;
+            specialArgs = {
+              inherit inputs;
+              inherit
+                graphical
+                system
+                user
+                home
+                modules
+                info
+                ;
+            };
+            modules = [
+              home-manager.nixosModules.home-manager
+              impermanence.nixosModules.impermanence
+              ./host/nixos-desktop0
+            ];
+          };
       };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
