@@ -75,9 +75,7 @@
         nixos-desktop0 =
           let
             info = {
-              info = {
-                system = "x86_64-linux";
-              };
+              system = "x86_64-linux";
             };
           in
           nixpkgs.lib.nixosSystem {

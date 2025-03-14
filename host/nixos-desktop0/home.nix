@@ -10,12 +10,15 @@
     home.vscode.default
 
     home.gpg
+    home.gh
+    home.thunderbird
 
     modules.develop.home
 
     inputs.nixvim.homeManagerModules.nixvim
     home.nixvim.full
     home.nixvim.complete.with-icons
+    home.nixvim.gui.neovide.default
   ];
 
   develop = {
@@ -32,7 +35,18 @@
     };
   };
 
+  home.packages = with pkgs; [
+    git-annex
+
+    gopass
+
+    wl-clipboard
+
+    vlc
+  ];
+
   services.gpg-agent.pinentryPackage = pkgs.pinentry-all;
+
   programs.nixvim = {
     autoCmd = [
       {

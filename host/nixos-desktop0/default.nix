@@ -11,6 +11,7 @@
 }:
 {
   imports = [
+    ./hardware-configuration.nix
     system.nix
     system.tools.min
     system.tools.base
@@ -25,6 +26,10 @@
 
     modules.develop.system
     system.modules.tools
+    system.modules.firefox
+    system.modules.thunderbird
+
+    system.smart
   ];
 
   boot.loader = {
@@ -36,6 +41,10 @@
     networkmanager.enable = true;
   };
 
+  hardware.bluetooth = {
+    enable = true;
+  };
+
   services.fstrim.enable = true;
 
   persistence."/nix/persist" = {
@@ -44,6 +53,7 @@
       "/var/lib/systemd/catalog"
       "/var/lib/systemd/timers"
       "/var/log"
+      "/var/lib/bluetooth"
     ];
     files = [ "/etc/machine-id" ];
     users = {
@@ -51,18 +61,34 @@
         directories = [
           "Documents"
           "Source"
+          "Shared/main"
+        ];
+        files = [
+          ".mozilla/firefox/default/key4.db"
+          ".mozilla/firefox/default/signedInUser.json"
+          ".mozilla/firefox/default/logins.json"
         ];
         firefox = {
           enable = true;
           profiles.default.enable = true;
         };
+        thunderbird = {
+          enable = true;
+          profiles.default.enable = true;
+        };
         gpg.enable = true;
+        ssh.enable = true;
+        gopass.enable = true;
+        gh.enable = true;
       };
     };
   };
 
   users = {
     mutableUsers = false;
+    groups = {
+      share-main.gid = 2001;
+    };
     users =
       let
         passFile = name: "/nix/secrets/passwords/${name}";
@@ -70,6 +96,7 @@
       {
         reid = {
           hashedPasswordFile = passFile "reid";
+          extraGroups = [ "share-main" ];
         };
       };
   };
@@ -98,6 +125,18 @@
     Users.HideUsers = "test";
   };
 
+  environment.systemPackages = with pkgs; [
+    dnsutils
+    usbutils
+
+    man-pages
+    man-pages-posix
+  ];
+
+  documentation = {
+    dev.enable = true;
+  };
+
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = {
@@ -115,7 +154,6 @@
         {
           imports = [
             home.kde.default
-            home.kde.bluedevil
             home.firefox.default
             home.starship
           ];
@@ -135,7 +173,15 @@
         {
           imports = [
             user.reid.git
+            user.reid.email
+            ./home.nix
           ];
+
+          accounts.email.accounts = {
+            outlook = {
+              thunderbird.enable = true;
+            };
+          };
 
           programs.git = {
             signing.signByDefault = true;
@@ -149,7 +195,9 @@
   system.stateVersion = "24.11";
 
   nix.settings = {
-    substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+    substituters = [
+      "https://mirrors.ustc.edu.cn/nix-channels/store"
+    ];
     flake-registry = "";
     keep-outputs = true;
   };
