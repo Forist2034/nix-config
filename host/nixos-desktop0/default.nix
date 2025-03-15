@@ -47,37 +47,47 @@
 
   services.fstrim.enable = true;
 
-  persistence."/nix/persist" = {
-    directories = [
-      "/etc/nixos"
-      "/var/lib/systemd/catalog"
-      "/var/lib/systemd/timers"
-      "/var/log"
-    ];
-    files = [ "/etc/machine-id" ];
-    bluetooth.enable = true;
-    users = {
-      reid = {
-        directories = [
-          "Documents"
-          "Source"
-          "Shared/main"
-        ];
-        firefox = {
-          enable = true;
-          profiles.default = {
+  persistence = {
+    "/nix/persist/root" = {
+      directories = [
+        "/etc/nixos"
+        "/var/lib/systemd/catalog"
+        "/var/lib/systemd/timers"
+        "/var/log"
+      ];
+      files = [ "/etc/machine-id" ];
+      bluetooth.enable = true;
+      users = {
+        reid = {
+          directories = [
+            "Documents"
+            "Source"
+          ];
+          firefox = {
             enable = true;
-            account.enable = true;
+            profiles.default = {
+              enable = true;
+              account.enable = true;
+            };
           };
+          thunderbird = {
+            enable = true;
+            profiles.default.enable = true;
+          };
+          gpg.enable = true;
+          ssh.enable = true;
+          gopass.enable = true;
+          gh.enable = true;
         };
-        thunderbird = {
-          enable = true;
-          profiles.default.enable = true;
+      };
+    };
+    "/nix/persist/share-main" = {
+      users = {
+        reid = {
+          directories = [
+            "Shared/main"
+          ];
         };
-        gpg.enable = true;
-        ssh.enable = true;
-        gopass.enable = true;
-        gh.enable = true;
       };
     };
   };
