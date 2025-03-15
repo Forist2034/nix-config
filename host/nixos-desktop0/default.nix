@@ -28,7 +28,7 @@
     modules.develop.system
     system.modules.tools
     parts.github.system.default
-    system.modules.firefox
+    parts.firefox.system.default
     system.modules.thunderbird
 
     system.smart
@@ -65,14 +65,12 @@
           "Source"
           "Shared/main"
         ];
-        files = [
-          ".mozilla/firefox/default/key4.db"
-          ".mozilla/firefox/default/signedInUser.json"
-          ".mozilla/firefox/default/logins.json"
-        ];
         firefox = {
           enable = true;
-          profiles.default.enable = true;
+          profiles.default = {
+            enable = true;
+            account.enable = true;
+          };
         };
         thunderbird = {
           enable = true;
@@ -157,7 +155,7 @@
         {
           imports = [
             home.kde.default
-            home.firefox.default
+            parts.firefox.home.default
             home.starship
           ];
 

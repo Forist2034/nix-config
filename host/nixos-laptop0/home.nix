@@ -3,6 +3,7 @@
   pkgs,
   home,
   modules,
+  parts,
   ...
 }:
 {
@@ -66,7 +67,7 @@
 
   programs.firefox.profiles = {
     # no local cdn proxy, for account login
-    upstream-cdn = home.firefox.profiles.base // {
+    upstream-cdn = parts.firefox.config.profiles.base // {
       id = 2;
     };
   };

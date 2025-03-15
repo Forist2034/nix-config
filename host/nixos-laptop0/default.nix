@@ -28,7 +28,7 @@
 
     modules.develop.system
     parts.github.system.modules.persist
-    system.modules.firefox
+    parts.firefox.system.modules.persist
     system.modules.thunderbird
     system.modules.tools
 
@@ -168,6 +168,7 @@
         user
         info
         modules
+        parts
         ;
     };
     sharedModules = [
@@ -177,7 +178,7 @@
           imports = [
             home.kde.default
             home.kde.bluedevil
-            home.firefox.default
+            parts.firefox.home.default
             home.starship
           ];
 

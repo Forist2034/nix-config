@@ -84,21 +84,4 @@ in
     policies
     profiles
     ;
-
-  default =
-    { pkgs, ... }@args:
-    {
-      programs.firefox = {
-        enable = true;
-        policies = policies.base;
-        profiles = {
-          default = profiles.default // {
-            isDefault = true;
-          };
-          test = profiles.base // {
-            id = 1;
-          };
-        };
-      };
-    };
 }
