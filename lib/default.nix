@@ -29,6 +29,37 @@ lib: with lib; {
   };
 
   persist = {
+    system =
+      let
+        mkOption =
+          options:
+          lib.mkOption {
+            type = types.attrsOf (
+              types.submodule {
+                inherit options;
+              }
+            );
+          };
+        mkConfig = fun: config: builtins.mapAttrs (path: value: fun value) config.persistence;
+      in
+      {
+        inherit mkOption mkConfig;
+
+        mkModule =
+          {
+            name,
+            options,
+            config,
+          }@mod:
+          { config, lib, ... }@args:
+          {
+            options.persistence = mkOption { ${name} = options; };
+            config = {
+              environment.persistence = mkConfig (value: mod.config (args // { value = value.${name}; })) config;
+            };
+          };
+      };
+
     user =
       let
         mkOption =

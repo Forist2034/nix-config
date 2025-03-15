@@ -25,6 +25,8 @@
     user.reid.base
     user.test.base
 
+    parts.bluetooth.system.default
+
     modules.develop.system
     system.modules.tools
     parts.github.system.default
@@ -43,10 +45,6 @@
     networkmanager.enable = true;
   };
 
-  hardware.bluetooth = {
-    enable = true;
-  };
-
   services.fstrim.enable = true;
 
   persistence."/nix/persist" = {
@@ -55,9 +53,9 @@
       "/var/lib/systemd/catalog"
       "/var/lib/systemd/timers"
       "/var/log"
-      "/var/lib/bluetooth"
     ];
     files = [ "/etc/machine-id" ];
+    bluetooth.enable = true;
     users = {
       reid = {
         directories = [
