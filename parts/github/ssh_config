@@ -1,0 +1,10 @@
+Host github.com ssh.github.com
+  Protocol 2
+  StrictHostKeyChecking yes
+  PubkeyAuthentication yes
+  PreferredAuthentications publickey
+
+  ForwardAgent no
+  ForwardX11 no
+  PermitLocalCommand no
+  UseRoaming no

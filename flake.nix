@@ -39,6 +39,7 @@
     }@inputs:
     let
       libs = (import ./lib) nixpkgs.lib;
+      parts = import (./parts) libs;
       graphical = import ./graphical;
       system = (import ./system) libs;
       home = import ./home;
@@ -64,6 +65,7 @@
                 home
                 modules
                 info
+                parts
                 ;
             };
             modules = [
@@ -89,6 +91,7 @@
                 home
                 modules
                 info
+                parts
                 ;
             };
             modules = [

@@ -5,7 +5,6 @@
     ./gpg.nix
     ./ssh.nix
     ./gopass.nix
-    ./gh.nix
     ./taskwarrior.nix
   ];
 }

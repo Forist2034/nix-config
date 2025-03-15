@@ -7,6 +7,7 @@
   inputs,
   user,
   info,
+  parts,
   ...
 }:
 {
@@ -26,6 +27,7 @@
 
     modules.develop.system
     system.modules.tools
+    parts.github.system.default
     system.modules.firefox
     system.modules.thunderbird
 
@@ -146,6 +148,7 @@
         user
         info
         modules
+        parts
         ;
     };
     sharedModules = [

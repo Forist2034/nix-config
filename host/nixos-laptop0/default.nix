@@ -7,6 +7,7 @@
   inputs,
   user,
   info,
+  parts,
   ...
 }:
 {
@@ -26,6 +27,7 @@
     user.test.base
 
     modules.develop.system
+    parts.github.system.modules.persist
     system.modules.firefox
     system.modules.thunderbird
     system.modules.tools

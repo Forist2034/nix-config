@@ -3,6 +3,7 @@
   pkgs,
   home,
   modules,
+  parts,
   ...
 }:
 {
@@ -10,7 +11,7 @@
     home.vscode.default
 
     home.gpg
-    home.gh
+    parts.github.home.default
     home.thunderbird
 
     modules.develop.home
