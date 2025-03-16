@@ -97,7 +97,7 @@
             modules = [
               home-manager.nixosModules.home-manager
               impermanence.nixosModules.impermanence
-              ./host/nixos-desktop0
+              ./host/nixos-desktop0/configuration.nix
             ];
           };
       };
