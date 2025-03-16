@@ -8,6 +8,7 @@
   user,
   info,
   parts,
+  services,
   ...
 }:
 {
@@ -35,6 +36,8 @@
     system.modules.thunderbird
 
     system.smart
+
+    services.openssh.system.default
   ];
 
   boot.loader = {
@@ -58,6 +61,13 @@
       ];
       files = [ "/etc/machine-id" ];
       bluetooth.enable = true;
+      ssh = {
+        enable = true;
+        hostKeys = [
+          "ssh_host_ed25519_key"
+          "ssh_host_rsa_key"
+        ];
+      };
       users = {
         reid = {
           directories = [
