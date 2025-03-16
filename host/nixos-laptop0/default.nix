@@ -27,6 +27,7 @@
     user.test.base
 
     modules.develop.system
+    parts.ssh.system.default
     parts.github.system.modules.persist
     parts.firefox.system.modules.persist
     system.modules.thunderbird
@@ -80,7 +81,10 @@
           profiles.default.enable = true;
         };
         gpg.enable = true;
-        ssh.enable = true;
+        ssh = {
+          enable = true;
+          keys = [ "id_ed25519" ];
+        };
         gopass.enable = true;
         gh.enable = true;
         taskwarrior.enable = true;

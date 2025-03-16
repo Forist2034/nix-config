@@ -29,6 +29,7 @@
 
     modules.develop.system
     system.modules.tools
+    parts.ssh.system.default
     parts.github.system.default
     parts.firefox.system.default
     system.modules.thunderbird
@@ -75,7 +76,10 @@
             profiles.default.enable = true;
           };
           gpg.enable = true;
-          ssh.enable = true;
+          ssh = {
+            enable = true;
+            keys = [ "id_ed25519" ];
+          };
           gopass.enable = true;
           gh.enable = true;
         };
