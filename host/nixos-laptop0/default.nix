@@ -23,8 +23,8 @@
     graphical.fonts.dev
     graphical.plasma
 
-    user.reid.base
-    user.test.base
+    user.reid.system.default
+    user.test.system.default
 
     modules.develop.system
     parts.ssh.system.default
@@ -200,20 +200,9 @@
         }:
         {
           imports = [
-            user.reid.git
-            user.reid.email
+            user.reid.home.default
             ./home.nix
           ];
-
-          accounts.email.accounts = {
-            outlook = {
-              thunderbird.enable = true;
-            };
-          };
-
-          programs.git = {
-            signing.signByDefault = true;
-          };
 
           home.stateVersion = "23.11";
         };

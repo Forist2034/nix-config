@@ -1,6 +1,6 @@
 # User for testing configuration
 {
-  base =
+  system.default =
     { ... }:
     {
       users.users.test = {
