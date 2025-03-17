@@ -68,12 +68,13 @@
                 modules
                 info
                 parts
+                suites
                 ;
             };
             modules = [
               home-manager.nixosModules.home-manager
               impermanence.nixosModules.impermanence
-              ./host/nixos-laptop0
+              ./host/nixos-laptop0/configuration.nix
             ];
           };
         nixos-desktop0 =
