@@ -20,7 +20,7 @@ in
             enable = lib.mkEnableOption "Persist firefox data";
             profiles = firefox.profile.mkOption {
               enable = lib.mkEnableOption "Persist profile";
-              bookmarks.enable = options.mkDisableOption "Persist bookmarks";
+              bookmarks.enable = lib.mkEnableOption "Persist bookmarks";
               account.enable = lib.mkEnableOption "Persist firefox account";
             };
           };

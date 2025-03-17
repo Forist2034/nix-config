@@ -41,6 +41,7 @@
       libs = (import ./lib) nixpkgs.lib;
       parts = import (./parts) libs;
       services = (import ./services) libs;
+      suites = (import ./suites) libs;
       graphical = import ./graphical;
       system = (import ./system) libs;
       home = import ./home;
@@ -94,6 +95,7 @@
                 info
                 parts
                 services
+                suites
                 ;
             };
             modules = [

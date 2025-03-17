@@ -1,9 +1,10 @@
 {
   inputs,
   pkgs,
+  parts,
+  # legacy modules
   home,
   modules,
-  parts,
   ...
 }:
 {
