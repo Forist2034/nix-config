@@ -39,6 +39,7 @@
     }@inputs:
     let
       libs = (import ./lib) nixpkgs.lib;
+      hosts = (import ./host) libs;
       parts = import (./parts) libs;
       services = (import ./services) libs;
       suites = (import ./suites) libs;
@@ -67,6 +68,7 @@
                 home
                 modules
                 info
+                hosts
                 parts
                 suites
                 ;
@@ -94,6 +96,7 @@
                 home
                 modules
                 info
+                hosts
                 parts
                 services
                 suites

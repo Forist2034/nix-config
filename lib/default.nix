@@ -15,6 +15,30 @@ lib: with lib; {
       };
   };
 
+  ssh = {
+    mkHostConfig =
+      {
+        name,
+        hostname ? null,
+        hostKeys,
+      }:
+      let
+        knownHosts = builtins.toFile "${name}.keys" (
+          builtins.concatStringsSep "\n" (builtins.map (k: "${name} ${k}") hostKeys)
+        );
+      in
+      ''
+        Host ${name}
+          Protocol 2
+          ${if hostname != null then "Hostname ${hostname}" else ""}
+          StrictHostKeyChecking yes
+          PubkeyAuthentication yes
+          PreferredAuthentications publickey
+          HostKeyAlias ${name}
+          GlobalKnownHostsFile ${knownHosts}
+      '';
+  };
+
   firefox = {
     profile = {
       mkOption =

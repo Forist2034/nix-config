@@ -1,6 +1,8 @@
 {
   inputs,
   pkgs,
+  lib,
+  hosts,
   parts,
   services,
   suites,
@@ -123,6 +125,12 @@
 
   documentation = {
     dev.enable = true;
+  };
+
+  programs.ssh = {
+    extraConfig = lib.mkMerge [
+      hosts.nixos-desktop0.sshConfig
+    ];
   };
 
   home-manager = {
