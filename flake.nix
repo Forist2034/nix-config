@@ -46,69 +46,41 @@
       graphical = import ./graphical;
       system = (import ./system) libs;
       home = import ./home;
-      user = import ./user;
+      users = import ./user;
       modules = (import ./modules) libs;
     in
     {
-      nixosConfigurations = {
-        nixos-laptop0 =
-          let
-            info = {
-              system = "x86_64-linux";
+      nixosConfigurations =
+        let
+          mkConfig =
+            info: config:
+            nixpkgs.lib.nixosSystem {
+              inherit (info) system;
+              specialArgs = {
+                inherit inputs info;
+                inherit
+                  hosts
+                  parts
+                  services
+                  suites
+                  users
+                  ;
+                # TODO: use users
+                user = users;
+                inherit
+                  graphical
+                  home
+                  modules
+                  system
+                  ;
+              };
+              modules = [ config ];
             };
-          in
-          nixpkgs.lib.nixosSystem {
-            inherit (info) system;
-            specialArgs = {
-              inherit inputs;
-              inherit
-                graphical
-                system
-                user
-                home
-                modules
-                info
-                hosts
-                parts
-                suites
-                ;
-            };
-            modules = [
-              home-manager.nixosModules.home-manager
-              impermanence.nixosModules.impermanence
-              ./host/nixos-laptop0/configuration.nix
-            ];
-          };
-        nixos-desktop0 =
-          let
-            info = {
-              system = "x86_64-linux";
-            };
-          in
-          nixpkgs.lib.nixosSystem {
-            inherit (info) system;
-            specialArgs = {
-              inherit inputs;
-              inherit
-                graphical
-                system
-                user
-                home
-                modules
-                info
-                hosts
-                parts
-                services
-                suites
-                ;
-            };
-            modules = [
-              home-manager.nixosModules.home-manager
-              impermanence.nixosModules.impermanence
-              ./host/nixos-desktop0/configuration.nix
-            ];
-          };
-      };
+        in
+        {
+          nixos-desktop0 = mkConfig hosts.nixos-desktop0 ./host/nixos-desktop0/configuration.nix;
+          nixos-laptop0 = mkConfig hosts.nixos-laptop0 ./host/nixos-laptop0/configuration.nix;
+        };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
     };

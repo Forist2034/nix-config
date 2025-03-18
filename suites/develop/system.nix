@@ -17,6 +17,9 @@
 }:
 {
   imports = [
+    inputs.home-manager.nixosModules.home-manager
+    inputs.impermanence.nixosModules.impermanence
+
     system.nix
     system.tools.base
     system.tools.admin
