@@ -63,6 +63,7 @@
           profiles.default = {
             enable = true;
             account.enable = true;
+            bookmarkbackups.enable = true;
           };
         };
         thunderbird = {

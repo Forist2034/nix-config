@@ -21,6 +21,7 @@ in
             profiles = firefox.profile.mkOption {
               enable = lib.mkEnableOption "Persist profile";
               bookmarks.enable = lib.mkEnableOption "Persist bookmarks";
+              bookmarkbackups.enable = lib.mkEnableOption "Persist bookmark backups";
               account.enable = lib.mkEnableOption "Persist firefox account";
             };
           };
@@ -34,8 +35,10 @@ in
                     lib.mkIf value.enable (
                       lib.mkMerge [
                         (lib.mkIf value.bookmarks.enable {
-                          directories = [ ".mozilla/firefox/${name}/bookmarkbackups" ];
                           files = [ ".mozilla/firefox/${name}/places.sqlite" ];
+                        })
+                        (lib.mkIf value.bookmarkbackups.enable {
+                          directories = [ ".mozilla/firefox/${name}/bookmarkbackups" ];
                         })
                         (lib.mkIf value.account.enable {
                           files = [
