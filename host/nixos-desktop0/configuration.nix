@@ -18,8 +18,6 @@
     suites.develop.system
 
     parts.bluetooth.system.default
-
-    services.openssh.system.default
   ];
 
   boot.loader = {

@@ -41,6 +41,8 @@
     parts.github.system.default
 
     system.smart
+
+    services.openssh.system.default
   ];
 
   persistence = {
@@ -53,6 +55,7 @@
         "/var/log"
       ];
       files = [ "/etc/machine-id" ];
+
       users.reid = {
         directories = [
           "Documents"
@@ -136,6 +139,7 @@
   programs.ssh = {
     extraConfig = lib.mkMerge [
       hosts.nixos-desktop0.sshConfig
+      hosts.nixos-laptop0.sshConfig
     ];
   };
 

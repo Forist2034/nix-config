@@ -38,6 +38,14 @@
         "/etc/NetworkManager/system-connections"
       ];
       bluetooth.enable = true;
+      ssh = {
+        enable = true;
+        hostKeys = [
+          "ssh_host_ed25519_key"
+          "ssh_host_rsa_key"
+        ];
+      };
+
       users = {
         reid = {
           ssh = {
