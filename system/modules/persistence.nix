@@ -12,6 +12,10 @@
               };
             in
             {
+              persistStorageRoot = mkOption {
+                type = types.str;
+                description = "Persist storage root";
+              };
               files = fileList;
               directories = fileList;
               users = mkOption {
@@ -30,9 +34,13 @@
     };
   };
   config = {
-    environment.persistence = builtins.mapAttrs (path: value: {
-      inherit (value) files directories;
-      users = builtins.mapAttrs (user: value: { inherit (value) files directories; }) value.users;
-    }) config.persistence;
+    environment.persistence = lib.mkMerge (
+      builtins.map (value: {
+        "${value.persistStorageRoot}" = {
+          inherit (value) files directories;
+          users = builtins.mapAttrs (user: value: { inherit (value) files directories; }) value.users;
+        };
+      }) (builtins.attrValues config.persistence)
+    );
   };
 }

@@ -33,7 +33,7 @@
   services.fstrim.enable = true;
 
   persistence = {
-    "/nix/persist/root" = {
+    root = {
       directories = [
         "/etc/NetworkManager/system-connections"
       ];

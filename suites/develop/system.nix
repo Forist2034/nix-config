@@ -41,7 +41,8 @@
   ];
 
   persistence = {
-    "/nix/persist/root" = {
+    root = {
+      persistStorageRoot = "/nix/persist/root";
       directories = [
         "/etc/nixos"
         "/var/lib/systemd/catalog"
@@ -72,7 +73,8 @@
         gh.enable = true;
       };
     };
-    "/nix/persist/share-main" = {
+    share-main = {
+      persistStorageRoot = "/nix/persist/share-main";
       users.reid = {
         directories = [ "Shared/main" ];
         firefox = {

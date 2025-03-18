@@ -64,7 +64,13 @@ lib: with lib; {
               }
             );
           };
-        mkConfig = fun: config: builtins.mapAttrs (path: value: fun value) config.persistence;
+        mkConfig =
+          fun: config:
+          lib.mkMerge (
+            builtins.map (value: {
+              "${value.persistStorageRoot}" = fun value;
+            }) (builtins.attrValues config.persistence)
+          );
       in
       {
         inherit mkOption mkConfig;
@@ -97,9 +103,13 @@ lib: with lib; {
           };
         mkConfig =
           fun: config:
-          builtins.mapAttrs (path: value: {
-            users = builtins.mapAttrs (user: value: fun value) value.users;
-          }) config.persistence;
+          lib.mkMerge (
+            builtins.map (value: {
+              "${value.persistStorageRoot}" = {
+                users = builtins.mapAttrs (user: value: fun value) value.users;
+              };
+            }) (builtins.attrValues config.persistence)
+          );
       in
       {
         inherit mkOption mkConfig;

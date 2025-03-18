@@ -34,7 +34,7 @@
   services.fstrim.enable = true;
 
   persistence = {
-    "/nix/persist/root" = {
+    root = {
       bluetooth.enable = true;
       ssh = {
         enable = true;
