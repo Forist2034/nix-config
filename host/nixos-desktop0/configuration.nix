@@ -64,13 +64,12 @@
         pkgs,
         home,
         user,
-        suites,
         ...
       }:
       {
         imports = [
           user.reid.home.default
-          suites.develop.home
+          ./home.nix
         ];
 
         home.stateVersion = "24.11";
