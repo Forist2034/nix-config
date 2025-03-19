@@ -8,4 +8,10 @@
       (builtins.readFile ./ssh_host_rsa_key.pub)
     ];
   };
+
+  userPasswordFile = user: "/nix/secrets/passwords/${user}";
+
+  home = {
+    develop.configuration = import ./home.nix;
+  };
 }

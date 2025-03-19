@@ -8,6 +8,7 @@
   user,
   info,
   parts,
+  private,
   suites,
   services,
   ...
@@ -16,6 +17,8 @@
   imports = [
     ./hardware-configuration.nix
     suites.develop.system
+
+    private.hosts.nixos-desktop0.configuration
 
     parts.bluetooth.system.default
   ];
