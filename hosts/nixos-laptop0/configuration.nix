@@ -5,20 +5,21 @@
   modules,
   home,
   inputs,
-  user,
+  users,
   info,
   parts,
   private,
   suites,
-  services,
   ...
 }:
 {
   imports = [
     ./hardware-configuration.nix
+    ./filesystem.nix
+
     suites.develop.system
 
-    private.hosts.nixos-desktop0.configuration
+    private.hosts.nixos-laptop0.configuration
 
     parts.bluetooth.system.default
   ];
@@ -28,7 +29,7 @@
   };
 
   networking = {
-    hostName = "nixos-desktop0";
+    hostName = "nixos-laptop0";
     networkmanager.enable = true;
   };
 
@@ -36,6 +37,9 @@
 
   persistence = {
     root = {
+      directories = [
+        "/etc/NetworkManager/system-connections"
+      ];
       bluetooth.enable = true;
       ssh = {
         enable = true;
@@ -44,38 +48,54 @@
           "ssh_host_rsa_key"
         ];
       };
-      users.reid = {
-        ssh = {
-          enable = true;
-          keys = [ "id_ed25519" ];
+
+      users = {
+        reid = {
+          ssh = {
+            enable = true;
+            keys = [ "id_ed25519" ];
+          };
+          taskwarrior.enable = true;
         };
       };
     };
   };
 
+  users.users = {
+    reid = {
+      extraGroups = [
+        "networkmanager"
+        "wireshark"
+      ];
+    };
+  };
+
   time.timeZone = "Asia/Shanghai";
 
-  services.displayManager.sddm.settings = {
-    Users.HideUsers = "test";
-  };
+  programs.wireshark.enable = true;
 
   home-manager.users = {
     reid =
       {
         pkgs,
         home,
-        user,
+        users,
         ...
       }:
       {
         imports = [
-          user.reid.home.default
+          users.reid.home.default
           ./home.nix
         ];
 
-        home.stateVersion = "24.11";
+        home.stateVersion = "23.11";
+      };
+    test =
+      { ... }:
+      {
+        home.stateVersion = "23.11";
       };
   };
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "23.11";
 }

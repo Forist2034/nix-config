@@ -45,7 +45,7 @@
     }@inputs:
     let
       libs = (import ./lib) nixpkgs.lib;
-      hosts = (import ./host) libs;
+      hosts = (import ./hosts) libs;
       parts = import (./parts) libs;
       private = inputs.private-config.config libs;
       services = (import ./services) libs;
@@ -53,14 +53,14 @@
       graphical = import ./graphical;
       system = (import ./system) libs;
       home = import ./home;
-      users = import ./user;
+      users = import ./users;
       modules = (import ./modules) libs;
     in
     {
       nixosConfigurations =
         let
           mkConfig =
-            info: config:
+            info: configs:
             nixpkgs.lib.nixosSystem {
               inherit (info) system;
               specialArgs = {
@@ -73,8 +73,6 @@
                   suites
                   users
                   ;
-                # TODO: use users
-                user = users;
                 inherit
                   graphical
                   home
@@ -82,12 +80,12 @@
                   system
                   ;
               };
-              modules = [ config ];
+              modules = configs;
             };
         in
         {
-          nixos-desktop0 = mkConfig hosts.nixos-desktop0 ./host/nixos-desktop0/configuration.nix;
-          nixos-laptop0 = mkConfig hosts.nixos-laptop0 ./host/nixos-laptop0/configuration.nix;
+          nixos-desktop0 = mkConfig hosts.nixos-desktop0 [ ./hosts/nixos-desktop0/configuration.nix ];
+          nixos-laptop0 = mkConfig hosts.nixos-laptop0 [ ./hosts/nixos-laptop0/configuration.nix ];
         };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;

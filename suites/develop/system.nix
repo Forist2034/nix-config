@@ -6,7 +6,7 @@
   parts,
   services,
   suites,
-  user,
+  users,
   # legacy modules
   graphical,
   system,
@@ -28,8 +28,8 @@
     graphical.fonts.dev
     graphical.plasma
 
-    user.reid.system.default
-    user.test.system.default
+    users.reid.system.default
+    users.test.system.default
 
     modules.develop.system
     system.modules.tools
@@ -150,7 +150,7 @@
         inputs
         parts
         suites
-        user
+        users
         ;
       inherit info home modules;
     };
