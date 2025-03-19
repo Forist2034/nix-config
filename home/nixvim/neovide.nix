@@ -9,6 +9,17 @@ let
         };
       };
 
+      programs.neovide = {
+        enable = true;
+        settings = {
+          maximized = true;
+          font = {
+            normal = [ "monospace" ];
+            size = 10;
+          };
+        };
+      };
+
       home.packages = [ pkgs.neovide ];
     };
 in
