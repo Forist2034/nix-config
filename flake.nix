@@ -27,6 +27,12 @@
       url = "git+https://github.com/Forist2034/local_cdn?submodules=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    private-config = {
+      type = "git";
+      url = "file:///etc/nixos/private";
+      rev = "ad820e99ec03e4a46523aeeadaa1f413e81b7de4";
+    };
   };
 
   outputs =
@@ -41,6 +47,7 @@
       libs = (import ./lib) nixpkgs.lib;
       hosts = (import ./host) libs;
       parts = import (./parts) libs;
+      private = inputs.private-config.config libs;
       services = (import ./services) libs;
       suites = (import ./suites) libs;
       graphical = import ./graphical;
@@ -61,6 +68,7 @@
                 inherit
                   hosts
                   parts
+                  private
                   services
                   suites
                   users

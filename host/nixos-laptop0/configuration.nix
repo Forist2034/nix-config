@@ -8,6 +8,7 @@
   user,
   info,
   parts,
+  private,
   suites,
   ...
 }:
@@ -17,6 +18,8 @@
     ./filesystem.nix
 
     suites.develop.system
+
+    private.hosts.nixos-laptop0.configuration
 
     parts.bluetooth.system.default
   ];
@@ -68,10 +71,6 @@
   };
 
   time.timeZone = "Asia/Shanghai";
-
-  services.displayManager.sddm.settings = {
-    Users.HideUsers = "test";
-  };
 
   programs.wireshark.enable = true;
 
