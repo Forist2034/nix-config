@@ -25,7 +25,7 @@
     system.tools.admin
     system.modules.persistence
 
-    graphical.fonts.dev
+    graphical.fonts.default
     graphical.plasma
 
     users.reid.system.default

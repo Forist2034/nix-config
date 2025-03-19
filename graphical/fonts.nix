@@ -1,7 +1,19 @@
 {
-  dev =
+  default =
     { pkgs, ... }:
     {
-      fonts.packages = [ pkgs.cascadia-code ];
+      fonts = {
+        packages = with pkgs; [
+          cascadia-code
+        ];
+        fontconfig = {
+          defaultFonts = {
+            monospace = [
+              "Cascadia Code"
+              "Cascadia Code NF"
+            ];
+          };
+        };
+      };
     };
 }
