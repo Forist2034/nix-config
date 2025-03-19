@@ -5,6 +5,8 @@
       fonts = {
         packages = with pkgs; [
           cascadia-code
+          noto-fonts-cjk-sans
+          noto-fonts-cjk-serif
         ];
         fontconfig = {
           defaultFonts = {
@@ -13,6 +15,9 @@
               "Cascadia Code NF"
             ];
           };
+          localConf = ''
+            <include>${./fonts/cjk.conf}</include>
+          '';
         };
       };
     };
