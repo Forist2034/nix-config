@@ -75,6 +75,11 @@
 
         home.stateVersion = "24.11";
       };
+    test =
+      { ... }:
+      {
+        home.stateVersion = "24.11";
+      };
   };
 
   system.stateVersion = "24.11";

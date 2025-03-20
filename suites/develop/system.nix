@@ -170,6 +170,7 @@
         }
       )
     ];
+    users.test = { ... }: { };
   };
 
   nix.settings = {
