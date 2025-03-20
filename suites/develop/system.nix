@@ -82,8 +82,10 @@
     };
     share-main = {
       persistStorageRoot = "/nix/persist/share-main";
+      share = {
+        enable = true;
+      };
       users.reid = {
-        directories = [ "Shared/main" ];
         firefox = {
           enable = true;
           profiles.default = {

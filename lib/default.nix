@@ -127,6 +127,15 @@ lib: with lib; {
             };
             config = {
               environment.persistence = mkConfig (value: mod.config (input // { value = value.${name}; })) config;
+
+              init-shared-persist = builtins.mapAttrs (
+                _: value:
+                lib.mkIf value.share.enable {
+                  users = builtins.mapAttrs (
+                    user: value: mod.config (input // { value = value.${name}; })
+                  ) value.users;
+                }
+              ) config.persistence;
             };
           };
       };
