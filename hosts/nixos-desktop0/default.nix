@@ -11,6 +11,12 @@
 
   userPasswordFile = user: "/nix/secrets/passwords/${user}";
 
+  hardware = {
+    cpu = {
+      threads = 32;
+    };
+  };
+
   home = {
     develop.configuration = import ./home.nix;
   };

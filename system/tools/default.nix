@@ -7,12 +7,6 @@ let
         --theme=OneHalfDark
       '';
     };
-  htop =
-    { pkgs, ... }:
-    {
-      environment.systemPackages = [ pkgs.htop ];
-      environment.etc."htoprc".source = ./htoprc;
-    };
 in
 {
   min =
@@ -37,11 +31,11 @@ in
     };
 
   admin =
-    { pkgs, ... }:
+    { pkgs, parts, ... }:
     {
       imports = [
         bat
-        htop
+        parts.htop.system.default
       ];
       environment.systemPackages = with pkgs; [
         eza
@@ -53,5 +47,5 @@ in
       ];
     };
 
-  inherit bat htop;
+  inherit bat;
 }
