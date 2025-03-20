@@ -44,10 +44,12 @@
           "ssh_host_rsa_key"
         ];
       };
-      users.reid = {
-        ssh = {
-          enable = true;
-          keys = [ "id_ed25519" ];
+      users = {
+        reid = {
+          ssh = {
+            enable = true;
+            keys = [ "id_ed25519" ];
+          };
         };
       };
     };
