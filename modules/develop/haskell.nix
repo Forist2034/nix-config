@@ -9,17 +9,20 @@
   system = persist.user.mkModule {
     name = "haskell";
     options = {
-      cabal.enable = lib.mkEnableOption "Cabal for haskell";
+      cabal = {
+        enable = lib.mkEnableOption "Cabal for haskell";
+        packages.enable = lib.mkEnableOption "Cabal packages";
+        store.enable = lib.mkEnableOption "Cabal store";
+      };
     };
     config =
       { value, ... }:
       # mount separately allow files to be shared
       lib.mkIf value.cabal.enable {
         files = [ ".cabal/config" ];
-        directories = [
-          ".cabal/packages"
-          ".cabal/store"
-        ];
+        directories =
+          (if value.cabal.packages.enable then [ ".cabal/packages" ] else [ ])
+          ++ (if value.cabal.store.enable then [ ".cabal/store" ] else [ ]);
       };
   };
 
@@ -148,7 +151,8 @@
               haskell.haskell
             ];
             userSettings = {
-              "haskell.serverExecutablePath" = "${pkgs.haskell-language-server}/bin/haskell-language-server-wrapper";
+              "haskell.serverExecutablePath" =
+                "${pkgs.haskell-language-server}/bin/haskell-language-server-wrapper";
             };
           };
 
