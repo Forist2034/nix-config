@@ -82,10 +82,27 @@
               };
               modules = configs;
             };
+          flake-keep =
+            let
+              flake-inputs = (import ./flake-keep.nix) {
+                self = ./.;
+                lock = builtins.fromJSON (builtins.readFile ./flake.lock);
+              };
+            in
+            { pkgs, ... }@args:
+            {
+              environment.etc."flake-inputs".source = flake-inputs args;
+            };
         in
         {
-          nixos-desktop0 = mkConfig hosts.nixos-desktop0 [ ./hosts/nixos-desktop0/configuration.nix ];
-          nixos-laptop0 = mkConfig hosts.nixos-laptop0 [ ./hosts/nixos-laptop0/configuration.nix ];
+          nixos-desktop0 = mkConfig hosts.nixos-desktop0 [
+            ./hosts/nixos-desktop0/configuration.nix
+            flake-keep
+          ];
+          nixos-laptop0 = mkConfig hosts.nixos-laptop0 [
+            ./hosts/nixos-laptop0/configuration.nix
+            flake-keep
+          ];
         };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
