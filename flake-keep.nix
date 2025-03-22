@@ -5,10 +5,10 @@
 { pkgs, ... }:
 let
   nodes = builtins.attrValues (
-    builtins.mapAttrs (name: node: ''
-      ${if node ? locked then "ln -sv ${builtins.fetchTree node.locked} $out/nodes/${name}" else ""}
-      cp ${builtins.toFile "${name}.json" (builtins.toJSON node)} $out/nodes/${name}.json
-    '') lock.nodes
+    builtins.mapAttrs (
+      name: node:
+      if node ? locked then "ln -sv ${builtins.fetchTree node.locked} $out/nodes/${name}" else ""
+    ) lock.nodes
   );
 in
 pkgs.runCommand "flake-inputs" { } ''
