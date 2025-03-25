@@ -3,6 +3,7 @@
   programs.starship = {
     enable = true;
     settings = {
+      direnv.disabled = false;
       username.show_always = true;
       shell = {
         disabled = false;
@@ -19,6 +20,7 @@
         format = "[$symbol $int $common_meaning(SIGNAL $signal_name\\($signal_number\\))]($style) ";
         pipestatus_format = "\\[$pipestatus\\] => [$symbol $int $common_meaning(SIGNAL $signal_name\\($signal_number\\))]($style) ";
       };
+      sudo.disabled = false;
     };
   };
 }
