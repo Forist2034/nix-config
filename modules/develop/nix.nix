@@ -47,6 +47,7 @@
                 search = {
                   packages = options.mkDisableOption "Nix packages search";
                   options = options.mkDisableOption "Nix options search";
+                  wiki = options.mkDisableOption "NixOS wiki search";
                 };
               };
             };
@@ -119,40 +120,105 @@
               profiles = firefox.profile.mkConfig (
                 value:
                 lib.mkIf value.enable {
-                  search.engines = {
-                    "NixOS packages" = lib.mkIf value.search.packages {
-                      description = "Search NixOS packages by name or description.";
-                      urls = [
-                        {
-                          template = "https://search.nixos.org/packages";
-                          params = [
-                            {
-                              name = "query";
-                              value = "{searchTerms}";
-                            }
-                          ];
-                        }
-                      ];
+                  search.engines =
+                    let
                       icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                      definedAliases = [ "@nixpkg" ];
+                    in
+                    {
+
+                      "NixOS packages" = lib.mkIf value.search.packages {
+                        description = "Search NixOS packages by name or description.";
+                        urls = [
+                          {
+                            template = "https://search.nixos.org/packages";
+                            params = [
+                              {
+                                name = "query";
+                                value = "{searchTerms}";
+                              }
+                            ];
+                          }
+                        ];
+                        inherit icon;
+                        definedAliases = [ "@nixpkg" ];
+                      };
+                      "NixOS options" = lib.mkIf value.search.options {
+                        description = "Search NixOS options by name or description.";
+                        urls = [
+                          {
+                            template = "https://search.nixos.org/options";
+                            params = [
+                              {
+                                name = "query";
+                                value = "{searchTerms}";
+                              }
+                            ];
+                          }
+                        ];
+                        inherit icon;
+                        definedAliases = [ "@nixopt" ];
+                      };
+                      "NixOS Wiki" = lib.mkIf value.search.wiki {
+                        description = "NixOS Wiki (en)";
+                        urls = [
+                          {
+                            template = "https://wiki.nixos.org/w/index.php";
+                            params = [
+                              {
+                                name = "title";
+                                value = "Special:Search";
+                              }
+                              {
+                                name = "search";
+                                value = "{searchTerms}";
+                              }
+                            ];
+                          }
+                          {
+                            template = "https://wiki.nixos.org/w/api.php";
+                            params = [
+                              {
+                                name = "action";
+                                value = "opensearch";
+                              }
+                              {
+                                name = "search";
+                                value = "{searchTerms}";
+                              }
+                              {
+                                name = "namespace";
+                                value = "0";
+                              }
+                            ];
+                            type = "application/x-suggestions+json";
+                          }
+                          {
+                            template = "https://wiki.nixos.org/w/api.php";
+                            params = [
+                              {
+                                name = "action";
+                                value = "opensearch";
+                              }
+                              {
+                                name = "format";
+                                value = "xml";
+                              }
+                              {
+                                name = "search";
+                                value = "{searchTerms}";
+                              }
+                              {
+                                name = "namespace";
+                                value = "0";
+                              }
+                            ];
+                            type = "application/x-suggestions+xml";
+                          }
+                        ];
+                        inherit icon;
+                        definedAliases = [ "@nixwiki" ];
+                      };
                     };
-                    "NixOS options" = lib.mkIf value.search.options {
-                      description = "Search NixOS options by name or description.";
-                      urls = [
-                        {
-                          template = "https://search.nixos.org/options";
-                          params = [
-                            {
-                              name = "query";
-                              value = "{searchTerms}";
-                            }
-                          ];
-                        }
-                      ];
-                      icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                      definedAliases = [ "@nixopt" ];
-                    };
-                  };
                 }
               ) cfgFF.profiles;
             };
