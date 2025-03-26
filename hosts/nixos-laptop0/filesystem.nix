@@ -9,6 +9,7 @@
     "/boot" = {
       device = "/dev/disk/by-partuuid/7a4eb9bc-21c7-4a67-889c-09b230ae925f";
       fsType = "vfat";
+      options = [ "umask=0077" ];
     };
     "/nix" = {
       device = "/dev/disk/by-uuid/ed6f3689-e429-4189-b2d3-8fb92e35100c";

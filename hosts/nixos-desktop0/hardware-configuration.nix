@@ -43,6 +43,7 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-partuuid/a790837d-c805-42e5-9a9a-d78aecbe0dbd";
     fsType = "vfat";
+    options = [ "umask=0077" ];
   };
 
   fileSystems."/nix" = {
