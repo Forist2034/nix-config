@@ -26,14 +26,7 @@ let
   };
 
   settings = {
-    base = {
-      "privacy.history.custom" = true;
-      "privacy.sanitize.sanitizeOnShutdown" = true;
-      "privacy.clearOnShutdown.cache" = false;
-      "privacy.clearOnShutdown.history" = false;
-      "privacy.clearOnShutdown.cookies" = true;
-      "privacy.clearOnShutdown.sessions" = true;
-    };
+    base = { };
   };
 
   policies = {
