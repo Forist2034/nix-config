@@ -44,6 +44,7 @@
                 enable = mkEnableOption "Rust firefox";
                 search = {
                   crates = options.mkDisableOption "Crates.io search engine";
+                  docsrs = options.mkDisableOption "Docs.rs search engine";
                 };
               };
             };
@@ -98,6 +99,23 @@
                         }
                       ];
                       definedAliases = [ "@crates" ];
+                    };
+                    "Docs.rs" = lib.mkIf value.search.docsrs {
+                      description = "Search for crate documentation on docs.rs";
+                      urls = [
+                        {
+                          template = "https://docs.rs/releases/search";
+                          params = [
+                            {
+                              name = "query";
+                              value = "{searchTerms}";
+                            }
+                          ];
+                        }
+                      ];
+                      iconUpdateUrl = "https://docs.rs/-/static/favicon.ico";
+                      updateInternal = 7 * 24 * 60 * 60;
+                      definedAliases = [ "@docsrs" ];
                     };
                   };
                 }
