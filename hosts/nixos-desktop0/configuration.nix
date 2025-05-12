@@ -27,6 +27,8 @@
     systemd-boot.enable = true;
   };
 
+  boot.kernel.sysctl."kernel.sysrq" = 1;
+
   networking = {
     hostName = "nixos-desktop0";
     networkmanager.enable = true;
