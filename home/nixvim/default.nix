@@ -94,16 +94,15 @@ let
     }:
     {
       programs.nixvim = {
+        dependencies = {
+          fzf = {
+            enable = true;
+            package = pkgs.skim;
+          };
+        };
         plugins = {
           fzf-lua = {
             enable = true;
-            # TODO: use stable when nixpkgs updated
-            package =
-              let
-                unstable-pkgs = inputs.nixpkgs-unstable.legacyPackages.${info.system};
-              in
-              unstable-pkgs.vimPlugins.fzf-lua;
-            fzfPackage = pkgs.skim;
             profile = "skim";
           };
         };
