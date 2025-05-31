@@ -108,13 +108,13 @@
                         docs = inputs.nixvim.packages.${info.system}.docs.overrideAttrs (
                           final: prev: {
                             # avoid depends on gcc which is contained in environments
-                            buildPhase = prev.buildPhase + "rm $dest/env-vars\n";
+                            buildPhase = prev.buildPhase + "rm $out/env-vars\n";
                           }
                         );
                       in
                       {
                         name = "Nixvim docs";
-                        url = "${docs}/share/doc/index.html";
+                        url = "${docs}/index.html";
                       }
                     )
                   ])

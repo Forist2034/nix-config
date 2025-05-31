@@ -32,8 +32,6 @@
       };
       browser.firefox = {
         enable = true;
-        # TODO: fix nixvim doc
-        bookmarks.nixvim.enable = false;
         profiles.default.enable = true;
       };
     };
