@@ -45,6 +45,8 @@
     wl-clipboard
 
     vlc
+
+    ripgrep-all
   ];
 
   services.gpg-agent.pinentry.package = pkgs.pinentry-all;

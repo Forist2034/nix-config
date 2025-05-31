@@ -147,6 +147,9 @@
     ];
   };
 
+  services.envfs.enable = true; # for hard coded scripts
+  programs.nix-ld.enable = true; # for externally compiled binary
+
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = {
