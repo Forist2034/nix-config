@@ -118,7 +118,7 @@ let
             pattern = "*";
             callback.__raw = ''
               function (ev)
-                for _, client in pairs(vim.lsp.get_active_clients({ bufnr = ev.buf })) do
+                for _, client in pairs(vim.lsp.get_clients({ bufnr = ev.buf })) do
                   if client and client.supports_method("textDocument/codeLens") then
                     vim.lsp.codelens.refresh()
                   end
