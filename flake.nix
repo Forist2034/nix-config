@@ -22,12 +22,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    local_cdn = {
-      # github:owner url is not work
-      url = "git+https://github.com/Forist2034/local_cdn?submodules=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     private-config = {
       type = "git";
       url = "file:///etc/nixos/private";
