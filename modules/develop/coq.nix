@@ -18,7 +18,7 @@
 
           editor = {
             vscode = {
-              coq-lsp.enable = mkEnableOption "Coq lsp";
+              enable = mkEnableOption "Coq lsp";
             };
             nixvim = {
               enable = mkEnableOption "Neovim nix coq";
@@ -33,22 +33,16 @@
           cfg = config.develop.coq;
         in
         lib.mkIf cfg.enable {
-          home.packages = lib.mkIf cfg.env.enable [ pkgs.coq ];
+          home.packages = lib.mkIf cfg.env.enable [
+            pkgs.coq
+          ];
 
-          programs.vscode =
-            let
-              cfgVsc = cfg.editor.vscode;
-              open-vsx = inputs.nix-vscode-extensions.extensions.${info.system}.open-vsx;
-            in
-            lib.mkMerge [
-              (lib.mkIf cfgVsc.coq-lsp.enable {
-                extensions = [ open-vsx.ejgallego.coq-lsp ];
-                userSettings = {
-                  "coq-lsp.path" = "${pkgs.coqPackages.coq-lsp}/bin/coq-lsp";
-                  "coq-lsp.updateIgnores" = false; # don't create .vscode dir
-                };
-              })
-            ];
+          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+            extensions = [ pkgs.vscode-extensions.maximedenes.vscoq ];
+            userSettings = {
+              "vscoq.path" = "${pkgs.coqPackages.vscoq-language-server}/bin/vscoqtop";
+            };
+          };
 
           programs.nixvim =
             let

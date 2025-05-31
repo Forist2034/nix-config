@@ -44,15 +44,15 @@
           ];
 
           programs.vscode = lib.mkIf cfg.editor.vscode.enable {
-            extensions = [ pkgs.vscode-extensions.nvarner.typst-lsp ];
+            extensions = [ pkgs.vscode-extensions.myriad-dreamin.tinymist ];
             userSettings = {
-              "typst-lsp.serverPath" = "${pkgs.typst-lsp}/bin/typst-lsp";
+              "tinymist.serverPath" = "${pkgs.tinymist}/bin/tinymist";
             };
           };
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {
-              lsp.servers.typst_lsp = {
+              lsp.servers.tinymist = {
                 enable = true;
               };
               typst-vim = {
