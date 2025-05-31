@@ -21,6 +21,8 @@
     private.hosts.nixos-desktop0.configuration
 
     parts.bluetooth.system.default
+
+    ./networking.nix
   ];
 
   boot.loader = {
