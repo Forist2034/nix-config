@@ -1,4 +1,4 @@
-{ options, ... }:
+{ options, vscode, ... }:
 {
   home =
     {
@@ -16,18 +16,24 @@
 
           editor =
             let
-              editorCfg = name: {
-                enable = mkEnableOption "${name} Prettier support";
-                languages = mkOption {
-                  description = "enabled language id";
-                  type = types.attrsOf types.bool;
-                  default = { };
-                };
+              langOpt = mkOption {
+                description = "enabled language id";
+                type = types.attrsOf types.bool;
+                default = { };
               };
             in
             {
-              vscode = editorCfg "VSCode";
-              nixvim = editorCfg "Nixvim";
+              vscode = {
+                enable = mkEnableOption "VSCode Prettier support";
+                profiles = vscode.profile.mkOption {
+                  enable = mkEnableOption "Prettier support";
+                  languages = langOpt;
+                };
+              };
+              nixvim = {
+                enable = mkEnableOption "Nixvim Prettier support";
+                languages = langOpt;
+              };
             };
         };
       };
@@ -40,18 +46,23 @@
           home.packages = lib.mkIf cfg.env.enable [ pkgs.nodePackages.prettier ];
 
           programs.vscode = lib.mkIf cfg.editor.vscode.enable {
-            extensions = [ pkgs.vscode-extensions.esbenp.prettier-vscode ];
-            userSettings = lib.mkMerge (
-              builtins.attrValues (
-                builtins.mapAttrs (
-                  id: enable:
-                  lib.mkIf enable {
-                    "[${id}]" = {
-                      "editor.defaultFormatter" = "esbenp.prettier-vscode";
-                    };
-                  }
-                ) cfg.editor.vscode.languages
-              )
+            profiles = vscode.profile.mkConfig cfg.editor.vscode.profiles (
+              value:
+              lib.mkIf value.enable {
+                extensions = [ pkgs.vscode-extensions.esbenp.prettier-vscode ];
+                userSettings = lib.mkMerge (
+                  builtins.attrValues (
+                    builtins.mapAttrs (
+                      id: enable:
+                      lib.mkIf enable {
+                        "[${id}]" = {
+                          "editor.defaultFormatter" = "esbenp.prettier-vscode";
+                        };
+                      }
+                    ) value.languages
+                  )
+                );
+              }
             );
           };
 

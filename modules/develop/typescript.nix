@@ -1,4 +1,9 @@
-{ mkHomeModule, options, ... }:
+{
+  mkHomeModule,
+  options,
+  vscode,
+  ...
+}:
 {
   home =
     {
@@ -15,7 +20,7 @@
           env.enable = options.mkDisableOption "TypeScript build tools";
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode TypeScript support";
+            vscode = vscode.mkSimpleOption "VSCode TypeScript support";
             helix.enable = mkEnableOption "Helix TypeScript support";
             nixvim.enable = mkEnableOption "Nixvim TypeScript support";
           };
@@ -38,9 +43,12 @@
               editor = {
                 vscode = lib.mkIf editor.vscode.enable {
                   enable = true;
-                  languages = {
-                    typescript = true;
-                    typescriptreact = true;
+                  profiles = vscode.profile.mkEnableConfig editor.vscode {
+                    enable = true;
+                    languages = {
+                      typescript = true;
+                      typescriptreact = true;
+                    };
                   };
                 };
                 nixvim = lib.mkIf editor.nixvim.enable {

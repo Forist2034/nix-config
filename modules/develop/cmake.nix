@@ -1,4 +1,4 @@
-{ options, ... }:
+{ options, vscode, ... }:
 {
   home =
     {
@@ -13,7 +13,7 @@
           enable = mkEnableOption "CMake support";
           env.enable = options.mkDisableOption "CMake tools";
           editor = {
-            vscode.enable = mkEnableOption "VSCode CMake support";
+            vscode = vscode.mkSimpleOption "VSCode CMake support";
             helix.enable = mkEnableOption "Helix CMake support";
             nixvim.enable = mkEnableOption "Helix CMake support";
           };
@@ -27,7 +27,7 @@
         lib.mkIf cfg.enable {
           home.packages = lib.mkIf cfg.env.enable [ pkgs.cmake ];
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = with pkgs.vscode-extensions; [
               twxs.cmake
               ms-vscode.cmake-tools

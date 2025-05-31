@@ -1,4 +1,4 @@
-{ options, ... }:
+{ options, vscode, ... }:
 {
   home =
     {
@@ -15,7 +15,7 @@
           env.enable = options.mkDisableOption "JSON tools";
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode JSON support";
+            vscode = vscode.mkSimpleConfig "VSCode JSON support";
             helix.enable = mkEnableOption "Helix JSON support";
             nixvim.enable = mkEnableOption "Nixvim JSON support";
           };
@@ -38,9 +38,12 @@
               editor = {
                 vscode = lib.mkIf editor.vscode.enable {
                   enable = true;
-                  languages = {
-                    json = true;
-                    jsonc = true;
+                  profiles = vscode.profile.mkEnableConfig editor.vscode.profiles {
+                    enable = true;
+                    languages = {
+                      json = true;
+                      jsonc = true;
+                    };
                   };
                 };
                 nixvim = lib.mkIf editor.nixvim.enable {

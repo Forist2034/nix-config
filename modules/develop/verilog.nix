@@ -1,4 +1,4 @@
-{ options, ... }:
+{ options, vscode, ... }:
 {
   home =
     {
@@ -15,7 +15,7 @@
           env.enable = options.mkDisableOption "Verilog tools";
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode verilog support";
+            vscode = vscode.mkSimpleOption "VSCode verilog support";
             nixvim.enable = mkEnableOption "Neovim verilog support";
           };
         };
@@ -32,7 +32,7 @@
           ];
 
           # TODO: add formatter in vscode
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [ pkgs.vscode-extensions.mshr-h.veriloghdl ];
           };
 

@@ -2,6 +2,7 @@
   persist,
   lib,
   options,
+  vscode,
   ...
 }:
 {
@@ -28,7 +29,7 @@
           env.enable = options.mkDisableOption "OCaml build tools";
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode ocaml support";
+            vscode = vscode.mkSimpleOption "VSCode ocaml support";
           };
         };
       };
@@ -53,7 +54,7 @@
             ]
           );
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [ pkgs.vscode-extensions.ocamllabs.ocaml-platform ];
           };
         };

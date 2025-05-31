@@ -1,6 +1,7 @@
 {
   persist,
   firefox,
+  vscode,
   options,
   lib,
   ...
@@ -44,7 +45,7 @@
           };
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode haskell support";
+            vscode = vscode.mkSimpleOption "VSCode haskell support";
             helix.enable = mkEnableOption "Helix haskell support";
             nixvim.enable = mkEnableOption "Neovim haskell support";
           };
@@ -146,7 +147,7 @@
               ) ffCfg.profiles;
             };
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = with pkgs.vscode-extensions; [
               justusadam.language-haskell # syntax highlight
               haskell.haskell

@@ -2,6 +2,7 @@
   options,
   persist,
   lib,
+  vscode,
   ...
 }:
 {
@@ -49,7 +50,7 @@
           };
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode JavaScript support";
+            vscode = vscode.mkSimpleOption "VSCode JavaScript support";
             nixvim.enable = mkEnableOption "Nixvim JavaScript support";
           };
         };
@@ -75,9 +76,12 @@
               editor = {
                 vscode = lib.mkIf editor.vscode.enable {
                   enable = true;
-                  languages = {
-                    javascript = true;
-                    javascriptreact = true;
+                  profiles = vscode.profile.mkEnableConfig editor.vscode.profiles {
+                    enable = true;
+                    languages = {
+                      javascript = true;
+                      javascriptreact = true;
+                    };
                   };
                 };
                 nixvim = lib.mkIf editor.nixvim.enable {

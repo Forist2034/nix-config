@@ -1,4 +1,4 @@
-{ options, ... }:
+{ options, vscode, ... }:
 {
   home =
     {
@@ -15,7 +15,7 @@
           enable = mkEnableOption "Meson support";
           env.enable = options.mkDisableOption "Meson tools";
           editor = {
-            vscode.enable = mkEnableOption "VSCode Meson support";
+            vscode = vscode.mkSimpleOption "VSCode Meson support";
           };
         };
       };
@@ -27,7 +27,7 @@
         lib.mkIf cfg.enable {
           home.packages = lib.mkIf cfg.env.enable [ pkgs.meson ];
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [
               inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace.mesonbuild.mesonbuild
             ];

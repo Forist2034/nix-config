@@ -9,13 +9,13 @@
 }:
 {
   imports = [
-    home.vscode.default
-
     home.gpg
     parts.github.home.default
     home.thunderbird
 
     modules.develop.home
+
+    parts.vscode.home.default
 
     inputs.nixvim.homeManagerModules.nixvim
     home.nixvim.full
@@ -27,7 +27,7 @@
     nix = {
       enable = true;
       editor = {
-        vscode.nix-ide.enable = true;
+        vscode.enable = true;
         nixvim.enable = true;
       };
       browser.firefox = {

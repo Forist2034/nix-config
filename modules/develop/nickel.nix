@@ -1,4 +1,4 @@
-{ options, ... }:
+{ options, vscode, ... }:
 {
   home =
     {
@@ -17,7 +17,7 @@
           env.enable = options.mkDisableOption "Nickel tools";
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode Nickel support";
+            vscode = vscode.mkSimpleOption "VSCode Nickel support";
             helix.enable = mkEnableOption "Helix Nickel support";
             nixvim.enable = mkEnableOption "Nixvim Nickel support";
           };
@@ -31,7 +31,7 @@
         lib.mkIf cfg.enable {
           home.packages = lib.mkIf cfg.env.enable [ pkgs.nickel ];
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [
               inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace.tweag.vscode-nickel
             ];

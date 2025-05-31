@@ -1,4 +1,9 @@
-{ firefox, options, ... }:
+{
+  firefox,
+  options,
+  vscode,
+  ...
+}:
 {
   home =
     {
@@ -15,9 +20,7 @@
           enable = mkEnableOption "Nix environment";
 
           editor = {
-            vscode = {
-              nix-ide.enable = mkEnableOption "Nix IDE";
-            };
+            vscode = vscode.mkSimpleOption "VSCode Nix support";
             helix = {
               enable = mkEnableOption "Helix nix support";
               formatter = {
@@ -223,7 +226,7 @@
               ) cfgFF.profiles;
             };
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.nix-ide.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [ pkgs.vscode-extensions.jnoortheen.nix-ide ];
             userSettings = {
               "nix.formatterPath" = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";

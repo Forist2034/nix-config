@@ -1,4 +1,4 @@
-{ options, ... }:
+{ options, vscode, ... }:
 {
   home =
     {
@@ -17,7 +17,7 @@
           env.enable = options.mkDisableOption "Lean build tools";
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode Lean support";
+            vscode = vscode.mkSimpleOption "VSCode Lean support";
             nixvim.enable = mkEnableOption "Nixvim Lean support";
           };
         };
@@ -30,7 +30,7 @@
         lib.mkIf cfg.enable {
           home.packages = lib.mkIf cfg.env.enable [ pkgs.lean4 ];
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [
               inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace.leanprover.lean4
             ];

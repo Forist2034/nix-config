@@ -1,4 +1,4 @@
-{ options, ... }:
+{ options, vscode, ... }:
 {
   home =
     {
@@ -17,7 +17,7 @@
           env.enable = options.mkDisableOption "Agda build tools";
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode Agda support";
+            vscode = vscode.mkSimpleOption "VSCode Agda support";
             nixvim.enable = mkEnableOption "Nixvim Agda support";
           };
         };
@@ -34,7 +34,7 @@
             # pkgs.agda-pkg
           ];
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [
               inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace.banacorn.agda-mode
             ];

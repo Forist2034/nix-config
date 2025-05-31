@@ -1,6 +1,7 @@
 {
   persist,
   options,
+  vscode,
   lib,
   ...
 }:
@@ -27,7 +28,7 @@
           env.enable = options.mkDisableOption "Typst build tools";
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode Typst support";
+            vscode = vscode.mkSimpleOption "VSCode Typst support";
             nixvim.enable = mkEnableOption "Neovim nix typst support";
           };
         };
@@ -43,7 +44,7 @@
             pkgs.typst-fmt
           ];
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [ pkgs.vscode-extensions.myriad-dreamin.tinymist ];
             userSettings = {
               "tinymist.serverPath" = "${pkgs.tinymist}/bin/tinymist";

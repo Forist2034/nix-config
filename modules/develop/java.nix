@@ -2,6 +2,7 @@
   persist,
   options,
   lib,
+  vscode,
   ...
 }:
 {
@@ -41,8 +42,10 @@
           editor = {
             vscode = {
               enable = mkEnableOption "VSCode Java support";
-              gradle.enable = options.mkDisableOption "VSCode Gradle support";
-              maven.enable = options.mkDisableOption "VSCode Maven support";
+              profiles = vscode.profile.mkOption {
+                gradle.enable = options.mkDisableOption "VSCode Gradle support";
+                maven.enable = options.mkDisableOption "VSCode Maven support";
+              };
             };
             helix.enable = mkEnableOption "Helix Java support";
             nixvim.enable = mkEnableOption "Nixvim Java support";
@@ -62,22 +65,27 @@
           ];
 
           programs.vscode = lib.mkIf cfg.editor.vscode.enable {
-            extensions =
-              let
-                market = inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace;
-              in
-              with pkgs.vscode-extensions;
-              [
-                redhat.java
-                vscjava.vscode-java-debug
-                vscjava.vscode-java-test
-                vscjava.vscode-java-dependency
-                (lib.mkIf cfg.editor.vscode.gradle.enable market.vscjava.vscode-gradle)
-                (lib.mkIf cfg.editor.vscode.maven.enable vscjava.vscode-maven)
-              ];
-            userSettings = {
-              "java.jdt.ls.java.home" = "${pkgs.jdk}/lib/openjdk";
-            };
+            profiles = vscode.profile.mkConfig cfg.editor.vscode.profiles (
+              value:
+              lib.mkIf value.enable {
+                extensions =
+                  let
+                    market = inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace;
+                  in
+                  with pkgs.vscode-extensions;
+                  [
+                    redhat.java
+                    vscjava.vscode-java-debug
+                    vscjava.vscode-java-test
+                    vscjava.vscode-java-dependency
+                    (lib.mkIf value.gradle.enable market.vscjava.vscode-gradle)
+                    (lib.mkIf value.maven.enable vscjava.vscode-maven)
+                  ];
+                userSettings = {
+                  "java.jdt.ls.java.home" = "${pkgs.jdk}/lib/openjdk";
+                };
+              }
+            );
           };
 
           programs.helix = lib.mkIf cfg.editor.helix.enable { extraPackages = [ pkgs.jdt-language-server ]; };

@@ -1,4 +1,4 @@
-{ options, ... }:
+{ options, vscode, ... }:
 {
   home =
     {
@@ -13,7 +13,7 @@
           enable = mkEnableOption "HTML environment";
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode HTML support";
+            vscode = vscode.mkSimpleOption "VSCode HTML support";
             helix.enable = mkEnableOption "Helix HTML support";
             nixvim.enable = mkEnableOption "Nixvim HTML support";
           };
@@ -30,7 +30,10 @@
             editor = {
               vscode = lib.mkIf cfg.editor.vscode.enable {
                 enable = true;
-                languages.html = true;
+                profiles = vscode.profile.mkEnableConfig cfg.editor.vscode.profiles {
+                  enable = true;
+                  languages.html = true;
+                };
               };
               nixvim = lib.mkIf cfg.editor.nixvim.enable {
                 enable = true;

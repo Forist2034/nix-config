@@ -52,6 +52,44 @@ lib: with lib; {
     };
   };
 
+  vscode =
+    let
+      profile =
+        let
+          mkOption =
+            options:
+            lib.mkOption {
+              type = types.attrsOf (types.submodule { inherit options; });
+              default = {
+                default.enable = true;
+              };
+            };
+          mkConfig = config: fun: builtins.mapAttrs (name: value: fun value) config;
+        in
+        {
+          inherit mkOption;
+          mkEnableOption =
+            desc:
+            mkOption {
+              enable = lib.mkEnableOption desc;
+            };
+          inherit mkConfig;
+          mkEnableConfig = config: cfg: mkConfig config (value: lib.mkIf value.enable cfg);
+        };
+    in
+    {
+      inherit profile;
+      mkSimpleOption = desc: {
+        enable = lib.mkEnableOption desc;
+        profiles = profile.mkEnableOption desc;
+      };
+      mkSimpleConfig =
+        config: fun:
+        lib.mkIf config.enable {
+          profiles = profile.mkEnableConfig config.profiles fun;
+        };
+    };
+
   persist = {
     system =
       let

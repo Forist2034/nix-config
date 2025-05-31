@@ -4,4 +4,5 @@ libs: {
   github = (import ./github) libs;
   htop = (import ./htop) libs;
   ssh = (import ./ssh.nix) libs;
+  vscode = (import ./vscode.nix) libs;
 }

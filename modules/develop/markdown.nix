@@ -1,4 +1,4 @@
-{ options, ... }:
+{ options, vscode, ... }:
 {
   home =
     { config, lib, ... }:
@@ -8,7 +8,7 @@
           enable = mkEnableOption "Markdown support";
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode Markdown support";
+            vscode = vscode.mkSimpleOption "VSCode Markdown support";
             nixvim.enable = mkEnableOption "Neovim Markdown support";
           };
         };
@@ -28,7 +28,10 @@
               editor = {
                 vscode = lib.mkIf editor.vscode.enable {
                   enable = true;
-                  languages.markdown = true;
+                  profiles = vscode.profile.mkEnableConfig editor.vscode.profiles {
+                    enable = true;
+                    languages.markdown = true;
+                  };
                 };
                 nixvim = lib.mkIf editor.nixvim.enable {
                   enable = true;

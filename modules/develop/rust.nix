@@ -2,6 +2,7 @@
   persist,
   firefox,
   options,
+  vscode,
   lib,
   ...
 }:
@@ -29,7 +30,7 @@
           env.enable = options.mkDisableOption "Rust build tools";
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode rust support";
+            vscode = vscode.mkSimpleOption "VSCode rust support";
             helix.enable = mkEnableOption "Helix rust support";
             nixvim.enable = mkEnableOption "Neovim rust support";
           };
@@ -122,7 +123,7 @@
               ) cfgFF.profiles;
             };
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [ pkgs.vscode-extensions.rust-lang.rust-analyzer ];
             userSettings = {
               "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";

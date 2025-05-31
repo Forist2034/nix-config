@@ -1,4 +1,4 @@
-{ options, ... }:
+{ options, vscode, ... }:
 {
   home =
     {
@@ -20,7 +20,7 @@
           };
 
           editor = {
-            vscode.enable = mkEnableOption "VSCode Kotlin support";
+            vscode = vscode.mkSimpleOption "VSCode Kotlin support";
             helix.enable = mkEnableOption "Helix Kotlin support";
             nixvim.enable = mkEnableOption "Nixvim Kotlin support";
           };
@@ -44,7 +44,7 @@
             ]
           );
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
+          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [
               inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace.fwcd.kotlin
             ];
