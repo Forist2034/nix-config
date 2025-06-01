@@ -16,6 +16,7 @@
   imports = [
     ./hardware-configuration.nix
     ./filesystem.nix
+    ./networking.nix
 
     suites.develop.system
 
@@ -32,7 +33,6 @@
 
   networking = {
     hostName = "nixos-laptop0";
-    networkmanager.enable = true;
   };
 
   services.fstrim.enable = true;
