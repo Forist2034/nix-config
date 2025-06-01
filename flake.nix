@@ -16,6 +16,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix4vscode = {
+      url = "github:nix-community/nix4vscode";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixvim = {
       url = "github:nix-community/nixvim/nixos-25.05";
 
@@ -84,14 +89,21 @@
             {
               environment.etc."flake-inputs".source = flake-inputs args;
             };
+          nix4vscode =
+            { ... }:
+            {
+              nixpkgs.overlays = [ inputs.nix4vscode.overlays.forVscode ];
+            };
         in
         {
           nixos-desktop0 = mkConfig hosts.nixos-desktop0 [
             ./hosts/nixos-desktop0/configuration.nix
+            nix4vscode
             flake-keep
           ];
           nixos-laptop0 = mkConfig hosts.nixos-laptop0 [
             ./hosts/nixos-laptop0/configuration.nix
+            nix4vscode
             flake-keep
           ];
         };

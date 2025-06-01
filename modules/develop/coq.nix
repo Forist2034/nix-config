@@ -35,12 +35,16 @@
             pkgs.coq
           ];
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
-            extensions = [ pkgs.vscode-extensions.maximedenes.vscoq ];
-            userSettings = {
-              "vscoq.path" = "${pkgs.coqPackages.vscoq-language-server}/bin/vscoqtop";
+          programs.vscode =
+            let
+              server = pkgs.coqPackages.vscoq-language-server;
+            in
+            vscode.mkSimpleConfig cfg.editor.vscode {
+              extensions = pkgs.nix4vscode.forVscode [ "maximedenes.vscoq.${server.version}" ];
+              userSettings = {
+                "vscoq.path" = "${server}/bin/vscoqtop";
+              };
             };
-          };
 
           programs.nixvim =
             let
