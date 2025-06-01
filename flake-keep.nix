@@ -1,21 +1,20 @@
-{
-  self,
-  lock,
-}:
+flakes:
 { pkgs, ... }:
 let
-  nodes = builtins.attrValues (
-    builtins.mapAttrs (
-      name: node:
-      if node ? locked then "ln -sv ${builtins.fetchTree node.locked} $out/nodes/${name}" else ""
-    ) lock.nodes
-  );
+  collectInputs =
+    path: flake:
+    ''
+      mkdir -pv "${path}"
+      ln -sv "${flake}" "${path}/flake"
+    ''
+    + builtins.concatStringsSep "\n" (
+      builtins.attrValues (
+        builtins.mapAttrs (name: collectInputs "${path}/inputs/${name}") (flake.inputs or { })
+      )
+    );
 in
-pkgs.runCommand "flake-inputs" { } ''
-  mkdir -pv $out/nodes
-
-  ${builtins.concatStringsSep "\n" nodes}
-
-  ln -sv ${self} $out/root
-  cp ${builtins.toFile "lock.json" (builtins.toJSON lock)} $out/lock.json
-''
+pkgs.runCommand "flake-inputs" { } (
+  builtins.concatStringsSep "\n" (
+    builtins.attrValues (builtins.mapAttrs (name: flake: collectInputs "$out/${name}" flake) flakes)
+  )
+)
