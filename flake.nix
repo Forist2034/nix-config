@@ -78,10 +78,7 @@
             };
           flake-keep =
             let
-              flake-inputs = (import ./flake-keep.nix) {
-                self = ./.;
-                lock = builtins.fromJSON (builtins.readFile ./flake.lock);
-              };
+              flake-inputs = (import ./flake-keep.nix) { inherit (inputs) self; };
             in
             { pkgs, ... }@args:
             {
