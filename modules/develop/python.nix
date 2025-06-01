@@ -37,7 +37,7 @@
             extensions = with pkgs.vscode-extensions; [
               ms-python.python
               ms-python.debugpy
-              inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace.charliermarsh.ruff
+              charliermarsh.ruff
             ];
             userSettings = {
               "python.languageServer" = "Jedi";

@@ -45,8 +45,8 @@
           );
 
           programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
-            extensions = [
-              inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace.fwcd.kotlin
+            extensions = pkgs.forOpenVsx [
+              "fwcd.kotlin"
             ];
             userSettings = {
               "kotlin.java.home" = "${pkgs.jdk}/lib/openjdk";

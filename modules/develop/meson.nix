@@ -29,7 +29,7 @@
 
           programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [
-              inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace.mesonbuild.mesonbuild
+              pkgs.vscode-extensions.mesonbuild.mesonbuild
             ];
           };
         };

@@ -32,8 +32,8 @@
           home.packages = lib.mkIf cfg.env.enable [ pkgs.nickel ];
 
           programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
-            extensions = [
-              inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace.tweag.vscode-nickel
+            extensions = pkgs.nix4vscode.forVscode [
+              "tweag.vscode-nickel"
             ];
             userSettings = {
               "nls.server.path" = "${pkgs.nls}/bin/nls";

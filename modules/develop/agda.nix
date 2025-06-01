@@ -35,8 +35,8 @@
           ];
 
           programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
-            extensions = [
-              inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace.banacorn.agda-mode
+            extensions = pkgs.nix4vscode.forVscode [
+              "banacorn.agda-mode"
             ];
           };
 
