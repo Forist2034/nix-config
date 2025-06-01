@@ -15,7 +15,7 @@
       environmentFiles = [
         "/nix/secrets/network/net0.env"
       ];
-      profiles = {
+      profiles = rec {
         net0-lan-ethernet = {
           connection = {
             id = "Net0-Lan-Ethernet";
@@ -67,6 +67,7 @@
           };
           vlan = {
             id = 64;
+            parent = net0-lan-ethernet.connection.uuid;
           };
           ipv4 = {
             method = "manual";
