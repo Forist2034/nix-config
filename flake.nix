@@ -10,9 +10,8 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-
+    nix4vscode = {
+      url = "github:nix-community/nix4vscode";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -84,14 +83,21 @@
             {
               environment.etc."flake-inputs".source = flake-inputs args;
             };
+          nix4vscode =
+            { ... }:
+            {
+              nixpkgs.overlays = [ inputs.nix4vscode.overlays.forVscode ];
+            };
         in
         {
           nixos-desktop0 = mkConfig hosts.nixos-desktop0 [
             ./hosts/nixos-desktop0/configuration.nix
+            nix4vscode
             flake-keep
           ];
           nixos-laptop0 = mkConfig hosts.nixos-laptop0 [
             ./hosts/nixos-laptop0/configuration.nix
+            nix4vscode
             flake-keep
           ];
         };

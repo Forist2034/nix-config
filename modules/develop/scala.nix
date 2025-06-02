@@ -57,12 +57,14 @@
           );
 
           programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
-            extensions = [
-              pkgs.vscode-extensions.scala-lang.scala
-
-              # package in nixpkgs is outdated
-              inputs.nix-vscode-extensions.extensions.${info.system}.open-vsx.scalameta.metals
-            ];
+            extensions =
+              [
+                pkgs.vscode-extensions.scala-lang.scala
+              ]
+              ++ pkgs.nix4vscode.forOpenVsx [
+                # package in nixpkgs is outdated
+                "scalameta.metals"
+              ];
             userSettings = {
               "metals.javaHome" = "${pkgs.jdk.outPath}/lib/openjdk";
               "metals.millScript" = "mill";

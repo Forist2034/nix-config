@@ -23,24 +23,6 @@
     },
     "flake-utils": {
       "inputs": {
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_2": {
-      "inputs": {
         "systems": "systems_2"
       },
       "locked": {
@@ -121,39 +103,40 @@
         "type": "github"
       }
     },
-    "nix-vscode-extensions": {
+    "nix4vscode": {
       "inputs": {
-        "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "rust-overlay": "rust-overlay",
+        "systems": "systems"
       },
       "locked": {
-        "lastModified": 1748570411,
-        "narHash": "sha256-OU1Jzg0y2t6VfISh2wiXx4elwx8iV++KKStmaQLceXc=",
+        "lastModified": 1748740103,
+        "narHash": "sha256-GHNwNeXsKcg8tI9V/+o4moamyKprUAZp5UepcUzMF1A=",
         "owner": "nix-community",
-        "repo": "nix-vscode-extensions",
-        "rev": "fbaeabcfec7ac4e583461c923f360b6da7836f16",
+        "repo": "nix4vscode",
+        "rev": "da2ac46d55939d2dd8a6654f27f39c566d269b93",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "repo": "nix-vscode-extensions",
+        "repo": "nix4vscode",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1748437600,
-        "narHash": "sha256-hYKMs3ilp09anGO7xzfGs3JqEgUqFMnZ8GMAqI6/k04=",
-        "owner": "nixos",
+        "lastModified": 1736320768,
+        "narHash": "sha256-nIYdTAiKIGnFNugbomgBJR+Xv5F1ZQU+HfaBqJKroC0=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7282cb574e0607e65224d33be8241eae7cfe0979",
+        "rev": "4bc9c909d9ac828a039f288cf872d16d38185db8",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-25.05",
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -169,6 +152,22 @@
       },
       "original": {
         "owner": "nixos",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1748437600,
+        "narHash": "sha256-hYKMs3ilp09anGO7xzfGs3JqEgUqFMnZ8GMAqI6/k04=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "7282cb574e0607e65224d33be8241eae7cfe0979",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-25.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -199,7 +198,7 @@
     },
     "nuschtosSearch": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils",
         "ixx": "ixx",
         "nixpkgs": [
           "nixvim",
@@ -240,14 +239,33 @@
       "inputs": {
         "home-manager": "home-manager",
         "impermanence": "impermanence",
-        "nix-vscode-extensions": "nix-vscode-extensions",
-        "nixpkgs": "nixpkgs",
+        "nix4vscode": "nix4vscode",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "private-config": "private-config"
       }
     },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1742178793,
+        "narHash": "sha256-S2onMdoDS4tIYd3/Jc5oFEZBr2dJOgPrh9KzSO/bfDw=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "954582a766a50ebef5695a9616c93b5386418c08",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
     "systems": {
+      "flake": false,
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

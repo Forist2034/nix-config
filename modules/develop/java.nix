@@ -68,19 +68,14 @@
             profiles = vscode.profile.mkConfig cfg.editor.vscode.profiles (
               value:
               lib.mkIf value.enable {
-                extensions =
-                  let
-                    market = inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace;
-                  in
-                  with pkgs.vscode-extensions;
-                  [
-                    redhat.java
-                    vscjava.vscode-java-debug
-                    vscjava.vscode-java-test
-                    vscjava.vscode-java-dependency
-                    (lib.mkIf value.gradle.enable market.vscjava.vscode-gradle)
-                    (lib.mkIf value.maven.enable vscjava.vscode-maven)
-                  ];
+                extensions = with pkgs.vscode-extensions; [
+                  redhat.java
+                  vscjava.vscode-java-debug
+                  vscjava.vscode-java-test
+                  vscjava.vscode-java-dependency
+                  (lib.mkIf value.gradle.enable vscjava.vscode-gradle)
+                  (lib.mkIf value.maven.enable vscjava.vscode-maven)
+                ];
                 userSettings = {
                   "java.jdt.ls.java.home" = "${pkgs.jdk}/lib/openjdk";
                 };

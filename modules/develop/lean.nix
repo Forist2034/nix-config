@@ -31,8 +31,8 @@
           home.packages = lib.mkIf cfg.env.enable [ pkgs.lean4 ];
 
           programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
-            extensions = [
-              inputs.nix-vscode-extensions.extensions.${info.system}.vscode-marketplace.leanprover.lean4
+            extensions = pkgs.nix4vscode.forOpenVsx [
+              "leanprover.lean4"
             ];
           };
 
