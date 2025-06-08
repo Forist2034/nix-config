@@ -175,22 +175,40 @@
 
             set -o errexit
 
+            function link_dir() {
+              if [[ ! -e "$2" ]]
+              then
+                ln -sv "$1" "$2"
+              else
+                echo "skip linking '$1' -> '$2'"
+              fi
+            }
+
+            function link_file() {
+              if [[ ! -e "$2" ]]
+              then
+                ln -v "$1" "$2"
+              else
+                echo "skip linking '$1' => '$2'"
+              fi
+            }
+
             # create parent directories
             ${builtins.concatStringsSep "\n" (builtins.map (d: "mkdir -pv \"${userPath d}\"") paths.parents)}
 
             # link directories
             ${builtins.concatStringsSep "\n" (
-              builtins.map (d: "ln -sv \"${dataPath d}\" \"${userPath d}\"") paths.directories
+              builtins.map (d: "link_dir \"${dataPath d}\" \"${userPath d}\"") paths.directories
             )}
 
             # hard link files
             ${builtins.concatStringsSep "\n" (
-              builtins.map (f: "ln -v \"${dataPath f}\" \"${userPath f}\"") paths.files
+              builtins.map (f: "link_file \"${dataPath f}\" \"${userPath f}\"") paths.files
             )}
 
             # create shared dir link
             mkdir -pv "${userPath "Shared"}"
-            ln -sv "${persistStorageRoot}/home/${name}" "${userPath "Shared/${name}"}"
+            link_dir "${persistStorageRoot}/home/${name}" "${userPath "Shared/${name}"}"
           '';
       in
       builtins.listToAttrs (
