@@ -9,7 +9,7 @@
 }:
 {
   imports = [
-    home.gpg
+    parts.gpg.home.default
     parts.github.home.default
     home.thunderbird
 
@@ -48,8 +48,6 @@
 
     ripgrep-all
   ];
-
-  services.gpg-agent.pinentry.package = pkgs.pinentry-all;
 
   programs.nixvim = {
     autoCmd = [
