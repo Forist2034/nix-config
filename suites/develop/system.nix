@@ -36,6 +36,7 @@
 
     parts.ssh.system.default
     parts.gpg.system.default
+    parts.gopass.system.default
     parts.firefox.system.default
     parts.thunderbird.system.default
 

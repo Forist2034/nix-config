@@ -2,7 +2,6 @@
 { ... }:
 {
   imports = modules.importWithLibs libs [
-    ./gopass.nix
     ./taskwarrior.nix
   ];
 }

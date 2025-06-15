@@ -36,8 +36,6 @@
   home.packages = with pkgs; [
     git-annex
 
-    gopass
-
     wl-clipboard
 
     vlc

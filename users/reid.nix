@@ -70,6 +70,7 @@
             profiles.email
 
             parts.gpg.home.default
+            parts.gopass.home.default
             parts.github.home.default
             parts.thunderbird.home.default
           ];
