@@ -63,11 +63,15 @@
       inherit profiles;
 
       default =
-        { ... }:
+        { parts, ... }:
         {
           imports = [
             profiles.git
             profiles.email
+
+            parts.gpg.home.default
+            parts.github.home.default
+            parts.thunderbird.home.default
           ];
 
           accounts.email.accounts = {
@@ -75,7 +79,6 @@
               thunderbird.enable = true;
             };
           };
-
         };
     };
 }

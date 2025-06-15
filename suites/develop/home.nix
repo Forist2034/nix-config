@@ -9,10 +9,6 @@
 }:
 {
   imports = [
-    parts.gpg.home.default
-    parts.github.home.default
-    parts.thunderbird.home.default
-
     modules.develop.home
 
     parts.vscode.home.default
