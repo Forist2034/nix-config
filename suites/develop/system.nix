@@ -32,7 +32,6 @@
     users.test.system.default
 
     modules.develop.system
-    system.modules.tools
 
     parts.ssh.system.default
     parts.gpg.system.default
