@@ -23,6 +23,7 @@
     private.hosts.nixos-laptop0.configuration
 
     parts.bluetooth.system.default
+    parts.taskwarrior.system.default
   ];
 
   boot.loader = {

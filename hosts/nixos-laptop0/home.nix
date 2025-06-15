@@ -1,20 +1,17 @@
 {
   pkgs,
   suites,
-  home,
+  parts,
   ...
 }:
 {
   imports = [
     suites.develop.home
 
-    home.taskwarrior
+    parts.taskwarrior.home.default
   ];
 
   home.packages = with pkgs; [
     wireshark
-
-    xsel
-    xclip
   ];
 }
