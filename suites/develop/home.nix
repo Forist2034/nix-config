@@ -11,7 +11,7 @@
   imports = [
     parts.gpg.home.default
     parts.github.home.default
-    home.thunderbird
+    parts.thunderbird.home.default
 
     modules.develop.home
 

@@ -5,5 +5,6 @@ libs: {
   htop = (import ./htop) libs;
   gpg = (import ./gpg.nix) libs;
   ssh = (import ./ssh.nix) libs;
+  thunderbird = (import ./thunderbird.nix) libs;
   vscode = (import ./vscode.nix) libs;
 }

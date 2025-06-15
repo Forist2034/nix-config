@@ -37,7 +37,7 @@
     parts.ssh.system.default
     parts.gpg.system.default
     parts.firefox.system.default
-    system.modules.thunderbird
+    parts.thunderbird.system.default
 
     parts.github.system.default
 
