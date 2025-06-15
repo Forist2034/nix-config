@@ -24,7 +24,7 @@
     private-config = {
       type = "git";
       url = "file:///etc/nixos/private";
-      rev = "aeddaff9cddf586e9cb2e3c790419b0461bf1f0c";
+      rev = "8aeaf517430f1f9b5debd2a36d19d5bf578ee344";
     };
   };
 

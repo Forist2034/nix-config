@@ -5,7 +5,7 @@ let
       programs.nixvim = {
         globals = {
           neovide_cursor_animation_length = 0;
-          neovide_transparency = 0.8;
+          neovide_opacity = 0.8;
         };
       };
 

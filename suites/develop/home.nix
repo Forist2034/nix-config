@@ -9,10 +9,6 @@
 }:
 {
   imports = [
-    home.gpg
-    parts.github.home.default
-    home.thunderbird
-
     modules.develop.home
 
     parts.vscode.home.default
@@ -40,16 +36,12 @@
   home.packages = with pkgs; [
     git-annex
 
-    gopass
-
     wl-clipboard
 
     vlc
 
     ripgrep-all
   ];
-
-  services.gpg-agent.pinentry.package = pkgs.pinentry-all;
 
   programs.nixvim = {
     autoCmd = [

@@ -32,11 +32,12 @@
     users.test.system.default
 
     modules.develop.system
-    system.modules.tools
 
     parts.ssh.system.default
+    parts.gpg.system.default
+    parts.gopass.system.default
     parts.firefox.system.default
-    system.modules.thunderbird
+    parts.thunderbird.system.default
 
     parts.github.system.default
 

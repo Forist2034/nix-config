@@ -84,7 +84,15 @@
                         (lib.mkIf cfgFF.bookmarks.nixpkgs.enable [
                           {
                             name = "Nixpkgs manual";
-                            url = "${inputs.nixpkgs.htmlDocs.nixpkgsManual.${info.system}}/share/doc/nixpkgs/manual.html";
+                            url =
+                              let
+                                # TODO: use upstream package when fix is merged
+                                manual = pkgs.runCommand "nixpkgs-manual" { } ''
+                                  cp -rv --no-preserve=mode '${inputs.nixpkgs.htmlDocs.nixpkgsManual.${info.system}}' $out
+                                  ln -v $out/share/doc/nixpkgs/manual.html $out/share/doc/nixpkgs/index.html
+                                '';
+                              in
+                              "${manual}/share/doc/nixpkgs/index.html";
                           }
                         ])
                         (lib.mkIf cfgFF.bookmarks.nixos.enable [
