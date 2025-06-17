@@ -20,7 +20,6 @@
         format = "[$symbol $int $common_meaning(SIGNAL $signal_name\\($signal_number\\))]($style) ";
         pipestatus_format = "\\[$pipestatus\\] => [$symbol $int $common_meaning(SIGNAL $signal_name\\($signal_number\\))]($style) ";
       };
-      sudo.disabled = false;
     };
   };
 }
