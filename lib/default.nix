@@ -39,6 +39,32 @@ lib: with lib; {
       '';
   };
 
+  networkmanager = {
+    profile = {
+      toDhcpDns =
+        parent:
+        {
+          uuid,
+          ipv4 ? ({
+            ignore-auto-dns = false;
+          }),
+          ipv6 ? ({
+            ignore-auto-dns = false;
+          }),
+        }:
+        parent
+        // {
+          connection = parent.connection // {
+            id = "${parent.connection.id}-dhcp_dns";
+            inherit uuid;
+            autoconnect = false;
+          };
+          ipv4 = parent.ipv4 // ipv4;
+          ipv6 = parent.ipv6 // ipv6;
+        };
+    };
+  };
+
   firefox = {
     profile = {
       mkOption =

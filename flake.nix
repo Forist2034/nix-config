@@ -66,6 +66,7 @@
                   suites
                   users
                   ;
+                local-lib = libs;
                 inherit
                   graphical
                   home
