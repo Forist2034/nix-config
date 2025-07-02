@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   networking.networkmanager = {
     enable = true;
@@ -21,7 +21,7 @@
             id = "Net0-Lan-Ethernet";
             uuid = "fbd67eaf-be2d-47fb-855e-d694c27ec525";
             type = "ethernet";
-            autoconnect = false;
+            autoconnect = lib.mkDefault false;
           };
           ipv4 = {
             method = "manual";
@@ -50,7 +50,7 @@
           };
           ipv4 = {
             method = "manual";
-            address1 = "192.168.8.33/24,192.168.8.1";
+            address1 = "192.168.8.34/24,192.168.8.1";
           };
           ipv6 = {
             method = "auto";
@@ -113,5 +113,26 @@
         };
       };
     };
+  };
+
+  specialisation = {
+    loc0.configuration =
+      { ... }:
+      {
+        networking.networkmanager.ensureProfiles = {
+          profiles = {
+            net0-lan-ethernet = {
+              connection.autoconnect = true;
+            };
+          };
+        };
+
+        networking.firewall = {
+          allowedTCPPorts = [
+            8192
+            16384
+          ];
+        };
+      };
   };
 }
