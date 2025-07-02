@@ -2,7 +2,7 @@
 {
   networking.networkmanager = {
     enable = true;
-    insertNameservers = [
+    appendNameservers = [
       "1.0.0.1"
       "1.1.1.1"
     ];
@@ -12,7 +12,7 @@
     };
 
     ensureProfiles = {
-      profiles = {
+      profiles = rec {
         loc0-lan-ethernet = {
           connection = {
             id = "Loc0-Lan-Ethernet";
@@ -28,6 +28,20 @@
             method = "auto";
             addr-gen-mode = "stable-privacy";
             ip6-privacy = 2;
+            ignore-auto-dns = true;
+          };
+        };
+        loc0-lan-ethernet-dhcp_dns = {
+          connection = loc0-lan-ethernet.connection // {
+            id = "Loc0-Lan-Ethernet-dhcp_dns";
+            uuid = "1dec1a81-c9ba-4c47-a49c-beaea78fe1c4";
+            autoconnect = false;
+          };
+          ipv4 = loc0-lan-ethernet.ipv4 // {
+            dns = "192.168.8.1";
+          };
+          ipv6 = loc0-lan-ethernet.ipv6 // {
+            ignore-auto-dns = false;
           };
         };
         loc0-trusted-vlan = {
