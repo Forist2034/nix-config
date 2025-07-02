@@ -26,8 +26,6 @@
           };
           ipv6 = {
             method = "auto";
-            addr-gen-mode = "stable-privacy";
-            ip6-privacy = 2;
             ignore-auto-dns = true;
           };
         };

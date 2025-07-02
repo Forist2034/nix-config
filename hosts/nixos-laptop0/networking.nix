@@ -10,6 +10,12 @@
       "ipv6.ip6-privacy" = 2;
       "ipv6.addr-gen-mode" = "stable-privacy";
     };
+    wifi = {
+      macAddress = "stable";
+    };
+    ethernet = {
+      macAddress = "stable";
+    };
 
     ensureProfiles = {
       environmentFiles = [
@@ -23,14 +29,15 @@
             type = "ethernet";
             autoconnect = lib.mkDefault false;
           };
+          ethernet = {
+            assigned-mac-address = "permanent";
+          };
           ipv4 = {
             method = "manual";
             address1 = "192.168.8.33/24,192.168.8.1";
           };
           ipv6 = {
             method = "auto";
-            addr-gen-mode = "stable-privacy";
-            ip6-privacy = 2;
             ignore-auto-dns = true;
           };
         };
@@ -40,6 +47,7 @@
             uuid = "7732c385-ecb8-4485-a944-b749076edd9d";
             autoconnect = false;
           };
+          inherit (loc0-lan-ethernet) ethernet;
           ipv4 = loc0-lan-ethernet.ipv4 // {
             dns = "192.168.8.1";
           };
@@ -47,6 +55,7 @@
             ignore-auto-dns = false;
           };
         };
+
         loc0-lan-wlan = {
           connection = {
             id = "Loc0-Lan-Wlan";
@@ -57,6 +66,7 @@
           wifi = {
             mode = "infrastructure";
             ssid = "$LOC0_LAN_WLAN_SSID";
+            assigned-mac-address = "permanent";
           };
           wifi-security = {
             key-mgmt = "wpa-psk";
@@ -68,8 +78,6 @@
           };
           ipv6 = {
             method = "auto";
-            addr-gen-mode = "stable-privacy";
-            ip6-privacy = 2;
             ignore-auto-dns = true;
           };
         };
@@ -87,6 +95,7 @@
             ignore-auto-dns = false;
           };
         };
+
         loc0-trusted-vlan = {
           connection = {
             id = "Loc0-Trusted-Vlan";
@@ -114,6 +123,9 @@
             autoconnect = false;
             permissions = "user:reid:";
           };
+          ethernet = {
+            assigned-mac-address = "permanent";
+          };
           ipv4 = {
             method = "manual";
             address1 = "192.168.128.33/24";
@@ -137,8 +149,6 @@
           };
           ipv6 = {
             method = "auto";
-            addr-gen-mode = "stable-privacy";
-            ip6-privacy = 2;
             ignore-auto-dns = true;
           };
         };
