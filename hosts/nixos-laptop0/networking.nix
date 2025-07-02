@@ -20,6 +20,7 @@
     ensureProfiles = {
       environmentFiles = [
         "/nix/secrets/network/loc0.env"
+        "/nix/secrets/network/loc1.env"
       ];
       profiles =
         let
@@ -118,6 +119,73 @@
             ipv6 = {
               method = "disabled";
             };
+          };
+
+          loc1-lan-ethernet = {
+            connection = {
+              id = "Loc1-Lan-Ethernet";
+              uuid = "e80caed1-c9c0-4627-962b-2e3a08103432";
+              type = "ethernet";
+              autoconnect = false;
+            };
+            ipv4 = {
+              method = "auto";
+              ignore-auto-dns = true;
+            };
+            ipv6 = {
+              method = "auto";
+              ignore-auto-dns = true;
+            };
+          };
+          loc1-lan-ethernet-dhcp_dns = toDhcpDns loc1-lan-ethernet {
+            uuid = "78d71e61-2f1c-4855-a55d-0a4987797fa6";
+          };
+          loc1-lan-wlan0 = {
+            connection = {
+              id = "Loc1-Lan-Wlan0";
+              uuid = "f30b24cb-f8e9-4386-9bdc-7a7cf16778d1";
+              type = "wifi";
+              autoconnect = false;
+            };
+            wifi = {
+              mode = "infrastructure";
+              ssid = "$LOC1_LAN_WLAN0_SSID";
+            };
+            wifi-security = {
+              key-mgmt = "wpa-psk";
+              psk = "$LOC1_LAN_WLAN0_PSK";
+            };
+            ipv4 = {
+              method = "auto";
+              ignore-auto-dns = true;
+            };
+            ipv6 = {
+              method = "auto";
+              ignore-auto-dns = true;
+            };
+          };
+          loc1-lan-wlan0-dhcp_dns = toDhcpDns loc1-lan-wlan0 {
+            uuid = "e63b5bc8-570a-4365-8d4e-b0769692db37";
+          };
+          loc1-lan-wlan1 = {
+            connection = {
+              id = "Loc1-Lan-Wlan1";
+              uuid = "a574c558-b450-4c37-9e64-36ec9179b04b";
+              type = "wifi";
+              autoconnect = false;
+            };
+            wifi = {
+              mode = "infrastructure";
+              ssid = "$LOC1_LAN_WLAN1_SSID";
+            };
+            wifi-security = {
+              key-mgmt = "wpa-psk";
+              psk = "$LOC1_LAN_WLAN1_PSK";
+            };
+            inherit (loc1-lan-wlan0) ipv4 ipv6;
+          };
+          loc1-lan-wlan1-dhcp_dns = toDhcpDns loc1-lan-wlan1 {
+            uuid = "e0e0dd39-91ee-4638-a596-c100e7d9e094";
           };
 
           external-ethernet = {
