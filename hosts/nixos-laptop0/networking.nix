@@ -35,7 +35,7 @@
               autoconnect = lib.mkDefault false;
             };
             ethernet = {
-              assigned-mac-address = "permanent";
+              cloned-mac-address = "permanent";
             };
             ipv4 = {
               method = "manual";
@@ -61,7 +61,7 @@
             wifi = {
               mode = "infrastructure";
               ssid = "$LOC0_LAN_WLAN_SSID";
-              assigned-mac-address = "permanent";
+              cloned-mac-address = "permanent";
             };
             wifi-security = {
               key-mgmt = "wpa-psk";
@@ -109,7 +109,7 @@
               permissions = "user:reid:";
             };
             ethernet = {
-              assigned-mac-address = "permanent";
+              cloned-mac-address = "permanent";
             };
             ipv4 = {
               method = "manual";
