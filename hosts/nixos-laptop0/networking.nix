@@ -13,12 +13,12 @@
 
     ensureProfiles = {
       environmentFiles = [
-        "/nix/secrets/network/net0.env"
+        "/nix/secrets/network/loc0.env"
       ];
       profiles = rec {
-        net0-lan-ethernet = {
+        loc0-lan-ethernet = {
           connection = {
-            id = "Net0-Lan-Ethernet";
+            id = "Loc0-Lan-Ethernet";
             uuid = "fbd67eaf-be2d-47fb-855e-d694c27ec525";
             type = "ethernet";
             autoconnect = lib.mkDefault false;
@@ -33,20 +33,20 @@
             ip6-privacy = 2;
           };
         };
-        net0-lan-wlan = {
+        loc0-lan-wlan = {
           connection = {
-            id = "Net0-Lan-Wlan";
+            id = "Loc0-Lan-Wlan";
             uuid = "f5aef23d-684b-4a6a-8d67-fd7fc572c5b7";
             type = "wifi";
             autoconnect = false;
           };
           wifi = {
             mode = "infrastructure";
-            ssid = "$NET0_LAN_WLAN_SSID";
+            ssid = "$LOC0_LAN_WLAN_SSID";
           };
           wifi-security = {
             key-mgmt = "wpa-psk";
-            psk = "$NET0_LAN_WLAN_PSK";
+            psk = "$LOC0_LAN_WLAN_PSK";
           };
           ipv4 = {
             method = "manual";
@@ -58,16 +58,16 @@
             ip6-privacy = 2;
           };
         };
-        net0-trusted-vlan = {
+        loc0-trusted-vlan = {
           connection = {
-            id = "Net0-Trusted-Vlan";
+            id = "Loc0-Trusted-Vlan";
             uuid = "d8b22ce6-573f-43ce-ab95-8d94e7b3e580";
             type = "vlan";
             autoconnect = false;
           };
           vlan = {
             id = 64;
-            parent = net0-lan-ethernet.connection.uuid;
+            parent = loc0-lan-ethernet.connection.uuid;
           };
           ipv4 = {
             method = "manual";
@@ -77,9 +77,9 @@
             method = "disabled";
           };
         };
-        net0-management-ethernet = {
+        loc0-management-ethernet = {
           connection = {
-            id = "Net0-Management-Ethernet";
+            id = "Loc0-Management-Ethernet";
             uuid = "edfa6be5-56e8-4558-9f61-c16b00991ba9";
             type = "ethernet";
             autoconnect = false;
@@ -121,7 +121,7 @@
       {
         networking.networkmanager.ensureProfiles = {
           profiles = {
-            net0-lan-ethernet = {
+            loc0-lan-ethernet = {
               connection.autoconnect = true;
             };
           };

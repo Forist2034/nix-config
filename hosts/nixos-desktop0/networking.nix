@@ -13,9 +13,9 @@
 
     ensureProfiles = {
       profiles = {
-        net0-lan-ethernet = {
+        loc0-lan-ethernet = {
           connection = {
-            id = "Net0-Lan-Ethernet";
+            id = "Loc0-Lan-Ethernet";
             type = "ethernet";
             interface-name = "enp13s0";
             uuid = "83568938-3d37-441c-a459-4b1dc1a3d4ac";
@@ -30,9 +30,9 @@
             ip6-privacy = 2;
           };
         };
-        net0-trusted-vlan = {
+        loc0-trusted-vlan = {
           connection = {
-            id = "Net0-Trusted-Vlan";
+            id = "Loc0-Trusted-Vlan";
             type = "vlan";
             uuid = "94d2e868-11c3-4ac2-ae0c-9616f0636e3e";
           };
@@ -48,9 +48,9 @@
             method = "disabled";
           };
         };
-        net0-management-vlan = {
+        loc0-management-vlan = {
           connection = {
-            id = "Net0-Management-Vlan";
+            id = "Loc0-Management-Vlan";
             type = "vlan";
             autoconnect = false;
             uuid = "b53e0ef1-c960-4c42-9cf5-a98cc0eb7e8f";
