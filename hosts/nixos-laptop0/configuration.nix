@@ -32,6 +32,12 @@
 
   boot.kernel.sysctl."kernel.sysrq" = 1;
 
+  # use zswap to reduce memory pressure
+  boot.kernelParams = [
+    "zswap.enabled=1"
+    "zswap.max_pool_percent=48"
+  ];
+
   networking = {
     hostName = "nixos-laptop0";
   };

@@ -31,6 +31,10 @@
 
   boot.kernel.sysctl."kernel.sysrq" = 1;
 
+  zramSwap = {
+    enable = true;
+  };
+
   networking = {
     hostName = "nixos-desktop0";
     networkmanager.enable = true;
