@@ -123,9 +123,7 @@ in
                 method = "manual";
                 address1 = "192.168.64.33/24";
               };
-              ipv6 = {
-                method = "disabled";
-              };
+              ipv6.method = "disabled";
             };
             loc0-management-vlan = {
               connection = {
@@ -143,9 +141,7 @@ in
                 method = "manual";
                 address1 = "192.168.128.33/24";
               };
-              ipv6 = {
-                method = "disabled";
-              };
+              ipv6.method = "disabled";
             };
             loc0-management-ethernet = {
               connection = {
@@ -163,9 +159,7 @@ in
                 address1 = "192.168.128.33/24";
                 may-fail = false;
               };
-              ipv6 = {
-                method = "disabled";
-              };
+              ipv6.method = "disabled";
             };
           };
         };

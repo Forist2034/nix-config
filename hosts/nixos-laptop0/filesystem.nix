@@ -45,6 +45,12 @@
     }
   ];
 
+  # use zswap to reduce memory pressure
+  boot.kernelParams = [
+    "zswap.enabled=1"
+    "zswap.max_pool_percent=48"
+  ];
+
   # fscrypt configuration
   environment.systemPackages = [ pkgs.fscrypt-experimental ];
   environment.etc."fscrypt.conf".text = builtins.toJSON {

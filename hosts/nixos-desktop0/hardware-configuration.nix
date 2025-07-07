@@ -31,44 +31,6 @@
     nct6687d
   ];
 
-  fileSystems."/" = {
-    device = "none";
-    fsType = "tmpfs";
-    options = [
-      "size=8G"
-      "mode=755"
-    ];
-  };
-
-  fileSystems."/nix/var/nix/builds" = {
-    device = "none";
-    fsType = "tmpfs";
-    options = [
-      "size=16G"
-      "mode=755"
-    ];
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-partuuid/a790837d-c805-42e5-9a9a-d78aecbe0dbd";
-    fsType = "vfat";
-    options = [ "umask=0077" ];
-  };
-
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/afbf6c2a-f84e-4112-bbc5-1733ec308105";
-    fsType = "ext4";
-    neededForBoot = true;
-    options = [ "noatime" ];
-  };
-
-  boot.initrd.luks.devices."root" = {
-    device = "/dev/disk/by-uuid/13b9d01c-1099-4f04-8453-a7982ff81141";
-    allowDiscards = true;
-  };
-
-  swapDevices = [ ];
-
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
