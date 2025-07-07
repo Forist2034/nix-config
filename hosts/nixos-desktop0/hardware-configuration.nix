@@ -40,6 +40,15 @@
     ];
   };
 
+  fileSystems."/nix/var/nix/builds" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = [
+      "size=16G"
+      "mode=755"
+    ];
+  };
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-partuuid/a790837d-c805-42e5-9a9a-d78aecbe0dbd";
     fsType = "vfat";

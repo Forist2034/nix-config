@@ -17,6 +17,14 @@
       neededForBoot = true;
       options = [ "noatime" ];
     };
+    "/nix/var/nix/builds" = {
+      device = "none";
+      fsType = "tmpfs";
+      options = [
+        "size=4G"
+        "mode=755"
+      ];
+    };
     "/" = {
       device = "tmpfs";
       fsType = "tmpfs";
