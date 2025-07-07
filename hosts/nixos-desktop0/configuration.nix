@@ -21,6 +21,7 @@
     private.hosts.nixos-desktop0.configuration
 
     parts.bluetooth.system.default
+    parts.taskwarrior.system.default
 
     ./networking.nix
     ./filesystem.nix
@@ -55,6 +56,7 @@
             enable = true;
             keys = [ "id_ed25519" ];
           };
+          taskwarrior.enable = true;
         };
       };
     };
