@@ -38,6 +38,7 @@
     parts.gopass.system.default
     parts.firefox.system.default
     parts.thunderbird.system.default
+    parts.kwallet.system.default
 
     parts.github.system.default
 
@@ -62,8 +63,6 @@
           "Documents"
           "Source"
         ];
-        gpg.enable = true;
-        gopass.enable = true;
 
         firefox = {
           enable = true;
@@ -73,12 +72,6 @@
             bookmarkbackups.enable = true;
           };
         };
-        thunderbird = {
-          enable = true;
-          profiles.default.enable = true;
-        };
-
-        gh.enable = true;
       };
     };
     share-main = {

@@ -20,7 +20,24 @@
     {
       inherit profiles;
 
-      default = profiles.base;
+      default =
+        { ... }:
+        {
+          imports = [ profiles.base ];
+
+          persistence.root.users.reid = {
+            gpg.enable = true;
+            gopass.enable = true;
+
+            thunderbird = {
+              enable = true;
+              profiles.default.enable = true;
+            };
+
+            gh.enable = true;
+            kwallet.enable = true; # gh stores token in kwallet
+          };
+        };
     };
 
   home =
