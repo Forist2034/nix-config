@@ -16,10 +16,7 @@
     };
 
     nixvim = {
-      # url = "github:nix-community/nixvim/nixos-25.05";
-      # TODO: use latest after https://github.com/nix-community/nixvim/issues/3532 were fixed
-      url = "github:nix-community/nixvim/cfea16cdbe4f13b5d39dfe3df747092448252c9d";
-
+      url = "github:nix-community/nixvim/nixos-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
