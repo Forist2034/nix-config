@@ -32,7 +32,7 @@
             };
             ipv4 = {
               method = "manual";
-              address1 = "192.168.8.32/24,192.168.8.1";
+              address1 = "10.64.1.1/16,10.64.0.1";
             };
             ipv6 = {
               method = "auto";
@@ -41,7 +41,7 @@
           };
           loc0-lan-ethernet-dhcp_dns = toDhcpDns loc0-lan-ethernet {
             uuid = "1dec1a81-c9ba-4c47-a49c-beaea78fe1c4";
-            ipv4.dns = "192.168.8.1";
+            ipv4.dns = "10.64.0.1";
           };
           loc0-trusted-vlan = {
             connection = {
@@ -50,12 +50,12 @@
               uuid = "94d2e868-11c3-4ac2-ae0c-9616f0636e3e";
             };
             vlan = {
-              id = 64;
+              id = 1024 + 16;
               parent = "enp13s0";
             };
             ipv4 = {
               method = "manual";
-              address1 = "192.168.64.32/24";
+              address1 = "10.16.1.1/16";
             };
             ipv6.method = "disabled";
           };
@@ -68,12 +68,12 @@
               permissions = "user:reid:";
             };
             vlan = {
-              id = 128;
+              id = 1024;
               parent = "enp13s0";
             };
             ipv4 = {
               method = "manual";
-              address1 = "192.168.128.32/24";
+              address1 = "10.0.1.1/16";
               may-fail = false;
             };
             ipv6.method = "disabled";

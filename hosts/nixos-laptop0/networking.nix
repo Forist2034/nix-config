@@ -72,7 +72,7 @@ in
               };
               ipv4 = {
                 method = "manual";
-                address1 = "192.168.8.33/24,192.168.8.1";
+                address1 = "10.64.2.1/16,10.64.0.1";
               };
               ipv6 = {
                 method = "auto";
@@ -81,7 +81,7 @@ in
             };
             loc0-lan-ethernet-dhcp_dns = toDhcpDns loc0-lan-ethernet {
               uuid = "7732c385-ecb8-4485-a944-b749076edd9d";
-              ipv4.dns = "192.168.8.1";
+              ipv4.dns = "10.64.0.1";
             };
 
             loc0-lan-wlan = {
@@ -102,7 +102,7 @@ in
               };
               ipv4 = {
                 method = "manual";
-                address1 = "192.168.8.34/24,192.168.8.1";
+                address1 = "10.64.2.2/16,10.64.0.1";
               };
               ipv6 = {
                 method = "auto";
@@ -111,7 +111,7 @@ in
             };
             loc0-lan-wlan-dhcp_dns = toDhcpDns loc0-lan-wlan {
               uuid = "d00f8e93-f3c0-4368-970b-21e8b0bc6743";
-              ipv4.dns = "192.168.8.1";
+              ipv4.dns = "10.64.0.1";
             };
 
             loc0-trusted-vlan = {
@@ -122,12 +122,12 @@ in
                 autoconnect = false;
               };
               vlan = {
-                id = 64;
+                id = 1024 + 16;
                 parent = loc0-lan-ethernet.connection.uuid;
               };
               ipv4 = {
                 method = "manual";
-                address1 = "192.168.64.33/24";
+                address1 = "10.16.2.1/16";
               };
               ipv6.method = "disabled";
             };
@@ -140,12 +140,12 @@ in
                 permissions = "user:reid:";
               };
               vlan = {
-                id = 128;
+                id = 1024;
                 parent = loc0-lan-ethernet.connection.uuid;
               };
               ipv4 = {
                 method = "manual";
-                address1 = "192.168.128.33/24";
+                address1 = "10.0.2.1/16";
               };
               ipv6.method = "disabled";
             };
@@ -162,7 +162,7 @@ in
               };
               ipv4 = {
                 method = "manual";
-                address1 = "192.168.128.33/24";
+                address1 = "10.0.2.2/16";
                 may-fail = false;
               };
               ipv6.method = "disabled";
