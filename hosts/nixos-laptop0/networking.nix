@@ -20,6 +20,11 @@ in
     ethernet = {
       macAddress = "stable";
     };
+    settings = {
+      main = {
+        no-auto-default = "*";
+      };
+    };
 
     ensureProfiles = {
       profiles = rec {

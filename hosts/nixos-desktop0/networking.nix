@@ -11,6 +11,11 @@
       "ipv6.ip6-privacy" = 2;
       "ipv6.addr-gen-mode" = "stable-privacy";
     };
+    settings = {
+      main = {
+        no-auto-default = "*";
+      };
+    };
 
     ensureProfiles = {
       profiles =
