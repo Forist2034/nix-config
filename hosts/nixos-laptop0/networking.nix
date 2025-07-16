@@ -10,6 +10,7 @@ in
       "1.1.1.1"
     ];
     connectionConfig = {
+      "connection.stable-id" = "\${CONNECTION}-\${BOOT}-\${DEVICE}";
       "ipv6.ip6-privacy" = 2;
       "ipv6.addr-gen-mode" = "stable-privacy";
     };
