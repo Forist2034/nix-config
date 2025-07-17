@@ -23,7 +23,7 @@
     private-config = {
       type = "git";
       url = "file:///etc/nixos/private";
-      rev = "20bfe81e328ee5c7e60e203ce8ab5ed4d85abdb6";
+      rev = "f9e47a537facaf1e48d30873c86ee3a0fa31c12c";
     };
   };
 
@@ -36,17 +36,24 @@
       ...
     }@inputs:
     let
-      libs = (import ./lib) nixpkgs.lib;
-      hosts = (import ./hosts) libs;
-      parts = import (./parts) libs;
-      private = inputs.private-config.config libs;
-      services = (import ./services) libs;
-      suites = (import ./suites) libs;
+      local-lib = (import ./lib) nixpkgs.lib;
+      private = inputs.private-config.config {
+        inherit local-lib;
+        inherit (nixpkgs) lib;
+      };
+      args = {
+        inherit local-lib private;
+        inherit (nixpkgs) lib;
+      };
+      hosts = (import ./hosts) args;
+      parts = import (./parts) args;
+      services = (import ./services) args;
+      suites = (import ./suites) args;
       graphical = import ./graphical;
-      system = (import ./system) libs;
+      system = (import ./system) args;
       home = import ./home;
       users = import ./users;
-      modules = (import ./modules) libs;
+      modules = (import ./modules) args;
     in
     {
       nixosConfigurations =
@@ -59,13 +66,13 @@
                 inherit inputs info;
                 inherit
                   hosts
+                  local-lib
                   parts
                   private
                   services
                   suites
                   users
                   ;
-                local-lib = libs;
                 inherit
                   graphical
                   home

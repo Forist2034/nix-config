@@ -1,3 +1,3 @@
-libs: {
+args: {
   develop = import ./develop;
 }

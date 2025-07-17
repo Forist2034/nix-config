@@ -1,9 +1,9 @@
-{ persist, lib, ... }:
+{ local-lib, lib, ... }:
 {
   system =
     let
       modules = {
-        persist = persist.user.mkModule {
+        persist = local-lib.persist.user.mkModule {
           name = "gh";
           options = {
             enable = lib.mkEnableOption "gh";

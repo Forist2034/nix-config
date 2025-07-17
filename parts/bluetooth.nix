@@ -1,9 +1,9 @@
-{ persist, lib, ... }:
+{ local-lib, lib, ... }:
 {
   system =
     let
       modules = {
-        persist = persist.system.mkModule {
+        persist = local-lib.persist.system.mkModule {
           name = "bluetooth";
           options = {
             enable = lib.mkEnableOption "Persist bluetooth";

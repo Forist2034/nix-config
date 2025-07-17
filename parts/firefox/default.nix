@@ -1,8 +1,6 @@
 {
-  persist,
-  firefox,
+  local-lib,
   lib,
-  options,
   ...
 }:
 let
@@ -14,11 +12,11 @@ in
   system =
     let
       modules = {
-        persist = persist.user.mkModule {
+        persist = local-lib.persist.user.mkModule {
           name = "firefox";
           options = {
             enable = lib.mkEnableOption "Persist firefox data";
-            profiles = firefox.profile.mkOption {
+            profiles = local-lib.firefox.profile.mkOption {
               enable = lib.mkEnableOption "Persist profile";
               bookmarks.enable = lib.mkEnableOption "Persist bookmarks";
               bookmarkbackups.enable = lib.mkEnableOption "Persist bookmark backups";

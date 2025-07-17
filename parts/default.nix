@@ -1,13 +1,13 @@
-libs: {
-  bluetooth = (import ./bluetooth.nix) libs;
-  firefox = (import ./firefox) libs;
-  github = (import ./github) libs;
-  htop = (import ./htop) libs;
-  gopass = (import ./gopass.nix) libs;
-  gpg = (import ./gpg.nix) libs;
-  kwallet = (import ./kwallet.nix) libs;
-  ssh = (import ./ssh.nix) libs;
-  taskwarrior = (import ./taskwarrior.nix) libs;
-  thunderbird = (import ./thunderbird.nix) libs;
-  vscode = (import ./vscode.nix) libs;
+args: {
+  bluetooth = (import ./bluetooth.nix) args;
+  firefox = (import ./firefox) args;
+  github = (import ./github) args;
+  htop = (import ./htop) args;
+  gopass = (import ./gopass.nix) args;
+  gpg = (import ./gpg.nix) args;
+  kwallet = (import ./kwallet.nix) args;
+  ssh = (import ./ssh.nix) args;
+  taskwarrior = (import ./taskwarrior.nix) args;
+  thunderbird = (import ./thunderbird.nix) args;
+  vscode = (import ./vscode.nix) args;
 }

@@ -1,3 +1,3 @@
-libs: {
-  openssh = (import ./openssh.nix) libs;
+args: {
+  openssh = (import ./openssh.nix) args;
 }

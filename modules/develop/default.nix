@@ -1,7 +1,9 @@
-{ modules, ... }@libs:
+{ local-lib, ... }:
 let
   modules =
-    libs.modules.importWithLibs (libs // { mkHomeModule = (import ./mkHomeModule.nix) libs; })
+    # TODO: use arguments directly
+    local-lib.modules.importWithLibs
+      (local-lib // { mkHomeModule = (import ./mkHomeModule.nix) local-lib; })
       [
         ./agda.nix
         ./cmake.nix

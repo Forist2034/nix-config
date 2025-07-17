@@ -1,1 +1,1 @@
-libs: { develop = (import ./develop) libs; }
+args: { develop = (import ./develop) args; }

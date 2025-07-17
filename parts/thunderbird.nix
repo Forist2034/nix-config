@@ -1,14 +1,13 @@
 {
-  persist,
+  local-lib,
   lib,
-  options,
   ...
 }:
 {
   system =
     let
       modules = {
-        persist = persist.user.mkModule {
+        persist = local-lib.persist.user.mkModule {
           name = "thunderbird";
           options = with lib; {
             enable = mkEnableOption "Persist thunderbird";
@@ -17,7 +16,7 @@
                 types.submodule {
                   options = {
                     enable = mkEnableOption "Persist profile";
-                    mail.enable = options.mkDisableOption "Persist mail";
+                    mail.enable = local-lib.options.mkDisableOption "Persist mail";
                   };
                 }
               );
