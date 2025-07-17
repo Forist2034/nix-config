@@ -1,4 +1,4 @@
-{ local-lib, ... }:
+{ local-lib, locations, ... }:
 {
   networking.networkmanager = {
     enable = true;
@@ -21,6 +21,7 @@
       profiles =
         let
           toDhcpDns = local-lib.networkmanager.profile.toDhcpDns;
+          loc0 = locations.loc0.networks;
         in
         rec {
           loc0-lan-ethernet = {
@@ -50,7 +51,7 @@
               uuid = "94d2e868-11c3-4ac2-ae0c-9616f0636e3e";
             };
             vlan = {
-              id = 1024 + 16;
+              inherit (loc0.trusted.vlan) id;
               parent = "enp13s0";
             };
             ipv4 = {
@@ -68,7 +69,7 @@
               permissions = "user:reid:";
             };
             vlan = {
-              id = 1024;
+              inherit (loc0.management.vlan) id;
               parent = "enp13s0";
             };
             ipv4 = {

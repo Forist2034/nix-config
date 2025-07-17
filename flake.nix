@@ -23,7 +23,7 @@
     private-config = {
       type = "git";
       url = "file:///etc/nixos/private";
-      rev = "f9e47a537facaf1e48d30873c86ee3a0fa31c12c";
+      rev = "3d1d540640212c0fbd2a2db44e9952aa639d2cb7";
     };
   };
 
@@ -46,6 +46,7 @@
         inherit (nixpkgs) lib;
       };
       hosts = (import ./hosts) args;
+      locations = (import ./locations) args;
       parts = import (./parts) args;
       services = (import ./services) args;
       suites = (import ./suites) args;
@@ -66,6 +67,7 @@
                 inherit inputs info;
                 inherit
                   hosts
+                  locations
                   local-lib
                   parts
                   private
