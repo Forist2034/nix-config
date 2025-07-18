@@ -109,6 +109,17 @@
             nix4vscode
             flake-keep
           ];
+          nixos-sbc0 = mkConfig hosts.nixos-sbc0 [
+            ./hosts/nixos-sbc0/configuration.nix
+            (
+              { ... }:
+              {
+                nixpkgs.buildPlatform = {
+                  system = "x86_64-linux";
+                };
+              }
+            )
+          ];
         };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
