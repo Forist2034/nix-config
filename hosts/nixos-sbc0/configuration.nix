@@ -74,6 +74,7 @@
   };
 
   users = {
+    mutableUsers = false;
     users = {
       root = {
         openssh.authorizedKeys.keyFiles = [
@@ -109,7 +110,6 @@
         withAudit = false;
         withFido2 = false;
         withPasswordQuality = false;
-        withQrencode = false;
         withTpm2Tss = false;
       };
     })
@@ -120,18 +120,28 @@
   };
 
   system.disableInstallerTools = true;
-  image.modules.install =
-    { ... }:
-    {
-      system.tools.nixos-generate-config.enable = true;
-    };
-
   nix = {
     channel.enable = false;
     settings = {
       auto-optimise-store = true;
       max-jobs = 0; # disable local build
     };
+  };
+
+  image.modules = {
+    install =
+      { ... }:
+      {
+        system.tools.nixos-generate-config.enable = true;
+      };
+    ro-image =
+      { ... }:
+      {
+        nix.enable = false;
+        system = {
+          switch.enable = false;
+        };
+      };
   };
 
   system.stateVersion = "25.05";
