@@ -83,6 +83,7 @@
       };
       reid = {
         hashedPasswordFile = info.userPasswordFile "reid";
+        extraGroups = [ "adbusers" ];
       };
     };
   };
@@ -98,6 +99,10 @@
   environment.systemPackages = with pkgs; [
     coreutils
   ];
+
+  programs.adb = {
+    enable = true;
+  };
 
   nixpkgs.overlays = [
     (final: prev: {
