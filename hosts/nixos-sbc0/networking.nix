@@ -1,5 +1,16 @@
-{ locations, ... }:
 {
+  locations,
+  parts,
+  pkgs,
+  info,
+  ...
+}:
+{
+
+  imports = [
+    parts.dynv6.system.default
+  ];
+
   networking.useNetworkd = true;
 
   services.resolved = {
@@ -83,5 +94,27 @@
 
   networking.wireless.iwd = {
     enable = true;
+  };
+
+  services.update-dynv6 = {
+    enable = true;
+    inherit (info.ddns) hostName;
+  };
+  persistence.config = {
+    update-dynv6 = {
+      enable = true;
+    };
+  };
+
+  systemd.timers."update-dynv6@wlan0" = {
+    timerConfig = {
+      OnBootSec = 30;
+      OnUnitActiveSec = 60 * 5;
+    };
+
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+
+    wantedBy = [ "timers.target" ];
   };
 }

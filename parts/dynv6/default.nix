@@ -44,6 +44,10 @@
                     pkgs.curl
                     pkgs.iproute2
                   ];
+
+                  after = [ "network-online.target" ];
+                  wants = [ "network-online.target" ];
+
                   serviceConfig = {
                     Type = "oneshot";
 
