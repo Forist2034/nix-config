@@ -13,6 +13,9 @@ in
     trusted = {
       vlan.id = 1024 + 16;
     };
+    dmz = {
+      vlan.id = 1024 + 32;
+    };
     management = {
       vlan.id = 1024;
     };
