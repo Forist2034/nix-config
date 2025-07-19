@@ -42,7 +42,7 @@ case $2 in
   root)
     write_root
     ;;
-  "")
+  all)
     build_image
     write_boot
     write_root
