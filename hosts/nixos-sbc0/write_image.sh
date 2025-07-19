@@ -1,10 +1,15 @@
 #!/bin/sh
 
-set -o errexit -o xtrace
+set -o errexit -o xtrace -o nounset
 
 readonly result_dir="$1"
 readonly esp_part=/dev/disk/by-partlabel/sbc0-sd-esp
 readonly root_part=/dev/disk/by-partlabel/sbc0-sd-root0
+
+function build_image() {
+  nix build --keep-going -j1 -L --out-link $result_dir/install \
+    ${FLAKE}#nixosConfigurations.nixos-sbc0.config.system.build.images.install 
+}
 
 function write_boot() {
   # must set -F and -S, or the system can't boot
@@ -28,6 +33,9 @@ function write_root() {
 }
 
 case $2 in
+  build)
+    build_image
+    ;;
   boot)
     write_boot
     ;;
@@ -35,6 +43,7 @@ case $2 in
     write_root
     ;;
   "")
+    build_image
     write_boot
     write_root
     ;;

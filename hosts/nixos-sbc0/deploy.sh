@@ -1,8 +1,13 @@
 #!/bin/sh
 
-set -o errexit -o xtrace
+set -o errexit -o xtrace -o nounset
 
-nix build  .#nixosConfigurations.nixos-sbc0.config.system.build.toplevel  -L -j1 --keep-going --out-link $1/system
-nix copy $1/system --to ssh://root@$2
-ssh root@$2 $(readlink -f $1/system)/bin/switch-to-configuration $3
+readonly result_dir=$1
+readonly host=$2
+readonly op=$3
+
+nix build -L -j1 --keep-going --out-link $result_dir/system \
+  ${FLAKE}#nixosConfigurations.nixos-sbc0.config.system.build.toplevel 
+nix copy $result_dir/system --to ssh://root@$host
+ssh root@$host $(readlink -f $result_dir/system)/bin/switch-to-configuration $op
 
