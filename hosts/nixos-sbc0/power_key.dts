@@ -1,0 +1,23 @@
+/dts-v1/;
+/plugin/;
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+/ {
+  compatible = "xunlong,orangepi-lite", "allwinner,sun8i-h3";
+  
+  framment@0 {
+    target-path="/";
+    __overlay__ {
+      gpio-keys {
+		    compatible = "gpio-keys";
+
+		    switch-4 {
+			    label = "power";
+			    linux,code = <KEY_POWER>;
+			    gpios = <&r_pio 0 3 GPIO_ACTIVE_LOW>;
+          wakeup-source;
+		    };
+      };
+    };
+	};
+};
