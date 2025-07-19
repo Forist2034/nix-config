@@ -19,7 +19,7 @@ lib: with lib; {
     mkHostConfig =
       {
         name,
-        hostname ? null,
+        hostName ? null,
         hostKeys,
       }:
       let
@@ -30,7 +30,7 @@ lib: with lib; {
       ''
         Host ${name}
           Protocol 2
-          ${if hostname != null then "Hostname ${hostname}" else ""}
+          ${if hostName != null then "Hostname ${hostName}" else ""}
           StrictHostKeyChecking yes
           PubkeyAuthentication yes
           PreferredAuthentications publickey

@@ -1,5 +1,23 @@
-{ local-lib, locations, ... }:
 {
+  local-lib,
+  lib,
+  locations,
+  parts,
+  info,
+  ...
+}:
+let
+  eth_default = "enp13s0";
+in
+{
+  imports = [
+    parts.dynv6.system.default
+  ];
+
+  persistence.root = {
+    update-dynv6.enable = true;
+  };
+
   networking.networkmanager = {
     enable = true;
     appendNameservers = [
@@ -28,7 +46,7 @@
             connection = {
               id = "Loc0-Lan-Ethernet";
               type = "ethernet";
-              interface-name = "enp13s0";
+              interface-name = eth_default;
               uuid = "83568938-3d37-441c-a459-4b1dc1a3d4ac";
             };
             ipv4 = {
@@ -49,16 +67,44 @@
               id = "Loc0-Trusted-Vlan";
               type = "vlan";
               uuid = "94d2e868-11c3-4ac2-ae0c-9616f0636e3e";
+              interface-name = "${eth_default}.trust";
             };
             vlan = {
               inherit (loc0.trusted.vlan) id;
-              parent = "enp13s0";
+              parent = eth_default;
             };
             ipv4 = {
               method = "manual";
               address1 = "10.16.1.1/16";
             };
             ipv6.method = "disabled";
+          };
+          loc0-dmz-vlan = rec {
+            connection = {
+              id = "Loc0-Dmz-Vlan";
+              type = "vlan";
+              autoconnect = lib.mkDefault false;
+              uuid = "00c83f33-06d6-47d2-9943-3f4cc4b69d55";
+              permissions = "user:reid:";
+              stable-id = connection.uuid;
+              interface-name = "${eth_default}.dmz";
+            };
+            vlan = {
+              inherit (loc0.dmz.vlan) id;
+              parent = eth_default;
+            };
+            ipv4.method = "disabled"; # only ipv6 address can be accessed publicly
+            ipv6 = {
+              method = "auto";
+              addr-gen-mode = "eui64";
+              ip6-privacy = 0; # disabled
+              ignore-auto-dns = true;
+              # TODO: sent response back to this interface
+              # prefer public address, otherwise response is sent on
+              # lan interface
+              route-metric = 50;
+              token = "::2";
+            };
           };
           loc0-management-vlan = {
             connection = {
@@ -67,10 +113,11 @@
               autoconnect = false;
               uuid = "b53e0ef1-c960-4c42-9cf5-a98cc0eb7e8f";
               permissions = "user:reid:";
+              interface-name = "${eth_default}.mgmt";
             };
             vlan = {
               inherit (loc0.management.vlan) id;
-              parent = "enp13s0";
+              parent = eth_default;
             };
             ipv4 = {
               method = "manual";
@@ -81,5 +128,42 @@
           };
         };
     };
+  };
+
+  services.update-dynv6 = {
+    enable = true;
+    inherit (info.ddns) hostName;
+  };
+
+  specialisation = {
+    remote.configuration =
+      { config, pkgs, ... }:
+      {
+        networking.networkmanager = {
+          ensureProfiles.profiles = {
+            loc0-dmz-vlan = {
+              connection.autoconnect = true;
+            };
+          };
+          dispatcherScripts =
+            let
+              dmz = "${eth_default}.dmz";
+            in
+            [
+              {
+                type = "basic";
+                source = pkgs.writeText "update-ddns.sh" ''
+                  if [[ $1 != ${dmz} ]] then
+                    exit
+                  fi
+                  if [[ $2 != "up" && $2 != "dhcp6-change" ]] then
+                    exit
+                  fi
+                  ${pkgs.systemd}/bin/systemctl restart update-dynv6@${dmz}.service
+                '';
+              }
+            ];
+        };
+      };
   };
 }
