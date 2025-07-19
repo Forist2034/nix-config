@@ -2,7 +2,7 @@
 {
   system = "armv7l-linux";
 
-  userPasswordFile = user: "/mnt/config/var/lib/passwords/${user}";
+  userPasswordFile = user: "/mnt/config/etc/user-passwords/${user}";
 
   hardware = {
     cpu = {
