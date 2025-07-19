@@ -21,7 +21,7 @@ scp $root_file root@$remote:/mnt/images/$(jq -r .root $info_mount/filenames.json
 scp $boot_info_file root@$remote:/mnt/images/$(jq -r '."boot-info"' $info_mount/filenames.json)
 
 readonly uki_file=$(jq -r .uki $info_mount/filenames.json)
-scp "$info_mount/EFI/Linux/$uki_file" "root@$remote:/boot/EFI/Linux/$uki_file"
+scp "$info_mount/boot/EFI/Linux/$uki_file" "root@$remote:/boot/EFI/Linux/$uki_file"
 
-fusemount -u $info_mount
+fusermount -u $info_mount
 rmdir $info_mount
