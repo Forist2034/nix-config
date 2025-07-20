@@ -2,12 +2,9 @@
 
 set -o errexit -o xtrace -o nounset
 
-readonly image_dir="$1/image"
+readonly image_dir="$1"
 readonly esp_part=/dev/disk/by-partlabel/sbc0-sd-esp
 readonly image_part=/dev/disk/by-partlabel/sbc0-sd-images
-
-nix build --keep-going -j1 -L --out-link $image_dir \
-    ${FLAKE}#nixosConfigurations.nixos-sbc0.config.system.build.images.ro-image
 
 function image_filename() {
     jq -r "map(select(.label | startswith(\"$1\"))) | .[0].split_path" $image_dir/repart-output.json

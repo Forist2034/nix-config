@@ -6,11 +6,6 @@ readonly result_dir="$1"
 readonly esp_part=/dev/disk/by-partlabel/sbc0-sd-esp
 readonly root_part=/dev/disk/by-partlabel/sbc0-sd-root0
 
-function build_image() {
-  nix build --keep-going -j1 -L --out-link $result_dir/install \
-    ${FLAKE}#nixosConfigurations.nixos-sbc0.config.system.build.images.install 
-}
-
 function write_boot() {
   # must set -F and -S, or the system can't boot
   mkfs.vfat -F 32 -S 512 -n sbc0-sd-esp -v $esp_part
