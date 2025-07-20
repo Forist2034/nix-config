@@ -138,6 +138,7 @@
     extraConfig = lib.mkMerge [
       hosts.nixos-desktop0.sshConfig
       hosts.nixos-laptop0.sshConfig
+      hosts.nixos-sbc0.sshConfig
     ];
   };
 
