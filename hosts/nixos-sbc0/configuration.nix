@@ -70,6 +70,12 @@
           "ssh_host_rsa_key"
         ];
       };
+      users.reid = {
+        files = [
+          ".android/adbkey"
+          ".android/adbkey.pub"
+        ];
+      };
     };
   };
 
