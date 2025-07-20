@@ -6,7 +6,7 @@ readonly zone="$1"
 readonly device="$2"
 
 function get_ip_addr() {
-  ip -6 --json addr show dev $device scope global -temporary -mngtmpaddr | \
+  ip -6 --json addr show dev $device scope global | \
     jq -r '.[0].addr_info | map(select((.local != null) and (.local | startswith("fd") | not))) | .[0].local'
 }
 
