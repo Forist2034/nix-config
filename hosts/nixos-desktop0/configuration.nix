@@ -68,6 +68,13 @@
     Users.HideUsers = "test";
   };
 
+  environment.systemPackages = with pkgs; [
+    beep
+  ];
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="input", ATTRS{name}=="PC Speaker", ENV{DEVNAME}!="", TAG+="uaccess"
+  '';
+
   specialisation = {
     remote.configuration =
       { ... }:

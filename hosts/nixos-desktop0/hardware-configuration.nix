@@ -26,10 +26,13 @@
   boot.kernelModules = [
     "kvm-amd"
     "nct6687"
+    "pcspkr"
   ];
   boot.extraModulePackages = with config.boot.kernelPackages; [
     nct6687d
   ];
+  # allow speaker
+  boot.modprobeConfig.useUbuntuModuleBlacklist = false;
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
