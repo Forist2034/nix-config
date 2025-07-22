@@ -45,6 +45,19 @@
   # TODO: fix driver for rtl8189
   boot.kernelPackages = pkgs.linuxPackages_6_6;
 
+  boot.kernelParams = [
+    "panic=1"
+    "boot.panic_on_fail"
+    "nomodeset"
+  ];
+  systemd = {
+    enableEmergencyMode = false;
+    watchdog = {
+      runtimeTime = "15s";
+      rebootTime = "15s";
+    };
+  };
+
   networking.hostName = "nixos-sbc0";
 
   persistence = {
