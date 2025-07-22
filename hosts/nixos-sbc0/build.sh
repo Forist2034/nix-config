@@ -13,7 +13,7 @@ function build_image() {
   run_build system.build.images.ro-image image
 }
 function build_install() {
-  run_build system.build.images.install install
+  run_build system.build.images.system install
 }
 function build_system() {
   run_build system.build.toplevel system

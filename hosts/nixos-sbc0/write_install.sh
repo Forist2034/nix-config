@@ -13,7 +13,7 @@ function write_boot() {
   # timestamps in systemd-repart created image is too large for 32bit system
   local esp_img_mount=$(mktemp -d)
   local esp_part_mount=$(mktemp -d)
-  mount -o ro,noatime $result_dir/install/install-image.esp.raw $esp_img_mount
+  mount -o ro,noatime $result_dir/install/system-image.esp.raw $esp_img_mount
   mount $esp_part $esp_part_mount
   cp -r --no-preserve=timestamps $esp_img_mount/* $esp_part_mount/
   umount $esp_img_mount
@@ -23,7 +23,7 @@ function write_boot() {
 }
 
 function write_root() {
-  dd if=$result_dir/install/install-image.root.raw of=$root_part bs=4k status=progress
+  dd if=$result_dir/install/system-image.root.raw of=$root_part bs=4k status=progress
   sync
 }
 

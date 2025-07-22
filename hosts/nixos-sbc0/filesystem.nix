@@ -90,7 +90,7 @@
   };
 
   image.modules = {
-    install =
+    system =
       {
         config,
         modulesPath,
@@ -116,7 +116,7 @@
         };
 
         image.repart = {
-          name = "install-image";
+          name = "system-image";
           split = true;
           compression.enable = false;
           seed = "6dc21fbb-f6c6-4b5e-9cd6-2a36d7da683e";
