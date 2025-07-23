@@ -147,6 +147,14 @@
                 "/etc/install-closure".source = pkgs.buildPackages.closureInfo {
                   rootPaths = [ config.system.build.toplevel ];
                 };
+                "/etc/first-boot.sh".source = pkgs.writeText "first-boot.sh" ''
+                  #!${pkgs.bash}/bin/bash
+
+                  readonly root=/mnt/root
+
+                  nix-store --load-db < $root/etc/install-closure/registration
+                  bootctl install
+                '';
               };
               storePaths = [ config.system.build.toplevel ];
               repartConfig = {
