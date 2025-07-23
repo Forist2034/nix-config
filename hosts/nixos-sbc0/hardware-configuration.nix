@@ -17,6 +17,10 @@ in
         name = "power_key";
         dtsFile = ./power_key.dts;
       }
+      {
+        name = "leds";
+        dtsFile = ./leds.dts;
+      }
     ];
   };
 

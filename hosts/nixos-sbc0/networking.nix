@@ -96,6 +96,38 @@
     enable = true;
   };
 
+  services.networkd-dispatcher = {
+    enable = true;
+    extraArgs = [ "--run-startup-triggers" ];
+    rules =
+      let
+        net_led = "/sys/class/leds/orangepi:green:net/brightness";
+      in
+      {
+        net-led-on = {
+          onState = [ "routable" ];
+          script = ''
+            echo 1 > '${net_led}'
+          '';
+        };
+        net-led-off = {
+          onState = [
+            "off"
+            "no-carrier"
+            "dormant"
+            "carrier"
+            "degraded"
+          ];
+          script = ''
+            if [ "$IFACE" == "wlan0" ]
+            then
+              echo 0 > '${net_led}'
+            fi
+          '';
+        };
+      };
+  };
+
   services.update-dynv6 = {
     enable = true;
     inherit (info.ddns) hostName;

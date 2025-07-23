@@ -50,11 +50,21 @@
     "boot.panic_on_fail"
     "nomodeset"
   ];
-  systemd = {
-    enableEmergencyMode = false;
-    watchdog = {
-      runtimeTime = "15s";
-      rebootTime = "15s";
+  systemd.enableEmergencyMode = false;
+  systemd.watchdog = {
+    runtimeTime = "15s";
+    rebootTime = "15s";
+  };
+
+  systemd.services.set-sys-led = {
+    after = [ "basic.target" ];
+    requires = [ "basic.target" ];
+    wantedBy = [ "multi-user.target" ];
+    script = ''
+      echo 1 > '/sys/class/leds/orangepi:red:sys/brightness'
+    '';
+    serviceConfig = {
+      Type = "oneshot";
     };
   };
 
@@ -137,6 +147,23 @@
         withTpm2Tss = false;
       };
     })
+    # TODO: use upstream package when fixed
+    (final: prev: {
+      networkd-dispatcher = prev.networkd-dispatcher.overrideAttrs (
+        finalAttrs: prevAttrs: {
+          nativeBuildInputs = with pkgs; [
+            asciidoc # for a2x
+            installShellFiles
+            wrapGAppsNoGuiHook
+          ];
+          buildInputs = with pkgs; [
+            python3Packages.wrapPython
+            python3Packages.pygobject3
+          ];
+        }
+      );
+    })
+
   ];
   nixpkgs.flake = {
     setFlakeRegistry = false;
