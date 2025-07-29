@@ -11,6 +11,8 @@
   imports = [
     modules.develop.home
 
+    parts.nushell.home.default
+
     parts.vscode.home.default
 
     inputs.nixvim.homeManagerModules.nixvim

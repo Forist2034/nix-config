@@ -7,6 +7,7 @@ args: {
   gopass = (import ./gopass.nix) args;
   gpg = (import ./gpg.nix) args;
   kwallet = (import ./kwallet.nix) args;
+  nushell = (import ./nushell.nix) args;
   ssh = (import ./ssh.nix) args;
   taskwarrior = (import ./taskwarrior.nix) args;
   thunderbird = (import ./thunderbird.nix) args;
