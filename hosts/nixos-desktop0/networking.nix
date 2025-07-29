@@ -123,7 +123,6 @@ in
               type = "vlan";
               autoconnect = lib.mkDefault false;
               uuid = "00c83f33-06d6-47d2-9943-3f4cc4b69d55";
-              permissions = "user:reid:";
               stable-id = uuid;
               interface-name = eth_dmz;
             };
