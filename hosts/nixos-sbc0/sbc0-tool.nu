@@ -107,7 +107,7 @@ export module image {
     let info_path = mktemp --directory 
     erofsfuse $boot_info $info_path
 
-    let filenames = $info_path | path join "filenames.json" | from json
+    let filenames = $info_path | path join "filenames.json" | open -r | from json
     
     scp $root $"root@($hostname):/mnt/images/($filenames.root)"
     scp $boot_info $"root@($hostname):/mnt/images/($filenames | get "boot-info")"
@@ -136,6 +136,10 @@ export module system {
 
     export def test [] {
       remote_rebuild test
+    }
+
+    export def boot [] {
+      remote_rebuild boot
     }
   }
 
