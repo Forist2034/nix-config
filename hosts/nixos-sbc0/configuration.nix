@@ -112,7 +112,10 @@
       };
       reid = {
         hashedPasswordFile = info.userPasswordFile "reid";
-        extraGroups = [ "adbusers" ];
+        extraGroups = [
+          "adbusers"
+          "audio"
+        ];
       };
     };
   };
@@ -127,7 +130,14 @@
 
   environment.systemPackages = with pkgs; [
     coreutils
+
+    sox # audio tools
+    iperf3 # for network performance testing
   ];
+
+  hardware.alsa = {
+    enable = true;
+  };
 
   programs.adb = {
     enable = true;
@@ -163,7 +173,14 @@
         }
       );
     })
-
+    (final: prev: {
+      ffmpeg = prev.ffmpeg-headless;
+    })
+    (final: prev: {
+      alsa-utils = prev.alsa-utils.override {
+        withPipewireLib = false;
+      };
+    })
   ];
   nixpkgs.flake = {
     setFlakeRegistry = false;
