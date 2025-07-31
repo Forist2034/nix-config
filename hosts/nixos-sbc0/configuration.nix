@@ -157,6 +157,12 @@
         withTpm2Tss = false;
       };
     })
+    (final: prev: {
+      # networkd-dispatcher transitively depends on it
+      cairo = prev.cairo.override {
+        x11Support = false;
+      };
+    })
     # TODO: use upstream package when fixed
     (final: prev: {
       networkd-dispatcher = prev.networkd-dispatcher.overrideAttrs (
@@ -174,7 +180,42 @@
       );
     })
     (final: prev: {
-      ffmpeg = prev.ffmpeg-headless;
+      ffmpeg = prev.ffmpeg-headless.override {
+        withAmf = false;
+        withAom = false;
+        withAss = false;
+        withBluray = false;
+        withCudaLLVM = false;
+        withCuvid = false;
+        withDav1d = false;
+        withDrm = false;
+        withFontconfig = false;
+        withFreetype = false;
+        withFribidi = false;
+        withGnutls = false;
+        withHarfbuzz = false;
+        withOpencl = false;
+        withOpenjpeg = false;
+        withOpenmpt = false;
+        withRist = false;
+        withSrt = false;
+        withSoxr = false;
+        withSpeex = false;
+        withSvtav1 = false;
+        withTheora = false;
+        withV4l2 = false;
+        withVaapi = false;
+        withVidStab = false;
+        withVorbis = false;
+        withVpx = false;
+        withVulkan = false;
+        withWebp = false;
+        withX264 = false;
+        withX265 = false;
+        withXvid = false;
+        withZimg = false;
+        withZvbi = false;
+      };
     })
     (final: prev: {
       alsa-utils = prev.alsa-utils.override {
