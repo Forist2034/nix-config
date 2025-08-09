@@ -35,8 +35,18 @@ export module reset {
 }
 
 export module uboot {
-  export def write [disk: string] {
-    let bin_file = $env.OUT_DIR | path join "toplevel/etc/uboot/u-boot-sunxi-with-spl.bin"
+  const output_name = "uboot"
+
+  export def build [] {
+    nix_build --out-dir $env.OUT_DIR $output_name "system.build.uboot"
+  }
+
+  export def write [--build, disk: string] {
+    if $build {
+      build
+    }
+
+    let bin_file = $env.OUT_DIR | path join $output_name "u-boot-sunxi-with-spl.bin"
     dd $"if=($bin_file)" $"of=($disk)" bs=1024 seek=8 oflag=sync
   }
 }
@@ -181,4 +191,13 @@ export module system {
       write_root $out
     }
   }
+}
+
+export def build_all [] {
+  use uboot
+  use image
+  use system
+  uboot build
+  image build
+  system image build
 }

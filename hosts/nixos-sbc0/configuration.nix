@@ -34,12 +34,10 @@
     # FIXME: bootloader entry installation doesn't work
     systemd-boot.enable = true;
   };
-  environment.etc.uboot = {
-    source = pkgs.buildUBoot {
-      defconfig = "orangepi_lite_defconfig";
-      extraMeta.platforms = [ info.system ];
-      filesToInstall = [ "u-boot-sunxi-with-spl.bin" ];
-    };
+  system.build.uboot = pkgs.buildUBoot {
+    defconfig = "orangepi_lite_defconfig";
+    extraMeta.platforms = [ info.system ];
+    filesToInstall = [ "u-boot-sunxi-with-spl.bin" ];
   };
 
   # TODO: fix driver for rtl8189
