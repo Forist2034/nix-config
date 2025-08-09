@@ -16,6 +16,12 @@ def copy_contents [src: string, dest: string] {
   ls $src | each {|c| cp -r $c.name $dest }
 }
 
+def write_file [src: string, dest: string] {
+  print $"writing ($src) to ($dest)"
+  # adding sync output flag allows cancel and progress display
+  dd $"if=($src)" $"of=($dest)" bs=4M oflag=sync status=progress
+}
+
 export module reset {
   export def esp [] {
     # must set -F and -S, or the system can't boot
@@ -81,8 +87,8 @@ export module image {
     let image_mount = mktemp --directory 
     mount -v $part_images $image_mount
     let filenames = open -r ($info_path | path join "filenames.json") | from json
-    cp -v $boot_info ($image_mount | path join ($filenames | get "boot-info"))
-    cp -v $root ($image_mount | path join $filenames.root)
+    write_file $boot_info ($image_mount | path join ($filenames | get "boot-info"))
+    write_file $root ($image_mount | path join $filenames.root)
     umount -v  $image_mount
     rm --permanent $image_mount
   }
@@ -177,7 +183,7 @@ export module system {
       rm --permanent $part_path
     }
     def write_root [out: string] {
-      dd $"if=($out | path join "system-image.root.raw")" $"of=($part_root)" bs=4k status=progress
+      write_file ($out | path join "system-image.root.raw") $part_root
       sync
     }
 
