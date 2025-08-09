@@ -1,0 +1,14 @@
+/dts-v1/;
+/plugin/;
+/ {
+  compatible = "xunlong,orangepi-lite", "allwinner,sun8i-h3";
+};
+&usb_otg {
+  status = "okay";
+};
+&codec {
+  status = "okay";
+};
+&csi {
+  status = "okay";
+};

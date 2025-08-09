@@ -21,6 +21,10 @@ in
         name = "leds";
         dtsFile = ./leds.dts;
       }
+      {
+        name = "pheripheral";
+        dtsFile = ./soc_peripheral.dts;
+      }
     ];
   };
 
