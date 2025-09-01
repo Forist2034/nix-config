@@ -35,10 +35,28 @@
             );
         };
       };
+
+      profiles = {
+        ssh-agent =
+          { ... }:
+          {
+            programs.ssh = {
+              startAgent = true;
+              agentTimeout = "1h";
+            };
+          };
+      };
     in
     {
-      inherit modules;
+      inherit modules profiles;
 
-      default = modules.persist;
+      default =
+        { ... }:
+        {
+          imports = [
+            modules.persist
+            profiles.ssh-agent
+          ];
+        };
     };
 }
