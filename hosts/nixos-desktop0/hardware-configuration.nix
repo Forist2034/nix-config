@@ -31,8 +31,13 @@
   boot.extraModulePackages = with config.boot.kernelPackages; [
     nct6687d
   ];
+
+  # TODO: patch ubuntu blacklist to enable pcspkr only
   # allow speaker
   boot.modprobeConfig.useUbuntuModuleBlacklist = false;
+
+  # evbug prints input to kernel log, which may leaking passphrases
+  boot.blacklistedKernelModules = [ "evbug" ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
