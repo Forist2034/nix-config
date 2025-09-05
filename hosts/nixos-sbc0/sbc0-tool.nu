@@ -57,6 +57,14 @@ export module uboot {
   }
 }
 
+export module nix-src {
+  const output_name = "source"
+
+  export def build [] {
+    nix_build --out-dir $env.OUT_DIR $output_name "system.build.source"
+  }
+}
+
 export module image {
   const output_name = "image"
   
@@ -203,7 +211,9 @@ export def build_all [] {
   use uboot
   use image
   use system
+  use nix-src
   uboot build
   image build
   system image build
+  nix-src build
 }

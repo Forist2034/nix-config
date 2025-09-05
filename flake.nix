@@ -112,8 +112,10 @@
           nixos-sbc0 = mkConfig hosts.nixos-sbc0 [
             ./hosts/nixos-sbc0/configuration.nix
             (
-              { ... }:
+              { pkgs, ... }@args:
               {
+                system.build.source = (import ./flake-keep.nix) { inherit (inputs) self; } args;
+
                 nixpkgs.buildPlatform = {
                   system = "x86_64-linux";
                 };
