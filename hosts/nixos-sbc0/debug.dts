@@ -1,0 +1,44 @@
+/dts-v1/;
+/plugin/;
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+/ {
+  compatible = "xunlong,orangepi-lite", "allwinner,sun8i-h3";
+  
+  framment@0 {
+    target-path="/";
+    __overlay__ {
+      gpio-keys {
+		    compatible = "gpio-keys";
+		    
+        debug-power {
+			    label = "debug-power";
+			    linux,code = <KEY_POWER>;
+			    gpios = <&pio 0 10 GPIO_ACTIVE_LOW>; // PA10
+          wakeup-source;
+		    };
+        debug-reboot {
+          label = "debug-reboot";
+          linux,code = <KEY_RESTART>;
+          gpios = <&pio 0 20 GPIO_ACTIVE_LOW>; // PA20
+          wakeup-source;
+        };
+      };
+
+      leds {
+        compatible = "gpio-leds";
+        
+        debug-system {
+          label = "debug:system";
+          gpios = <&pio 0 68 GPIO_ACTIVE_LOW>; // PC4
+          default-state = "on";
+        };
+        debug-ready {
+          label = "debug:ready";
+          gpios = <&pio 0 71 GPIO_ACTIVE_LOW>; // PC7
+          default-state = "off";
+        };
+      };
+    };
+	};
+};

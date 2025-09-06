@@ -47,6 +47,9 @@
     "panic=1"
     "boot.panic_on_fail"
     "nomodeset"
+
+    # some parts of memory have failed, find and disable them
+    "memtest=32"
   ];
   systemd.enableEmergencyMode = false;
   systemd.watchdog = {
@@ -125,6 +128,7 @@
 
   fonts.fontconfig.enable = false;
   security.pam.services.su.forwardXAuth = lib.mkForce false;
+  services.lvm.enable = false;
 
   environment.systemPackages = with pkgs; [
     coreutils
