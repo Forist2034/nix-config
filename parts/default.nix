@@ -8,6 +8,7 @@ args: {
   gpg = (import ./gpg.nix) args;
   input-method = (import ./input-method.nix) args;
   kwallet = (import ./kwallet.nix) args;
+  libvirt = (import ./libvirt.nix) args;
   nushell = (import ./nushell.nix) args;
   ssh = (import ./ssh.nix) args;
   taskwarrior = (import ./taskwarrior.nix) args;
