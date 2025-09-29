@@ -27,6 +27,7 @@ in
         wget
         unzip
         lzip
+        file
       ];
     };
 

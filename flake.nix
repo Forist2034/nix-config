@@ -20,10 +20,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    microvm = {
+      url = "github:microvm-nix/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     private-config = {
       type = "git";
       url = "file:///etc/nixos/private";
-      rev = "740a8f025b2f8dbc334d8a190d0a47cfa207b0ee";
+      rev = "2f117a6ebea62d154c1cc6ead18575c4c81dfbb5";
     };
   };
 
