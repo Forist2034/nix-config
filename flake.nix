@@ -120,6 +120,10 @@
               }
             )
           ];
+          nixos-tablet0 = mkConfig hosts.nixos-tablet0 [
+            ./hosts/nixos-tablet0/configuration.nix
+            flake-keep
+          ];
         };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
