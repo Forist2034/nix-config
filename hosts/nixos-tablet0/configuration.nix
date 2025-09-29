@@ -23,19 +23,17 @@
 
   networking = {
     hostName = "nixos-tablet0";
-networkmanager.enable = true;  
-};
+    networkmanager.enable = true;
+  };
 
   services.fstrim.enable = true;
-
-hardware.enableRedistributableFirmware = true;
 
   persistence = {
     root = {
       bluetooth.enable = true;
     };
     share-main = {
-      users.reid = lib.mkForce {};
+      users.reid = lib.mkForce { };
     };
   };
 
@@ -52,9 +50,11 @@ hardware.enableRedistributableFirmware = true;
 
         home.stateVersion = "25.05";
       };
-    test = {lib,...}: {
-      home.stateVersion = lib.trivial.release;
-    };
+    test =
+      { lib, ... }:
+      {
+        home.stateVersion = lib.trivial.release;
+      };
   };
 
   system.stateVersion = "25.05";

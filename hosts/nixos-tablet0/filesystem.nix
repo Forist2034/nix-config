@@ -38,22 +38,22 @@
     };
   };
 
-#  swapDevices = [
- #   {
-#      device = null;
-#      randomEncryption = {
-#        enable = true;
-#        allowDiscards = true;
-#      };
-#    }
-#  ];
+  #  swapDevices = [
+  #   {
+  #      device = null;
+  #      randomEncryption = {
+  #        enable = true;
+  #        allowDiscards = true;
+  #      };
+  #    }
+  #  ];
 
-#  boot.kernelParams = [
-#    "zswap.enabled=1"
-#    "zswap.max_pool_percent=48"
-#  ];
+  #  boot.kernelParams = [
+  #    "zswap.enabled=1"
+  #    "zswap.max_pool_percent=48"
+  #  ];
 
-#  zramSwap = {
-#    enable = true;
-#  };
+  #  zramSwap = {
+  #    enable = true;
+  #  };
 }
