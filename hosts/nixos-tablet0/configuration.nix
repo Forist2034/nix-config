@@ -31,9 +31,22 @@
   persistence = {
     root = {
       bluetooth.enable = true;
-    };
-    share-main = {
-      users.reid = lib.mkForce { };
+      ssh = {
+        enable = true;
+        hostKeys = [
+          "ssh_host_ed25519_key"
+          "ssh_host_rsa_key"
+        ];
+      };
+
+      users = {
+        reid = {
+          ssh = {
+            enable = true;
+            keys = [ "id_ed25519" ];
+          };
+        };
+      };
     };
   };
 
