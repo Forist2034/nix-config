@@ -31,6 +31,7 @@ let
         ./python.nix
         ./rust.nix
         ./scala.nix
+        ./shell.nix
         ./toml.nix
         ./typescript.nix
         ./typst.nix

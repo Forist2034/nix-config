@@ -22,6 +22,9 @@
 
     parts.bluetooth.system.default
     parts.taskwarrior.system.default
+    parts.openrgb.system.default
+
+    parts.libvirt.system.default
 
     ./networking.nix
     ./filesystem.nix
@@ -42,6 +45,8 @@
 
   persistence = {
     root = {
+      libvirt.enable = true;
+      openrgb.enable = true;
       bluetooth.enable = true;
       ssh = {
         enable = true;

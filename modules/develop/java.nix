@@ -43,6 +43,7 @@
             vscode = {
               enable = mkEnableOption "VSCode Java support";
               profiles = vscode.profile.mkOption {
+                enable = mkEnableOption "VSCode support in profile";
                 gradle.enable = options.mkDisableOption "VSCode Gradle support";
                 maven.enable = options.mkDisableOption "VSCode Maven support";
               };
@@ -87,15 +88,22 @@
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {
-              nvim-jdtls =
-                let
-                  home = config.home.homeDirectory;
-                in
-                {
-                  enable = true;
-                  configuration = "${home}/.cache/jdtls/config";
-                  data = "${home}/.cache/jdtls/workspace";
+              jdtls = {
+                enable = true;
+                settings = {
+                  cmd =
+                    let
+                      home = config.home.homeDirectory;
+                    in
+                    [
+                      "jdtls"
+                      "-configuration"
+                      "${home}/.cache/jdtls/config"
+                      "-data"
+                      "${home}/.cache/jdtls/workspace"
+                    ];
                 };
+              };
             };
           };
         };
