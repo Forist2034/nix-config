@@ -53,6 +53,11 @@
 
   time.timeZone = "Asia/Shanghai";
 
+  environment.systemPackages = with pkgs; [
+    maliit-framework
+    maliit-keyboard
+  ];
+
   home-manager.users = {
     reid =
       { users, ... }:
