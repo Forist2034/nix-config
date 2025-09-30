@@ -64,6 +64,12 @@ in
         loc0-lan-wlan-dhcp_dns = "925a8a6b-7831-4aff-9dbf-5f3811127da9";
       };
     })
+    (locations.loc1.config.networking.networkmanager.basic {
+      connectionUuids = {
+        loc1-lan-wlan = "7cf277e8-105f-44b5-8273-daa4b6a39914";
+        loc1-lan-wlan-dhcp_dns = "45c9f1de-8b9d-4ef5-8afc-39a65fecc4cb";
+      };
+    })
   ];
 
   specialisation = {
