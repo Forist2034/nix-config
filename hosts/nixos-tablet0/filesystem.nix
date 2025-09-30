@@ -53,7 +53,7 @@
   #    "zswap.max_pool_percent=48"
   #  ];
 
-  #  zramSwap = {
-  #    enable = true;
-  #  };
+  zramSwap = {
+    enable = true;
+  };
 }
