@@ -12,6 +12,7 @@
               openssh.authorizedKeys.keyFiles = [
                 ./reid/nixos-desktop0_ed25519.pub
                 ./reid/nixos-laptop0_ed25519.pub
+                ./reid/nixos-tablet0_ed25519.pub
               ];
             };
           };
