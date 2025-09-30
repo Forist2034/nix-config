@@ -33,7 +33,11 @@ in
                     lib.mkIf value.enable (
                       lib.mkMerge [
                         (lib.mkIf value.bookmarks.enable {
-                          files = [ ".mozilla/firefox/${name}/places.sqlite" ];
+                          files = [
+                            ".mozilla/firefox/${name}/places.sqlite"
+                            ".mozilla/firefox/${name}/places.sqlite-shm"
+                            ".mozilla/firefox/${name}/places.sqlite-wal"
+                          ];
                         })
                         (lib.mkIf value.bookmarkbackups.enable {
                           directories = [ ".mozilla/firefox/${name}/bookmarkbackups" ];

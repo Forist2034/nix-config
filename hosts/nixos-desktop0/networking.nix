@@ -39,74 +39,25 @@ in
           no-auto-default = "*";
         };
       };
-
-      ensureProfiles = {
-        profiles =
-          let
-            toDhcpDns = local-lib.networkmanager.profile.toDhcpDns;
-          in
-          rec {
-            loc0-lan-ethernet = {
-              connection = {
-                id = "Loc0-Lan-Ethernet";
-                type = "ethernet";
-                interface-name = eth_default;
-                uuid = "83568938-3d37-441c-a459-4b1dc1a3d4ac";
-              };
-              ipv4 = {
-                method = "manual";
-                address1 = "10.64.1.1/16,10.64.0.1";
-              };
-              ipv6 = {
-                method = "auto";
-                ignore-auto-dns = true;
-              };
-            };
-            loc0-lan-ethernet-dhcp_dns = toDhcpDns loc0-lan-ethernet {
-              uuid = "1dec1a81-c9ba-4c47-a49c-beaea78fe1c4";
-              ipv4.dns = "10.64.0.1";
-            };
-            loc0-trusted-vlan = {
-              connection = {
-                id = "Loc0-Trusted-Vlan";
-                type = "vlan";
-                uuid = "94d2e868-11c3-4ac2-ae0c-9616f0636e3e";
-                interface-name = "${eth_default}.trust";
-              };
-              vlan = {
-                inherit (loc0.trusted.vlan) id;
-                parent = eth_default;
-              };
-              ipv4 = {
-                method = "manual";
-                address1 = "10.16.1.1/16";
-              };
-              ipv6.method = "disabled";
-            };
-
-            loc0-management-vlan = {
-              connection = {
-                id = "Loc0-Management-Vlan";
-                type = "vlan";
-                autoconnect = false;
-                uuid = "b53e0ef1-c960-4c42-9cf5-a98cc0eb7e8f";
-                permissions = "user:reid:";
-                interface-name = "${eth_default}.mgmt";
-              };
-              vlan = {
-                inherit (loc0.management.vlan) id;
-                parent = eth_default;
-              };
-              ipv4 = {
-                method = "manual";
-                address1 = "10.0.1.1/16";
-                may-fail = false;
-              };
-              ipv6.method = "disabled";
-            };
-          };
-      };
     }
+    (locations.loc0.config.networking.networkmanager.basic {
+      hostId = 1;
+      connectionUuids = {
+        loc0-lan-wlan = "8f51b6a2-8792-42e7-ab61-340c08ee4641";
+        loc0-lan-wlan-dhcp_dns = "1d71cacd-f2ac-484b-863e-9e1e03c03e6a";
+      };
+    })
+    (locations.loc0.config.networking.networkmanager.extra {
+      hostId = 1;
+      ethDevice = eth_default;
+      connectionUuids = {
+        loc0-lan-ethernet = "83568938-3d37-441c-a459-4b1dc1a3d4ac";
+        loc0-lan-ethernet-dhcp_dns = "1dec1a81-c9ba-4c47-a49c-beaea78fe1c4";
+        loc0-trusted-vlan = "94d2e868-11c3-4ac2-ae0c-9616f0636e3e";
+        loc0-management-vlan = "b53e0ef1-c960-4c42-9cf5-a98cc0eb7e8f";
+        loc0-management-ethernet = "a669a827-116c-4f18-91d9-2ca7b6e52807";
+      };
+    })
     (
       let
         route-table = 32;
