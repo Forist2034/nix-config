@@ -29,7 +29,6 @@
 
           programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = with pkgs.vscode-extensions; [
-              twxs.cmake
               ms-vscode.cmake-tools
             ];
           };
