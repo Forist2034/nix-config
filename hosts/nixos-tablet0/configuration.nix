@@ -11,6 +11,7 @@
   imports = [
     ./hardware-configuration.nix
     ./filesystem.nix
+    ./networking.nix
 
     suites.develop.system
 
