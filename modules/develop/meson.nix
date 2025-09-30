@@ -16,6 +16,7 @@
           env.enable = options.mkDisableOption "Meson tools";
           editor = {
             vscode = vscode.mkSimpleOption "VSCode Meson support";
+            nixvim.enable = mkEnableOption "Nixvim Meson support";
           };
         };
       };
@@ -25,12 +26,26 @@
           cfg = config.develop.meson;
         in
         lib.mkIf cfg.enable {
-          home.packages = lib.mkIf cfg.env.enable [ pkgs.meson ];
+          home.packages = lib.mkIf cfg.env.enable [
+            pkgs.meson
+            pkgs.muon
+          ];
 
           programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [
               pkgs.vscode-extensions.mesonbuild.mesonbuild
             ];
+            userSettings = {
+              "mesonbuild.formatting.enabled" = true;
+              "mesonbuild.linter.muon.enabled" = true;
+            };
+          };
+
+          programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+            # FIXME: mesonlsp is unmaintained
+            lsp.servers.mesonlsp = {
+              enable = true;
+            };
           };
         };
     };
