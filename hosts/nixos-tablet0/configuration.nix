@@ -15,6 +15,8 @@
 
     suites.develop.system
 
+    private.hosts.nixos-tablet0.configuration
+
     parts.bluetooth.system.default
   ];
 
