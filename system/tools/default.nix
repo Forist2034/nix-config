@@ -43,7 +43,7 @@ in
         fd
         ripgrep
         duf
-        du-dust
+        dust
         zellij
       ];
     };

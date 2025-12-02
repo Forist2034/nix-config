@@ -49,8 +49,12 @@
           {
             programs.git = {
               enable = true;
-              userName = "Jose Lane";
-              userEmail = "dariankline@outlook.com";
+              settings = {
+                user = {
+                  name = "Jose Lane";
+                  email = "dariankline@outlook.com";
+                };
+              };
               signing = {
                 key = "714C3CCC60466A93";
                 signByDefault = true;
