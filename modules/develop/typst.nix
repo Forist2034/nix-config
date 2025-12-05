@@ -41,7 +41,7 @@
         lib.mkIf cfg.enable {
           home.packages = lib.mkIf cfg.env.enable [
             pkgs.typst
-            pkgs.typst-fmt
+            pkgs.typstyle
           ];
 
           programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
