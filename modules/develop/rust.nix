@@ -12,7 +12,14 @@
     options = {
       enable = lib.mkEnableOption "Rust";
     };
-    config = { value, ... }: lib.mkIf value.enable { directories = [ ".cargo" ]; };
+    config =
+      { value, ... }:
+      lib.mkIf value.enable {
+        directories = [
+          ".cargo"
+          ".rustup"
+        ];
+      };
   };
 
   home =
@@ -28,6 +35,7 @@
           enable = mkEnableOption "Rust environment";
 
           env.enable = options.mkDisableOption "Rust build tools";
+          pkgs.enable = options.mkDisableOption "Rust packages";
 
           editor = {
             vscode = vscode.mkSimpleOption "VSCode rust support";
@@ -56,20 +64,19 @@
       config =
         let
           cfg = config.develop.rust;
+          visiblePkgs = with pkgs; [
+            cargo
+            rustc
+            rustfmt
+            clippy
+            rust-bindgen
+            rust-cbindgen
+            cargo-audit
+          ];
         in
         lib.mkIf cfg.enable {
-          home.packages = lib.mkIf cfg.env.enable (
-            with pkgs;
-            [
-              cargo
-              rustc
-              rustfmt
-              clippy
-              rust-bindgen
-              rust-cbindgen
-              cargo-audit
-            ]
-          );
+          home.packages = lib.mkIf cfg.env.enable visiblePkgs;
+          home.extraDependencies = lib.mkIf cfg.pkgs.enable (visiblePkgs ++ [ pkgs.rustup ]);
 
           programs.firefox =
             let
