@@ -30,6 +30,7 @@
 
           editor = {
             vscode = vscode.mkSimpleOption "VSCode ocaml support";
+            nixvim.enable = mkEnableOption "NixVim ocaml support";
           };
         };
       };
@@ -56,6 +57,12 @@
 
           programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
             extensions = [ pkgs.vscode-extensions.ocamllabs.ocaml-platform ];
+          };
+
+          programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+            lsp.servers.ocamllsp = {
+              enable = true;
+            };
           };
         };
     };
