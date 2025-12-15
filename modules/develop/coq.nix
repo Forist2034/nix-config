@@ -40,7 +40,7 @@
               server = pkgs.coqPackages.vscoq-language-server;
             in
             vscode.mkSimpleConfig cfg.editor.vscode {
-              extensions = pkgs.nix4vscode.forVscode [ "maximedenes.vscoq.${server.version}" ];
+              extensions = [ pkgs.vscode-extensions.maximedenes.vscoq ];
               userSettings = {
                 "vscoq.path" = "${server}/bin/vscoqtop";
               };

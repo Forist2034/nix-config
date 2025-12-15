@@ -37,12 +37,14 @@ let
           neo-tree = {
             enable = true;
             # TODO: use default document_symbols when stablized
-            sources = [
-              "filesystem"
-              "buffers"
-              "git_status"
-              "document_symbols"
-            ];
+            settings = {
+              sources = [
+                "filesystem"
+                "buffers"
+                "git_status"
+                "document_symbols"
+              ];
+            };
           };
           web-devicons.enable = true;
         };

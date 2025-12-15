@@ -13,6 +13,10 @@ let
             "editor.formatOnSave" = true;
             "editor.formatOnType" = true;
 
+            "scm.defaultViewMode" = "tree";
+
+            "window.autoDetectColorScheme" = true;
+
             "terminal.integrated.cursorStyle" = "line";
 
             "extensions.autoUpdate" = false;

@@ -40,6 +40,8 @@
                   hash = "sha256-jKAKdja2Q8FldgnRqOdFSnr1XHCC8eC6WeIUv83e7x4=";
                 };
 
+                patches = [ ];
+
                 postPatch = ''
                   patchShebangs scripts/build-udev-rules.sh
                   substituteInPlace scripts/build-udev-rules.sh \
