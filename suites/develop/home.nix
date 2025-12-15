@@ -15,7 +15,7 @@
 
     parts.vscode.home.default
 
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     home.nixvim.full
     home.nixvim.complete.with-icons
     home.nixvim.gui.neovide.default
