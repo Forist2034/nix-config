@@ -8,8 +8,6 @@
           enable = true;
           type = "fcitx5";
           fcitx5 = {
-            # TODO: use upstream config when fixed
-            fcitx5-with-addons = pkgs.qt6Packages.fcitx5-with-addons;
             waylandFrontend = true;
             addons = [ pkgs.fcitx5-rime ];
             settings = {
