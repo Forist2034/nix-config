@@ -85,8 +85,10 @@ let
           barbecue.enable = true;
           navbuddy = {
             enable = true;
-            useDefaultMapping = true;
-            lsp.autoAttach = true;
+            settings = {
+              useDefaultMapping = true;
+              lsp.autoAttach = true;
+            };
           };
 
           # highlight symbol
