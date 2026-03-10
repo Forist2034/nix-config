@@ -49,16 +49,4 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  # TODO: use upstream package when nixpkgs issue #466945 is fixed
-  hardware.firmware = [
-    (pkgs.linux-firmware.overrideAttrs (old: {
-      version = "20251111";
-      src = pkgs.fetchurl {
-        # https://www.kernel.org/pub/linux/kernel/firmware/
-        url = "https://www.kernel.org/pub/linux/kernel/firmware/linux-firmware-20251111.tar.gz";
-        sha256 = "0rp2ah8drcnl7fh9vbawa8p8c9lhvn1d8zkl48ckj20vba0maz2g";
-      };
-    }))
-  ];
 }
