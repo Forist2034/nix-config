@@ -1,3 +1,6 @@
 [submodule "private"]
 	path = private
 	url = ../private.git
+
+[includeIf "onbranch:hosts/nixos-desktop0"]
+  path = ./hosts/nixos-desktop0/gitmodules
