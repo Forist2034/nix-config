@@ -26,10 +26,12 @@
     };
 
     private-config = {
-      type = "git";
-      url = "file:///etc/nixos/private";
-      rev = "09bb1953fa20ad7797b00c58644e332a71f80553";
+      # need to set remote to absolute path of a local git repo to make submodule
+      # relative path resolve to a absolute local directory
+      url = "path:private";
     };
+
+    self.submodules = true;
   };
 
   outputs =
