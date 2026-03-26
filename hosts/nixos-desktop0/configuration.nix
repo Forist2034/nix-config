@@ -124,7 +124,11 @@
             packages.enable = true;
           };
         };
-        rust.enable = true;
+        rust = {
+          enable = true;
+          cargo.enable = true;
+          rustup.enable = true;
+        };
         coursier.enable = true;
         java = {
           maven.enable = true;
