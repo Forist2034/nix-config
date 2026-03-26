@@ -25,6 +25,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    http-capture = {
+      url = "github:Forist2034/http-capture";
+      flake = false;
+    };
+
     private-config = {
       # need to set remote to absolute path of a local git repo to make submodule
       # relative path resolve to a absolute local directory

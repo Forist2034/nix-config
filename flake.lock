@@ -81,6 +81,22 @@
         "type": "github"
       }
     },
+    "http-capture": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1755157372,
+        "narHash": "sha256-ekwhGHW9lHg+6aiNq0EGmkUBi+zfvmcKP9I1rRGVL+Q=",
+        "owner": "Forist2034",
+        "repo": "http-capture",
+        "rev": "857375e67b73eda5a31700a2656e387d62b9a0b9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Forist2034",
+        "repo": "http-capture",
+        "type": "github"
+      }
+    },
     "impermanence": {
       "inputs": {
         "home-manager": "home-manager_2",
@@ -278,6 +294,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "http-capture": "http-capture",
         "impermanence": "impermanence",
         "microvm": "microvm",
         "nix4vscode": "nix4vscode",
