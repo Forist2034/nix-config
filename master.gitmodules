@@ -1,0 +1,2 @@
+[submodule "private"]
+  branch = "hosts/nixos-desktop0"

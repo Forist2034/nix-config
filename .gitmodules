@@ -4,3 +4,6 @@
 
 [includeIf "onbranch:hosts/nixos-desktop0"]
   path = ./hosts/nixos-desktop0/gitmodules
+
+[includeIf "onbranch:master"]
+  path = ./master.gitmodules
