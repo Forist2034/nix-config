@@ -13,6 +13,10 @@ let
                 value = "{searchTerms}";
               }
               {
+                name = "pq";
+                value = "{searchTerms}";
+              }
+              {
                 name = "mkt";
                 value = "en-US";
               }

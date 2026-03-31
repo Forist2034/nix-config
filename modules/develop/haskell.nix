@@ -155,6 +155,8 @@
             userSettings = {
               "haskell.serverExecutablePath" =
                 "${pkgs.haskell-language-server}/bin/haskell-language-server-wrapper";
+              # TODO: remove this once hls issue #4674 is fixed
+              "haskell.plugin.hlint.diagnosticsOn" = false;
             };
           };
 

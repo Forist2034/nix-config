@@ -46,11 +46,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770260404,
-        "narHash": "sha256-3iVX1+7YUIt23hBx1WZsUllhbmP2EnXrV8tCRbLxHc8=",
+        "lastModified": 1772985280,
+        "narHash": "sha256-FdrNykOoY9VStevU4zjSUdvsL9SzJTcXt4omdEDZDLk=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "0d782ee42c86b196acff08acfbf41bb7d13eed5b",
+        "rev": "8f736f007139d7f70752657dff6a401a585d6cbc",
         "type": "github"
       },
       "original": {
@@ -78,6 +78,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "http-capture": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1755157372,
+        "narHash": "sha256-ekwhGHW9lHg+6aiNq0EGmkUBi+zfvmcKP9I1rRGVL+Q=",
+        "owner": "Forist2034",
+        "repo": "http-capture",
+        "rev": "857375e67b73eda5a31700a2656e387d62b9a0b9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Forist2034",
+        "repo": "http-capture",
         "type": "github"
       }
     },
@@ -136,11 +152,11 @@
         "spectrum": "spectrum"
       },
       "locked": {
-        "lastModified": 1770310890,
-        "narHash": "sha256-lyWAs4XKg3kLYaf4gm5qc5WJrDkYy3/qeV5G733fJww=",
+        "lastModified": 1773018425,
+        "narHash": "sha256-fpgZBmZpKoEXEowBK/6m8g9FcOLWQ4UxhXHqCw2CpSM=",
         "owner": "microvm-nix",
         "repo": "microvm.nix",
-        "rev": "68c9f9c6ca91841f04f726a298c385411b7bfcd5",
+        "rev": "25ebda3c558e923720c965832dc9a04f559a055c",
         "type": "github"
       },
       "original": {
@@ -157,11 +173,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1771036853,
-        "narHash": "sha256-3bO2hG4sfHkXIdzYrC1NN3/7Tf/dLAp87k60+xq+1dY=",
+        "lastModified": 1773024492,
+        "narHash": "sha256-s3WRN08YqmVTe0hMH70++2Pt/4eSDHVHN+tSl66cjCY=",
         "owner": "nix-community",
         "repo": "nix4vscode",
-        "rev": "83336aa085f4adfa4bc9289ad600dbc2f4f51088",
+        "rev": "e2807ca67c3f6b39ef61697d478fdcadbe238da8",
         "type": "github"
       },
       "original": {
@@ -188,11 +204,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1771111575,
-        "narHash": "sha256-72hr+EthiVbdetU01av7pvl2PNXZ4xjCSGgcLNmo5zE=",
+        "lastModified": 1773098047,
+        "narHash": "sha256-YkvKtmre3gW5i6odsBfDnOzLD5ERUPMTl27KYHRjSwo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "eb7bed020aab35d5ccddc42c7c6a984fa6ab94a3",
+        "rev": "9183e1dc9268e6599e82f7f44fd306f3b18e6713",
         "type": "github"
       },
       "original": {
@@ -203,11 +219,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1771043024,
-        "narHash": "sha256-O1XDr7EWbRp+kHrNNgLWgIrB0/US5wvw9K6RERWAj6I=",
+        "lastModified": 1772822230,
+        "narHash": "sha256-yf3iYLGbGVlIthlQIk5/4/EQDZNNEmuqKZkQssMljuw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "3aadb7ca9eac2891d52a9dec199d9580a6e2bf44",
+        "rev": "71caefce12ba78d84fe618cf61644dce01cf3a96",
         "type": "github"
       },
       "original": {
@@ -266,23 +282,19 @@
     },
     "private-config": {
       "locked": {
-        "lastModified": 1767947100,
-        "narHash": "sha256-hrZpebTEjOA+oKrDskj1UsZYqkQ06FxdvPRDb0CCASA=",
-        "ref": "refs/heads/master",
-        "rev": "09bb1953fa20ad7797b00c58644e332a71f80553",
-        "revCount": 22,
-        "type": "git",
-        "url": "file:///etc/nixos/private"
+        "path": "private",
+        "type": "path"
       },
       "original": {
-        "rev": "09bb1953fa20ad7797b00c58644e332a71f80553",
-        "type": "git",
-        "url": "file:///etc/nixos/private"
-      }
+        "path": "private",
+        "type": "path"
+      },
+      "parent": []
     },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "http-capture": "http-capture",
         "impermanence": "impermanence",
         "microvm": "microvm",
         "nix4vscode": "nix4vscode",
@@ -295,11 +307,11 @@
     "spectrum": {
       "flake": false,
       "locked": {
-        "lastModified": 1759482047,
-        "narHash": "sha256-H1wiXRQHxxPyMMlP39ce3ROKCwI5/tUn36P8x6dFiiQ=",
+        "lastModified": 1772189877,
+        "narHash": "sha256-i1p90Rgssb//aNiTDFq46ZG/fk3LmyRLChtp/9lddyA=",
         "ref": "refs/heads/main",
-        "rev": "c5d5786d3dc938af0b279c542d1e43bce381b4b9",
-        "revCount": 996,
+        "rev": "fe39e122d898f66e89ffa17d4f4209989ccb5358",
+        "revCount": 1255,
         "type": "git",
         "url": "https://spectrum-os.org/git/spectrum"
       },
