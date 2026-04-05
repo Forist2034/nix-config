@@ -37,6 +37,7 @@
     parts.gpg.system.default
     parts.gopass.system.default
     parts.firefox.system.default
+    parts.task.system.default
     parts.thunderbird.system.default
     parts.kwallet.system.default
 
@@ -72,6 +73,8 @@
             bookmarkbackups.enable = true;
           };
         };
+
+        task.default.enable = true;
       };
     };
     share-main = {

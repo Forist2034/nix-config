@@ -12,7 +12,7 @@
     modules.develop.home
 
     parts.nushell.home.default
-
+    parts.task.home.default
     parts.vscode.home.default
 
     inputs.nixvim.homeModules.nixvim
