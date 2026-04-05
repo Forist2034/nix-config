@@ -58,6 +58,8 @@
   environment.systemPackages = with pkgs; [
     maliit-framework
     maliit-keyboard
+
+    vlc
   ];
 
   home-manager.users = {
