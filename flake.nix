@@ -139,6 +139,7 @@
           ];
           nixos-tablet0 = mkConfig hosts.nixos-tablet0 [
             ./hosts/nixos-tablet0/configuration.nix
+            nix4vscode
             flake-keep
           ];
         };
