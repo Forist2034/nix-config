@@ -30,6 +30,11 @@
       flake = false;
     };
 
+    task-util = {
+      url = "github:Forist2034/task-util";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     private-config = {
       # need to set remote to absolute path of a local git repo to make submodule
       # relative path resolve to a absolute local directory

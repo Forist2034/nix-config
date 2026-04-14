@@ -301,7 +301,8 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
-        "private-config": "private-config"
+        "private-config": "private-config",
+        "task-util": "task-util"
       }
     },
     "spectrum": {
@@ -363,6 +364,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "task-util": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776171457,
+        "narHash": "sha256-j8ppqUDPYZVlbfHK0c9yVvc/lpQrZT7767Fk/ffZu08=",
+        "owner": "Forist2034",
+        "repo": "task-util",
+        "rev": "27af781260e4d0dd1e55e613487896994da5d664",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Forist2034",
+        "repo": "task-util",
         "type": "github"
       }
     }

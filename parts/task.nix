@@ -30,7 +30,12 @@
 
   home = {
     default =
-      { pkgs, ... }:
+      {
+        pkgs,
+        inputs,
+        info,
+        ...
+      }:
       {
         home.packages = with pkgs; [
           todoman
@@ -43,6 +48,8 @@
           super-productivity
           ttdl
           taskbook
+
+          inputs.task-util.packages.${info.system}.default
         ];
       };
   };

@@ -22,6 +22,13 @@
   ];
 
   develop = {
+    nickel = {
+      enable = true;
+      editor = {
+        vscode.enable = true;
+        nixvim.enable = true;
+      };
+    };
     nix = {
       enable = true;
       editor = {
