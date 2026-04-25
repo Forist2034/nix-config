@@ -66,11 +66,30 @@ in
 
   home = {
     default =
-      { ... }:
+      { lib, pkgs, ... }:
       {
         programs.firefox = {
           enable = true;
-          policies = config.policies.base;
+          policies = lib.mkMerge [
+            config.policies.base
+            {
+              ExtensionSettings = {
+                "@testpilot-containers" =
+                  let
+                    extension = pkgs.fetchurl {
+                      # UPDATE
+                      url = "https://addons.mozilla.org/firefox/downloads/file/4733069/multi_account_containers-8.3.7.xpi";
+                      hash = "sha256-f29e97EG0z0bmdLF5TogZdB/eEsYUv6bn3g5TptAUWU=";
+                    };
+                  in
+                  {
+                    installation_mode = "normal_installed";
+                    install_url = "file://${extension}";
+                    updates_disabled = true;
+                  };
+              };
+            }
+          ];
           profiles = {
             default = config.profiles.default // {
               isDefault = true;
