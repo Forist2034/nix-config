@@ -35,6 +35,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    browser-utils = {
+      url = "github:Forist2034/browser-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     private-config = {
       # need to set remote to absolute path of a local git repo to make submodule
       # relative path resolve to a absolute local directory
