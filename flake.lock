@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777124083,
-        "narHash": "sha256-Quxt2ohWSMC0yspykDeMyFkTwS8IjL8PpFGUNlS1fWA=",
+        "lastModified": 1777506371,
+        "narHash": "sha256-RSozlLOIMIqHcYL1bpodo/CUYPslVvvJSbySIlMnkPo=",
         "owner": "Forist2034",
         "repo": "browser-utils",
-        "rev": "2b20ad83d653382aee95350fbf4ce37f30feed18",
+        "rev": "657acecdad15917b4366f844854426aaefe42a1a",
         "type": "github"
       },
       "original": {
