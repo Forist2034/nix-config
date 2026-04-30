@@ -42,6 +42,7 @@
     parts.kwallet.system.default
 
     parts.github.system.default
+    parts.forgejo.system.default
 
     system.smart
 

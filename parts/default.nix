@@ -2,6 +2,7 @@ args: {
   bluetooth = (import ./bluetooth.nix) args;
   dynv6 = (import ./dynv6) args;
   firefox = (import ./firefox) args;
+  forgejo = (import ./forgejo) args;
   github = (import ./github) args;
   htop = (import ./htop) args;
   gopass = (import ./gopass.nix) args;
