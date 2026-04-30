@@ -51,6 +51,8 @@ let
           "browser.bookmarks.max_backups" = user (-1); # unlimited number of backups
           # allow override in user settings
           "browser.download.start_downloads_in_tmp_dir" = user true;
+
+          "extensions.activeThemeID" = user "default-theme@mozilla.org";
         };
     };
   };
