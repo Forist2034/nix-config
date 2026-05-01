@@ -5,6 +5,7 @@
   private,
   suites,
   lib,
+  system,
   ...
 }:
 {
@@ -18,6 +19,8 @@
     private.hosts.nixos-tablet0.configuration
 
     parts.bluetooth.system.default
+
+    system.dict
   ];
 
   boot.loader = {
