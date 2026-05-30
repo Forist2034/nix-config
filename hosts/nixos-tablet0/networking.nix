@@ -86,6 +86,12 @@ in
             loc0-management-ethernet = "44bd97ed-7802-4367-9761-798612d10c09";
           };
         };
+
+        networking.firewall = {
+          allowedTCPPorts = [
+            8192
+          ];
+        };
       };
   };
 }

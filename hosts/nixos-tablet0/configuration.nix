@@ -62,6 +62,8 @@
     maliit-framework
     maliit-keyboard
 
+    caddy # for file sharing
+
     vlc
   ];
 
