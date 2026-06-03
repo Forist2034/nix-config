@@ -59,7 +59,7 @@
           hardware.graphics.enable = lib.mkIf gpu true;
 
           services.openssh.settings = {
-            AcceptEnv = builtins.concatStringsSep " " [
+            AcceptEnv = [
               "DISPLAY"
               "WAYLAND_DISPLAY"
             ];
