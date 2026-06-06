@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -23,9 +23,9 @@
               };
             in
             {
-              vscode = {
-                enable = mkEnableOption "VSCode Prettier support";
-                profiles = vscode.profile.mkOption {
+              vscodium = {
+                enable = mkEnableOption "VSCodium Prettier support";
+                profiles = vscodium.profile.mkOption {
                   enable = mkEnableOption "Prettier support";
                   languages = langOpt;
                 };
@@ -45,8 +45,8 @@
         lib.mkIf cfg.enable {
           home.packages = lib.mkIf cfg.env.enable [ pkgs.nodePackages.prettier ];
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
-            profiles = vscode.profile.mkConfig cfg.editor.vscode.profiles (
+          programs.vscodium = lib.mkIf cfg.editor.vscodium.enable {
+            profiles = vscodium.profile.mkConfig cfg.editor.vscodium.profiles (
               value:
               lib.mkIf value.enable {
                 extensions = [ pkgs.vscode-extensions.esbenp.prettier-vscode ];

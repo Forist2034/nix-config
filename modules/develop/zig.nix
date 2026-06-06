@@ -3,7 +3,7 @@
   firefox,
   options,
   lib,
-  vscode,
+  vscodium,
   ...
 }:
 {
@@ -30,7 +30,7 @@
           env.enable = options.mkDisableOption "Zig build tools";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode Zig support";
+            vscodium = vscodium.mkSimpleOption "VSCodium Zig support";
             helix.enable = mkEnableOption "Helix Zig support";
             nixvim.enable = mkEnableOption "Neovim Zig support";
           };
@@ -66,7 +66,7 @@
               ];
             };
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.ziglang.vscode-zig ];
             userSettings = {
               "zig.initialSetupDone" = true;

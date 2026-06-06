@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -19,7 +19,7 @@
           };
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode Lua support";
+            vscodium = vscodium.mkSimpleOption "VSCodium Lua support";
             helix.enable = mkEnableOption "Helix Lua support";
             nixvim.enable = mkEnableOption "Neovim Lua support";
           };
@@ -38,7 +38,7 @@
             ]
           );
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.sumneko.lua ];
             userSettings = {
               "Lua.codeLens.enable" = true;

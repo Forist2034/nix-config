@@ -2,7 +2,7 @@
   options,
   persist,
   lib,
-  vscode,
+  vscodium,
   ...
 }:
 {
@@ -50,7 +50,7 @@
           };
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode JavaScript support";
+            vscodium = vscodium.mkSimpleOption "VSCodium JavaScript support";
             nixvim.enable = mkEnableOption "Nixvim JavaScript support";
           };
         };
@@ -72,11 +72,11 @@
               editor = cfg.editor;
             in
             {
-              enable = editor.vscode.enable || editor.nixvim.enable;
+              enable = editor.vscodium.enable || editor.nixvim.enable;
               editor = {
-                vscode = lib.mkIf editor.vscode.enable {
+                vscodium = lib.mkIf editor.vscodium.enable {
                   enable = true;
-                  profiles = vscode.profile.mkEnableConfig editor.vscode.profiles {
+                  profiles = vscodium.profile.mkEnableConfig editor.vscodium.profiles {
                     enable = true;
                     languages = {
                       javascript = true;

@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -12,7 +12,7 @@
         develop.nushell = {
           enable = lib.mkEnableOption "Nushell support";
           editor = {
-            vscode = vscode.mkSimpleOption "Nushell";
+            vscodium = vscodium.mkSimpleOption "Nushell";
             nixvim.enable = lib.mkEnableOption "Nixvim Nushell support";
           };
         };
@@ -22,7 +22,7 @@
           cfg = config.develop.nushell;
         in
         lib.mkIf cfg.enable {
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.thenuprojectcontributors.vscode-nushell-lang ];
           };
 

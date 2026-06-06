@@ -15,14 +15,14 @@
     cmake = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     coq = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
@@ -32,14 +32,14 @@
         gcc.enable = true;
       };
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     haskell = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
       browser.firefox = {
@@ -50,56 +50,56 @@
     java = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     latex = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     markdown = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     meson = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     nushell = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     ocaml = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     python = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     rust = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
       browser.firefox = {
@@ -110,28 +110,28 @@
     scala = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     shell = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     toml = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
     typst = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };
@@ -143,7 +143,7 @@
     };
   };
 
-  programs.vscode.profiles.default = {
+  programs.vscodium.profiles.default = {
     extensions = pkgs.nix4vscode.forOpenVsx [
       # TODO: use later version when upstream fixed
       "marus25.cortex-debug.1.12.1"

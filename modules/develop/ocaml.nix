@@ -2,7 +2,7 @@
   persist,
   lib,
   options,
-  vscode,
+  vscodium,
   ...
 }:
 {
@@ -29,7 +29,7 @@
           env.enable = options.mkDisableOption "OCaml build tools";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode ocaml support";
+            vscodium = vscodium.mkSimpleOption "VSCodium ocaml support";
             nixvim.enable = mkEnableOption "NixVim ocaml support";
           };
         };
@@ -55,7 +55,7 @@
             ]
           );
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.ocamllabs.ocaml-platform ];
           };
 

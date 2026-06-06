@@ -34,11 +34,11 @@
               {
                 editor = builtins.foldl' (acc: i: acc // i) { } [
                   (
-                    if editor ? vscode then
+                    if editor ? vscodium then
                       {
-                        vscode = {
-                          enable = mkEnableOption "VSCode ${name} support";
-                        } // (editor.vscode.options or { });
+                        vscodium = {
+                          enable = mkEnableOption "VSCodium ${name} support";
+                        } // (editor.vscodium.options or { });
                       }
                     else
                       { }
@@ -113,9 +113,9 @@
         )
 
         (
-          if editor ? vscode then
+          if editor ? vscodium then
             {
-              programs.vscode = lib.mkIf cfg.editor.vscode.enable (editor.vscode.config args cfg.editor.vscode);
+              programs.vscodium = lib.mkIf cfg.editor.vscodium.enable (editor.vscodium.config args cfg.editor.vscodium);
             }
           else
             { }

@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -13,7 +13,7 @@
           enable = mkEnableOption "Shell environment";
           env.enable = options.mkDisableOption "Shell tools";
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode shell support";
+            vscodium = vscodium.mkSimpleOption "VSCodium shell support";
             nixvim.enable = mkEnableOption "Nixvim shell support";
           };
         };
@@ -29,7 +29,7 @@
             pkgs.shellcheck
           ];
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.mads-hartmann.bash-ide-vscode ];
             userSettings = {
               "bashIde.shellcheckPath" = "${pkgs.shellcheck}/bin/shellcheck";

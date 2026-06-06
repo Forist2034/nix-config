@@ -1,7 +1,7 @@
 {
   mkHomeModule,
   options,
-  vscode,
+  vscodium,
   ...
 }:
 {
@@ -20,7 +20,7 @@
           env.enable = options.mkDisableOption "TypeScript build tools";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode TypeScript support";
+            vscodium = vscodium.mkSimpleOption "VSCodium TypeScript support";
             helix.enable = mkEnableOption "Helix TypeScript support";
             nixvim.enable = mkEnableOption "Nixvim TypeScript support";
           };
@@ -39,11 +39,11 @@
               editor = cfg.editor;
             in
             {
-              enable = editor.vscode.enable || editor.nixvim.enable;
+              enable = editor.vscodium.enable || editor.nixvim.enable;
               editor = {
-                vscode = lib.mkIf editor.vscode.enable {
+                vscodium = lib.mkIf editor.vscodium.enable {
                   enable = true;
-                  profiles = vscode.profile.mkEnableConfig editor.vscode {
+                  profiles = vscodium.profile.mkEnableConfig editor.vscodium {
                     enable = true;
                     languages = {
                       typescript = true;

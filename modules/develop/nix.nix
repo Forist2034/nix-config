@@ -1,7 +1,7 @@
 {
   firefox,
   options,
-  vscode,
+  vscodium,
   ...
 }:
 {
@@ -20,7 +20,7 @@
           enable = mkEnableOption "Nix environment";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode Nix support";
+            vscodium = vscodium.mkSimpleOption "VSCodium Nix support";
             helix = {
               enable = mkEnableOption "Helix nix support";
               formatter = {
@@ -230,7 +230,7 @@
               ) cfgFF.profiles;
             };
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.jnoortheen.nix-ide ];
             userSettings = {
               "nix.formatterPath" = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";

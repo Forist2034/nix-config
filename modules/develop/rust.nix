@@ -2,7 +2,7 @@
   persist,
   firefox,
   options,
-  vscode,
+  vscodium,
   lib,
   ...
 }:
@@ -40,7 +40,7 @@
           pkgs.enable = options.mkDisableOption "Rust packages";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode rust support";
+            vscodium = vscodium.mkSimpleOption "VSCodium rust support";
             helix.enable = mkEnableOption "Helix rust support";
             nixvim.enable = mkEnableOption "Neovim rust support";
           };
@@ -132,7 +132,7 @@
               ) cfgFF.profiles;
             };
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.rust-lang.rust-analyzer ];
             userSettings = {
               "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";

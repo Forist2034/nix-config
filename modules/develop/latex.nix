@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -18,7 +18,7 @@
           };
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode LaTex support";
+            vscodium = vscodium.mkSimpleOption "VSCodium LaTex support";
             helix.enable = mkEnableOption "Helix LaTex support";
             nixvim.enable = mkEnableOption "Neovim LaTex support";
           };
@@ -32,7 +32,7 @@
         lib.mkIf cfg.enable {
           home.packages = lib.mkIf cfg.env.texlive.full.enable [ pkgs.texlive.combined.scheme-full ];
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.james-yu.latex-workshop ];
           };
 

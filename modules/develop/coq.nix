@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -17,7 +17,7 @@
           env.enable = options.mkDisableOption "Coq build tools";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode Rocq support";
+            vscodium = vscodium.mkSimpleOption "VSCodium Rocq support";
             nixvim = {
               enable = mkEnableOption "Neovim nix coq";
               coqtail.enable = mkEnableOption "Use Coqtail for proof";
@@ -35,11 +35,11 @@
             pkgs.coq
           ];
 
-          programs.vscode =
+          programs.vscodium =
             let
               server = pkgs.coqPackages.vscoq-language-server;
             in
-            vscode.mkSimpleConfig cfg.editor.vscode {
+            vscodium.mkSimpleConfig cfg.editor.vscodium {
               extensions = [ pkgs.vscode-extensions.maximedenes.vscoq ];
               userSettings = {
                 "vscoq.path" = "${server}/bin/vscoqtop";

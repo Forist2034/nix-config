@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -15,7 +15,7 @@
           env.enable = options.mkDisableOption "Dhall tools";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode Dhall support";
+            vscodium = vscodium.mkSimpleOption "VSCodium Dhall support";
             helix.enable = mkEnableOption "Helix Dhall support";
             nixvim.enable = mkEnableOption "Neovim Dhall support";
           };
@@ -36,7 +36,7 @@
             ]
           );
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = with pkgs.vscode-extensions; [
               dhall.vscode-dhall-lsp-server
               dhall.dhall-lang

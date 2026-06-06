@@ -82,7 +82,7 @@ lib: with lib; {
     };
   };
 
-  vscode =
+  vscodium =
     let
       profile =
         let

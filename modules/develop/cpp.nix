@@ -1,4 +1,4 @@
-{ vscode, ... }:
+{ vscodium, ... }:
 {
   home =
     {
@@ -18,7 +18,7 @@
           };
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode c/c++ support";
+            vscodium = vscodium.mkSimpleOption "VSCodium c/c++ support";
             helix.enable = mkEnableOption "Helix c/c++ support";
             nixvim.enable = mkEnableOption "Neovim nix c/c++ support";
           };
@@ -37,7 +37,7 @@
               (lib.mkIf cfg.env.clang.enable [ clang ])
             ];
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = with pkgs.vscode-extensions; [ llvm-vs-code-extensions.vscode-clangd ];
             userSettings = {
               "clangd.path" = "${pkgs.clang-tools}/bin/clangd";

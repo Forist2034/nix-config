@@ -1,4 +1,4 @@
-{ vscode, ... }:
+{ vscodium, ... }:
 {
   home =
     {
@@ -13,7 +13,7 @@
           enable = mkEnableOption "Toml support";
 
           editor = {
-            vscode = vscode.mkSimpleOption "Toml vscode support";
+            vscodium = vscodium.mkSimpleOption "Toml vscodium support";
             helix.enable = mkEnableOption "Helix toml support";
             nixvim.enable = mkEnableOption "Neovim nix toml support";
           };
@@ -25,7 +25,7 @@
           cfg = config.develop.toml;
         in
         lib.mkIf cfg.enable {
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.tamasfe.even-better-toml ];
           };
 

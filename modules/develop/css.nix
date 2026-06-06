@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -15,7 +15,7 @@
           env.enable = options.mkDisableOption "scss";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode CSS support";
+            vscodium = vscodium.mkSimpleOption "VSCodium CSS support";
             helix.enable = mkEnableOption "Helix CSS support";
             nixvim.enable = mkEnableOption "Nixvim CSS support";
           };
@@ -37,11 +37,11 @@
               editor = cfg.editor;
             in
             {
-              enable = editor.vscode.enable || editor.nixvim.enable;
+              enable = editor.vscodium.enable || editor.nixvim.enable;
               editor = {
-                vscode = lib.mkIf editor.vscode.enable {
+                vscodium = lib.mkIf editor.vscodium.enable {
                   enable = true;
-                  profiles = vscode.profile.mkEnableConfig {
+                  profiles = vscodium.profile.mkEnableConfig {
                     enable = true;
                     languages = {
                       css = true;

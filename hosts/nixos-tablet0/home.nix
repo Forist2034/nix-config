@@ -8,7 +8,7 @@
     markdown = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
     };

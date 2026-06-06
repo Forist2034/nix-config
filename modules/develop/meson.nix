@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -15,7 +15,7 @@
           enable = mkEnableOption "Meson support";
           env.enable = options.mkDisableOption "Meson tools";
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode Meson support";
+            vscodium = vscodium.mkSimpleOption "VSCodium Meson support";
             nixvim.enable = mkEnableOption "Nixvim Meson support";
           };
         };
@@ -31,7 +31,7 @@
             pkgs.muon
           ];
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [
               pkgs.vscode-extensions.mesonbuild.mesonbuild
             ];
