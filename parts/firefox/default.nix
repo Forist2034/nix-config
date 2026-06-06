@@ -16,6 +16,11 @@ in
           name = "firefox";
           options = {
             enable = lib.mkEnableOption "Persist firefox data";
+            configPath = lib.mkOption {
+              description = "firefox config path";
+              type = lib.types.pathWith { };
+              default = ".config/mozilla/firefox";
+            };
             profiles = local-lib.firefox.profile.mkOption {
               enable = lib.mkEnableOption "Persist profile";
               bookmarks.enable = lib.mkEnableOption "Persist bookmarks";
@@ -25,6 +30,9 @@ in
           };
           config =
             { value, ... }:
+            let
+              configPath = value.configPath;
+            in
             lib.mkIf value.enable (
               lib.mkMerge (
                 builtins.attrValues (
@@ -34,19 +42,19 @@ in
                       lib.mkMerge [
                         (lib.mkIf value.bookmarks.enable {
                           files = [
-                            ".mozilla/firefox/${name}/places.sqlite"
-                            ".mozilla/firefox/${name}/places.sqlite-shm"
-                            ".mozilla/firefox/${name}/places.sqlite-wal"
+                            "${configPath}/${name}/places.sqlite"
+                            "${configPath}/${name}/places.sqlite-shm"
+                            "${configPath}/${name}/places.sqlite-wal"
                           ];
                         })
                         (lib.mkIf value.bookmarkbackups.enable {
-                          directories = [ ".mozilla/firefox/${name}/bookmarkbackups" ];
+                          directories = [ "${configPath}/${name}/bookmarkbackups" ];
                         })
                         (lib.mkIf value.account.enable {
                           files = [
-                            ".mozilla/firefox/${name}/key4.db"
-                            ".mozilla/firefox/${name}/signedInUser.json"
-                            ".mozilla/firefox/${name}/logins.json"
+                            "${configPath}/${name}/key4.db"
+                            "${configPath}/${name}/signedInUser.json"
+                            "${configPath}/${name}/logins.json"
                           ];
                         })
                       ]
@@ -83,6 +91,7 @@ in
 
             package = pkgs.firefox-devedition;
 
+            configPath = "${args.config.xdg.configHome}/mozilla/firefox";
             policies = lib.mkMerge [
               config.policies.base
               {
