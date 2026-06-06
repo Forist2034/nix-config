@@ -116,27 +116,32 @@ in
             nativeMessagingHosts = [ utils.browser-utils.ext ];
 
             profiles = {
-              default = config.profiles.default // {
-                isDefault = true;
+              default = lib.mkMerge [
+                config.profiles.default
+                {
+                  isDefault = true;
 
-                # dev edition needs default profile name be prefixed with dev-edition
-                name = "dev-edition-default";
-                path = "default";
+                  # dev edition needs default profile name be prefixed with dev-edition
+                  name = "dev-edition-default";
+                  path = "default";
 
-                settings = {
-                  "xpinstall.signatures.required" = false;
-                };
-
-                extensions = {
-                  force = true;
-                  packages = [ utils.history-extension ];
                   settings = {
-                    "${utils.history-extension.addonId}".settings = {
-                      root = "${args.config.home.homeDirectory}/Documents/browser-utils/history";
+                    "xpinstall.signatures.required" = false;
+
+                    "browser.backup.location" = "${args.config.home.homeDirectory}/Documents/Restore Firefox";
+                  };
+
+                  extensions = {
+                    force = true;
+                    packages = [ utils.history-extension ];
+                    settings = {
+                      "${utils.history-extension.addonId}".settings = {
+                        root = "${args.config.home.homeDirectory}/Documents/browser-utils/history";
+                      };
                     };
                   };
-                };
-              };
+                }
+              ];
               test = config.profiles.base // {
                 id = 1;
               };
