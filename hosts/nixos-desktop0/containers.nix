@@ -124,11 +124,11 @@
                     pango
                     cairo
                     atk
-                    xorg.libX11
-                    xorg.libXtst
-                    xorg.libXext
-                    xorg.libXrandr
-                    xorg.libXi
+                    libX11
+                    libXtst
+                    libXext
+                    libXrandr
+                    libXi
                     alsa-lib
 
                     udev
@@ -181,11 +181,11 @@
                     pango
                     cairo
                     atk
-                    xorg.libX11
-                    xorg.libXtst
-                    xorg.libXext
-                    xorg.libXrandr
-                    xorg.libXi
+                    libX11
+                    libXtst
+                    libXext
+                    libXrandr
+                    libXi
                     alsa-lib
 
                     udev

@@ -66,7 +66,7 @@
             X11Forwarding = true;
           };
 
-          environment.systemPackages = [ pkgs.xorg.xauth ];
+          environment.systemPackages = [ pkgs.xauth ];
 
           system.stateVersion = lib.trivial.release;
         };

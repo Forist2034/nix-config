@@ -233,7 +233,7 @@
           programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.jnoortheen.nix-ide ];
             userSettings = {
-              "nix.formatterPath" = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+              "nix.formatterPath" = "${pkgs.nixfmt}/bin/nixfmt";
             };
           };
 
@@ -244,7 +244,7 @@
                   name = "nix";
                   auto-format = true;
                   formatter = lib.mkIf cfg.editor.helix.formatter.enable {
-                    command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+                    command = "${pkgs.nixfmt}/bin/nixfmt";
                   };
                 }
               ];
@@ -261,7 +261,7 @@
                   formatting = {
                     nixfmt = lib.mkIf cfgVim.formatter.enable {
                       enable = true;
-                      package = pkgs.nixfmt-rfc-style;
+                      package = pkgs.nixfmt;
                     };
                   };
                 };
