@@ -217,6 +217,8 @@
   '';
   hardware.libftdi.enable = true;
 
+  hardware.i2c.enable = true; # monitor control
+
   programs.wireshark = {
     enable = true;
     usbmon.enable = true;
