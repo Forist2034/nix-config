@@ -81,6 +81,9 @@ in
         info,
         ...
       }@args:
+      let
+        firefoxBackupPath = "${args.config.home.homeDirectory}/Documents/Restore Firefox";
+      in
       {
         programs.firefox =
           let
@@ -128,7 +131,7 @@ in
                   settings = {
                     "xpinstall.signatures.required" = false;
 
-                    "browser.backup.location" = "${args.config.home.homeDirectory}/Documents/Restore Firefox";
+                    "browser.backup.location" = firefoxBackupPath;
                   };
 
                   extensions = {
@@ -147,7 +150,26 @@ in
               };
             };
           };
+        systemd.user = {
+          services.firefox-keep-backup = {
+            Unit.Description = "Keep firefox backup";
+            Service = {
+              ExecStart = lib.escapeShellArgs [
+                ./move-backup.sh
+                firefoxBackupPath
+                "${args.config.home.homeDirectory}/Documents/backup/firefox/backup/html"
+              ];
+            };
+          };
+          paths.firefox-keep-backup = {
+            Unit.Description = "Firefox backup dir path";
+            Path = {
+              PathChanged = [ firefoxBackupPath ];
+              MakeDirectory = true;
+            };
+            Install.WantedBy = [ "default.target" ];
+          };
+        };
       };
-
   };
 }
