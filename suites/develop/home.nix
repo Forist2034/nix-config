@@ -53,6 +53,7 @@
   ];
 
   programs.nixvim = {
+    nixpkgs.source = inputs.nixpkgs;
     autoCmd = [
       {
         event = [ "VimLeave" ];
