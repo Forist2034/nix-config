@@ -44,6 +44,8 @@
       };
     }
   ];
+  # can't hibernation due to random encrypted swap
+  systemd.sleep.settings.Sleep.AllowHibernation = false;
 
   # use zswap to reduce memory pressure
   boot.kernelParams = [
