@@ -9,10 +9,7 @@ readonly swap_path="$mount_path/swap"
 
 mount -t tmpfs -o size=$size none "$mount_path"
 mkswap --file --size $size "$swap_path"
-systemd-inhibit --why='Serving remote swap' nbd-server "$listen" -n "$swap_path" &
-
-read -rsp $'Press any key to continue...\n' -n1 key
-kill %1
+systemd-inhibit --why='Serving remote swap' nbd-server "$listen" --nodaemon --dont-fork "$swap_path"
 
 umount "$mount_path"
 rmdir "$mount_path"
