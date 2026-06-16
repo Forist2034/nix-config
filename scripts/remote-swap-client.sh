@@ -12,4 +12,5 @@ swapon -o pri=10 "$path"
 read -rsp $'Press any key to stop...\n' -n1 key
 
 swapoff "$path"
+sleep 8s # FIXME: avoid io error
 nbd-client -d "$path"
