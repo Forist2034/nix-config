@@ -44,9 +44,6 @@
 
   persistence = {
     root = {
-      directories = [
-        "/etc/NetworkManager/system-connections"
-      ];
       bluetooth.enable = true;
       ssh = {
         enable = true;

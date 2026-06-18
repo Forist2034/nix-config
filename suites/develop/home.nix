@@ -51,15 +51,4 @@
 
     ripgrep-all
   ];
-
-  programs.nixvim = {
-    nixpkgs.source = inputs.nixpkgs;
-    autoCmd = [
-      {
-        event = [ "VimLeave" ];
-        pattern = [ "*" ];
-        command = "set guicursor=a:ver25";
-      }
-    ];
-  };
 }
