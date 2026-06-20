@@ -58,6 +58,12 @@
 
   time.timeZone = "Asia/Shanghai";
 
+  # hardware acceleration for video
+  hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  };
+
   environment.systemPackages = with pkgs; [
     maliit-framework
     maliit-keyboard
