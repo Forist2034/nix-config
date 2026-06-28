@@ -15,7 +15,7 @@
           env.enable = options.mkDisableOption "JSON tools";
 
           editor = {
-            vscodium = vscodium.mkSimpleConfig "VSCodium JSON support";
+            vscodium = vscodium.mkSimpleOption "VSCodium JSON support";
             helix.enable = mkEnableOption "Helix JSON support";
             nixvim.enable = mkEnableOption "Nixvim JSON support";
           };
