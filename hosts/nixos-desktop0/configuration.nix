@@ -134,6 +134,7 @@
           maven.enable = true;
           gradle.enable = true;
         };
+        javascript.enable = true;
       };
     };
   };
