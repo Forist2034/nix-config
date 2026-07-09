@@ -1,5 +1,6 @@
 args: {
   bluetooth = (import ./bluetooth.nix) args;
+  direnv = (import ./direnv.nix) args;
   dynv6 = (import ./dynv6) args;
   firefox = (import ./firefox) args;
   forgejo = (import ./forgejo) args;
