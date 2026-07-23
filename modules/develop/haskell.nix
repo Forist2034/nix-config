@@ -95,7 +95,7 @@
                 (lib.mkIf ffCfg.bookmarks.ghc.enable [
                   {
                     name = "GHC Documentation";
-                    url = "${pkgs.ghc.doc}/share/doc/ghc/html/index.html";
+                    url = "file://${pkgs.ghc.doc}/share/doc/ghc/html/index.html";
                   }
                 ])
                 [
@@ -103,7 +103,7 @@
                     name = "Haskell packages";
                     children = builtins.map (p: {
                       inherit (p) name;
-                      url = "${p.doc}/share/doc/${p.name}/html/index.html";
+                      url = "file://${p.doc}/share/doc/${p.name}/html/index.html";
                     }) ffCfg.bookmarks.packages;
                   }
                 ]

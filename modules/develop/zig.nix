@@ -61,7 +61,7 @@
               policies.ManagedBookmarks = lib.mkIf cfgFF.bookmarks.zig.enable [
                 {
                   name = "Zig Language Reference";
-                  url = "${pkgs.zig.doc}/share/doc/zig-${pkgs.zig.version}/html/langref.html";
+                  url = "file://${pkgs.zig.doc}/share/doc/zig-${pkgs.zig.version}/html/langref.html";
                 }
               ];
             };

@@ -78,7 +78,7 @@
                         (lib.mkIf cfgFF.bookmarks.nix.enable [
                           {
                             name = "Nix Reference Manual";
-                            url = "${config.nix.package.doc}/share/doc/nix/manual/index.html";
+                            url = "file://${config.nix.package.doc}/share/doc/nix/manual/index.html";
                           }
                         ])
                         (lib.mkIf cfgFF.bookmarks.nixpkgs.enable [
@@ -88,13 +88,13 @@
                               let
                                 manual = inputs.nixpkgs.htmlDocs.nixpkgsManual.${info.system};
                               in
-                              "${manual}/share/doc/nixpkgs/index.html";
+                              "file://${manual}/share/doc/nixpkgs/index.html";
                           }
                         ])
                         (lib.mkIf cfgFF.bookmarks.nixos.enable [
                           {
                             name = "NixOS Manual";
-                            url = "${inputs.nixpkgs.htmlDocs.nixosManual.${info.system}}/share/doc/nixos/index.html";
+                            url = "file://${inputs.nixpkgs.htmlDocs.nixosManual.${info.system}}/share/doc/nixos/index.html";
                           }
                         ])
                       ];
@@ -103,7 +103,9 @@
                   (lib.mkIf cfgFF.bookmarks.home-manager.enable [
                     {
                       name = "Home Manager Manual";
-                      url = "${inputs.home-manager.packages.${info.system}.docs-html}/share/doc/home-manager/index.xhtml";
+                      url = "file://${
+                        inputs.home-manager.packages.${info.system}.docs-html
+                      }/share/doc/home-manager/index.xhtml";
                     }
                   ])
                   (lib.mkIf cfgFF.bookmarks.nixvim.enable [
@@ -118,7 +120,7 @@
                       in
                       {
                         name = "Nixvim docs";
-                        url = "${docs}/index.html";
+                        url = "file://${docs}/index.html";
                       }
                     )
                   ])
