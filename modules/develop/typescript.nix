@@ -43,7 +43,7 @@
               editor = {
                 vscodium = lib.mkIf editor.vscodium.enable {
                   enable = true;
-                  profiles = vscodium.profile.mkEnableConfig editor.vscodium {
+                  profiles = vscodium.profile.mkEnableConfig editor.vscodium.profiles {
                     enable = true;
                     languages = {
                       typescript = true;

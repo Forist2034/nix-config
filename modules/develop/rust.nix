@@ -88,7 +88,7 @@
               policies.ManagedBookmarks = lib.mkIf cfgFF.bookmarks.rustc.enable [
                 {
                   name = "Rust Documentation";
-                  url = "${pkgs.rustc.doc}/share/doc/docs/html/index.html";
+                  url = "file://${pkgs.rustc.doc}/share/doc/docs/html/index.html";
                 }
               ];
               profiles = firefox.profile.mkConfig (

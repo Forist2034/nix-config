@@ -36,6 +36,20 @@
         nixvim.enable = true;
       };
     };
+    css = {
+      enable = true;
+      editor = {
+        vscodium.enable = true;
+        nixvim.enable = true;
+      };
+    };
+    dhall = {
+      enable = true;
+      editor = {
+        vscodium.enable = true;
+        nixvim.enable = true;
+      };
+    };
     haskell = {
       enable = true;
       editor = {
@@ -47,7 +61,28 @@
         profiles.default.enable = true;
       };
     };
+    html = {
+      enable = true;
+      editor = {
+        vscodium.enable = true;
+        nixvim.enable = true;
+      };
+    };
     java = {
+      enable = true;
+      editor = {
+        vscodium.enable = true;
+        nixvim.enable = true;
+      };
+    };
+    javascript = {
+      enable = true;
+      editor = {
+        vscodium.enable = true;
+        nixvim.enable = true;
+      };
+    };
+    json = {
       enable = true;
       editor = {
         vscodium.enable = true;
@@ -129,6 +164,13 @@
       };
     };
     typst = {
+      enable = true;
+      editor = {
+        vscodium.enable = true;
+        nixvim.enable = true;
+      };
+    };
+    typescript = {
       enable = true;
       editor = {
         vscodium.enable = true;

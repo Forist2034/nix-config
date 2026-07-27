@@ -14,6 +14,7 @@
     parts.nushell.home.default
     parts.task.home.default
     parts.vscodium.home.default
+    parts.direnv.home.default
 
     inputs.nixvim.homeModules.nixvim
     home.nixvim.full
