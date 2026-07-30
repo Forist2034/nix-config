@@ -1,0 +1,52 @@
+env {
+  ADB_SERVER_SOCKET "localfilesystem:scrcpy_adb.sock"
+}
+
+layout {
+  default_tab_template {
+    // the default zellij tab-bar and status bar plugins
+    pane size=1 borderless=true {
+      plugin location="zellij:tab-bar"
+    }
+    children
+    pane size=2 borderless=true {
+      plugin location="zellij:status-bar"
+    }
+  }
+
+  tab name="voice" {
+    pane split_direction="vertical" {
+      pane name="tx" {
+        start_suspended true
+        command "bash"
+        args "-c" "rec -c 1 -t ogg -C -1 - | ssh reid@nixos-sbc0 sox -t ogg - -t alsa 'sysdefault:CARD=Device'"
+      }
+      pane name="rx" {
+        start_suspended true
+        command "bash"
+        args "-c" "ssh nixos-sbc0 sox -c 1 -t alsa 'sysdefault:CARD=Codec' -t ogg -C -1 - | play -t ogg -"
+      }
+    }
+  }
+  tab name="adb_server" {
+    pane {
+      command "ssh"
+      start_suspended true
+      args "-o" "StreamLocalBindUnlink=yes" "-CN" "-L" "./scrcpy_adb.sock:localhost:5037" "-R" "27183:localhost:27183" "nixos-sbc0"
+    }
+  }
+  tab name="scrcpy" {
+    pane {
+      command "scrcpy"
+      start_suspended true
+      args "--no-audio" "--video-bit-rate=512K" "--video-buffer=500" "--max-fps=15" "--print-fps"
+    }
+  }
+  tab name="ssh" {
+    pane {
+      command "ssh"
+      args "nixos-sbc0"
+    }
+  }
+  tab 
+}
