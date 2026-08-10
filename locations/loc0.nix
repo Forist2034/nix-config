@@ -71,6 +71,42 @@ let
         };
       };
     };
+    extlan = rec {
+      wlan = {
+        inherit (privateCfg.networks.extlan.wlan) ssid;
+      };
+
+      config = {
+        networkmanager = {
+          wlan = { uuid }: {
+            connection = {
+              id = "Loc0-ExtLan-Wlan";
+              inherit uuid;
+              type = "wifi";
+              autoconnect = false;
+            };
+            wifi = {
+              mode = "infrastructure";
+              inherit (wlan) ssid;
+            };
+            wifi-security = {
+              key-mgmt = "wpa-psk";
+              psk = "$LOC0_EXTLAN_WLAN_PSK";
+            };
+            ipv4 = {
+              method = "auto";
+              ignore-auto-dns = true;
+              route-metric = 2048;
+            };
+            ipv6 = {
+              method = "auto";
+              ignore-auto-dns = true;
+              route-metric = 2048;
+            };
+          };
+        };
+      };
+    };
     trusted = rec {
       vlan.id = 1024 + 16;
 
@@ -163,6 +199,37 @@ let
         };
       };
     };
+    pon = rec {
+      vlan.id = 512;
+
+      config = {
+        networkmanager = {
+          vlan = { uuid, parent }: {
+            connection = {
+              id = "Loc0-Pon-Vlan";
+              inherit uuid;
+              type = "vlan";
+              autoconnect = false;
+              permissions = "user:reid:";
+            };
+            vlan = {
+              inherit (vlan) id;
+              inherit parent;
+            };
+            ipv4 = {
+              method = "auto";
+              ignore-auto-dns = true;
+              never-default = true;
+            };
+            ipv6 = {
+              method = "auto";
+              ignore-auto-dns = true;
+              never-default = true;
+            };
+          };
+        };
+      };
+    };
   };
 in
 {
@@ -222,6 +289,9 @@ in
                 uuid = connectionUuids.loc0-lan-ethernet-dhcp_dns;
                 ipv4.dns = "10.64.0.1";
               };
+              loc0-extlan-wlan = networks.extlan.config.networkmanager.wlan {
+                uuid = connectionUuids.loc0-extlan-wlan;
+              };
 
               loc0-trusted-vlan = networks.trusted.config.networkmanager.vlan {
                 inherit hostId;
@@ -236,6 +306,10 @@ in
               loc0-management-ethernet = networks.management.config.networkmanager.ethernet {
                 inherit hostId;
                 uuid = connectionUuids.loc0-management-ethernet;
+              };
+              loc0-pon-vlan = networks.pon.config.networkmanager.vlan {
+                uuid = connectionUuids.loc0-pon-vlan;
+                parent = vlanParent;
               };
             };
           };

@@ -81,9 +81,11 @@ in
           connectionUuids = {
             loc0-lan-ethernet = "a7caefa5-7c72-4f0e-8736-1d92b6a5b2d8";
             loc0-lan-ethernet-dhcp_dns = "33ec830e-e390-40fc-8fda-7c14ee264667";
+            loc0-extlan-wlan = "04619c2a-a11f-4af4-9e21-bd3ff77449e1";
             loc0-trusted-vlan = "d6dded62-a0ba-453b-9d7b-d0e6612b9f8c";
             loc0-management-vlan = "44202d57-c236-4974-ad04-358bd322c4ee";
             loc0-management-ethernet = "44bd97ed-7802-4367-9761-798612d10c09";
+            loc0-pon-vlan = "7ad802e1-684f-4625-95cc-592a967ce63b";
           };
         };
 
