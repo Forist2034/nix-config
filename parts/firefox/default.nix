@@ -113,6 +113,10 @@ in
                       updates_disabled = true;
                     };
                 };
+                SearchEngines = {
+                  Add = [ config.policies.search.bing_global ];
+                  Default = "Global Bing";
+                };
               }
             ];
 

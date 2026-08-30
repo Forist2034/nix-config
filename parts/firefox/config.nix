@@ -1,34 +1,4 @@
 let
-  search = {
-    bing_global = {
-      name = "Bing Global";
-      value = {
-        description = "Bing Global";
-        urls = [
-          {
-            template = "https://global.bing.com/search";
-            params = [
-              {
-                name = "q";
-                value = "{searchTerms}";
-              }
-              {
-                name = "pq";
-                value = "{searchTerms}";
-              }
-              {
-                name = "mkt";
-                value = "en-US";
-              }
-            ];
-          }
-        ];
-        icon = "https://global.bing.com/sa/simg/favicon-trans-bg-blue-mg.ico";
-        definedAliases = [ "@gbing" ];
-      };
-    };
-  };
-
   settings = {
     base = { };
     backup = {
@@ -60,19 +30,21 @@ let
           "extensions.activeThemeID" = user "default-theme@mozilla.org";
         };
     };
+
+    search = {
+      bing_global = {
+        Name = "Global Bing";
+        URLTemplate = "https://global.bing.com/search?q={searchTerms}&pq={searchTerms}&mkt=en-US";
+        Method = "GET";
+        IconURL = "https://global.bing.com/sa/simg/favicon-trans-bg-blue-mg.ico";
+        Alias = "@gbing";
+      };
+    };
   };
 
   profiles =
     let
-      base = {
-        search = {
-          engines = {
-            ${search.bing_global.name} = search.bing_global.value;
-          };
-          force = true;
-          default = search.bing_global.name;
-        };
-      };
+      base = { };
     in
     {
       inherit base;
@@ -83,7 +55,6 @@ let
 in
 {
   inherit
-    search
     settings
     policies
     profiles
