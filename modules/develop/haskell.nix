@@ -60,12 +60,9 @@
                   default = [ ];
                 };
               };
+              search.enable = options.mkDisableOption "Haskell search engines";
               profiles = firefox.profile.mkOption {
                 enable = mkEnableOption "Haskell firefox";
-                search = {
-                  hackage = options.mkDisableOption "Hackages search engine";
-                  hoogle = options.mkDisableOption "Hoogle search";
-                };
               };
             };
           };
@@ -108,43 +105,20 @@
                   }
                 ]
               ];
-              profiles = firefox.profile.mkConfig (
-                value:
-                lib.mkIf value.enable {
-                  search.engines = {
-                    "Hackage" = lib.mkIf value.search.hackage {
-                      description = "Search for Haskell packages on Hackage";
-                      urls = [
-                        {
-                          template = "https://hackage.haskell.org/packages/search";
-                          params = [
-                            {
-                              name = "terms";
-                              value = "{searchTerms}";
-                            }
-                          ];
-                        }
-                      ];
-                      definedAliases = [ "@hackage" ];
-                    };
-                    "Hoogle" = lib.mkIf value.search.hoogle {
-                      description = "Haskell API Search";
-                      urls = [
-                        {
-                          template = "https://hoogle.haskell.org/";
-                          params = [
-                            {
-                              name = "hoogle";
-                              value = "{searchTerms}";
-                            }
-                          ];
-                        }
-                      ];
-                      definedAliases = [ "@hoogle" ];
-                    };
-                  };
+              policies.SearchEngines.Add = lib.mkIf ffCfg.search.enable [
+                {
+                  Name = "Hackage";
+                  Description = "Search for Haskell packages on Hackage";
+                  URLTemplate = "https://hackage.haskell.org/packages/search?terms={searchTerms}";
+                  Alias = "@hackage";
                 }
-              ) ffCfg.profiles;
+                {
+                  Name = "Hoogle";
+                  Description = "Haskell API Search";
+                  URLTemplate = "https://hoogle.haskell.org/?hoogle={searchTerms}";
+                  Alias = "@hoogle";
+                }
+              ];
             };
 
           programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {

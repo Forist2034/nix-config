@@ -51,12 +51,9 @@
               bookmarks = {
                 rustc.enable = options.mkDisableOption "Rust Documentation";
               };
+              search.enable = options.mkDisableOption "Rust Search engines";
               profiles = firefox.profile.mkOption {
                 enable = mkEnableOption "Rust firefox";
-                search = {
-                  crates = options.mkDisableOption "Crates.io search engine";
-                  docsrs = options.mkDisableOption "Docs.rs search engine";
-                };
               };
             };
           };
@@ -85,51 +82,29 @@
               cfgFF = cfg.browser.firefox;
             in
             lib.mkIf cfgFF.enable {
-              policies.ManagedBookmarks = lib.mkIf cfgFF.bookmarks.rustc.enable [
-                {
-                  name = "Rust Documentation";
-                  url = "file://${pkgs.rustc.doc}/share/doc/docs/html/index.html";
-                }
-              ];
-              profiles = firefox.profile.mkConfig (
-                value:
-                lib.mkIf value.enable {
-                  search.engines = {
-                    "Cargo" = lib.mkIf value.search.crates {
-                      description = "Search for crates on crates.io";
-                      urls = [
-                        {
-                          template = "https://crates.io/search";
-                          params = [
-                            {
-                              name = "q";
-                              value = "{searchTerms}";
-                            }
-                          ];
-                        }
-                      ];
-                      definedAliases = [ "@crates" ];
-                    };
-                    "Docs.rs" = lib.mkIf value.search.docsrs {
-                      description = "Search for crate documentation on docs.rs";
-                      urls = [
-                        {
-                          template = "https://docs.rs/releases/search";
-                          params = [
-                            {
-                              name = "query";
-                              value = "{searchTerms}";
-                            }
-                          ];
-                        }
-                      ];
-                      iconUpdateUrl = "https://docs.rs/-/static/favicon.ico";
-                      updateInternal = 7 * 24 * 60 * 60;
-                      definedAliases = [ "@docsrs" ];
-                    };
-                  };
-                }
-              ) cfgFF.profiles;
+              policies = {
+                ManagedBookmarks = lib.mkIf cfgFF.bookmarks.rustc.enable [
+                  {
+                    name = "Rust Documentation";
+                    url = "file://${pkgs.rustc.doc}/share/doc/docs/html/index.html";
+                  }
+                ];
+                SearchEngines.Add = lib.mkIf cfgFF.search.enable [
+                  {
+                    Name = "Cargo";
+                    Description = "Search for crates on crates.io";
+                    URLTemplate = "https://crates.io/search?q={searchTerms}";
+                    Alias = "@crates";
+                  }
+                  {
+                    Name = "Docs.rs";
+                    Description = "Search for crate documentation on docs.rs";
+                    URLTemplate = "https://docs.rs/releases/search?query={searchTerms}";
+                    IconURL = "https://docs.rs/-/static/favicon.ico";
+                    Alias = "@docsrs";
+                  }
+                ];
+              };
             };
 
           programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {

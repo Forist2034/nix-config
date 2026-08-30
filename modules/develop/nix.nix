@@ -45,13 +45,9 @@
                 home-manager.enable = options.mkDisableOption "Home Manager doc";
                 nixvim.enable = options.mkDisableOption "Nixvim doc";
               };
+              search.enable = options.mkDisableOption "Nix search engines";
               profiles = firefox.profile.mkOption {
                 enable = mkEnableOption "Nix firefox";
-                search = {
-                  packages = options.mkDisableOption "Nix packages search";
-                  options = options.mkDisableOption "Nix options search";
-                  wiki = options.mkDisableOption "NixOS wiki search";
-                };
               };
             };
           };
@@ -125,111 +121,36 @@
                     )
                   ])
                 ];
-              };
-              profiles = firefox.profile.mkConfig (
-                value:
-                lib.mkIf value.enable {
-                  search.engines =
-                    let
-                      icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                    in
+                SearchEngines.Add = lib.mkIf cfgFF.search.enable (
+                  let
+                    IconURL = "file://${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                  in
+                  [
                     {
-
-                      "NixOS packages" = lib.mkIf value.search.packages {
-                        description = "Search NixOS packages by name or description.";
-                        urls = [
-                          {
-                            template = "https://search.nixos.org/packages";
-                            params = [
-                              {
-                                name = "query";
-                                value = "{searchTerms}";
-                              }
-                            ];
-                          }
-                        ];
-                        inherit icon;
-                        definedAliases = [ "@nixpkg" ];
-                      };
-                      "NixOS options" = lib.mkIf value.search.options {
-                        description = "Search NixOS options by name or description.";
-                        urls = [
-                          {
-                            template = "https://search.nixos.org/options";
-                            params = [
-                              {
-                                name = "query";
-                                value = "{searchTerms}";
-                              }
-                            ];
-                          }
-                        ];
-                        inherit icon;
-                        definedAliases = [ "@nixopt" ];
-                      };
-                      "NixOS Wiki" = lib.mkIf value.search.wiki {
-                        description = "NixOS Wiki (en)";
-                        urls = [
-                          {
-                            template = "https://wiki.nixos.org/w/index.php";
-                            params = [
-                              {
-                                name = "title";
-                                value = "Special:Search";
-                              }
-                              {
-                                name = "search";
-                                value = "{searchTerms}";
-                              }
-                            ];
-                          }
-                          {
-                            template = "https://wiki.nixos.org/w/api.php";
-                            params = [
-                              {
-                                name = "action";
-                                value = "opensearch";
-                              }
-                              {
-                                name = "search";
-                                value = "{searchTerms}";
-                              }
-                              {
-                                name = "namespace";
-                                value = "0";
-                              }
-                            ];
-                            type = "application/x-suggestions+json";
-                          }
-                          {
-                            template = "https://wiki.nixos.org/w/api.php";
-                            params = [
-                              {
-                                name = "action";
-                                value = "opensearch";
-                              }
-                              {
-                                name = "format";
-                                value = "xml";
-                              }
-                              {
-                                name = "search";
-                                value = "{searchTerms}";
-                              }
-                              {
-                                name = "namespace";
-                                value = "0";
-                              }
-                            ];
-                            type = "application/x-suggestions+xml";
-                          }
-                        ];
-                        inherit icon;
-                        definedAliases = [ "@nixwiki" ];
-                      };
-                    };
-                }
-              ) cfgFF.profiles;
+                      Name = "NixOS packages";
+                      Description = "Search NixOS packages by name or description.";
+                      inherit IconURL;
+                      URLTemplate = "https://search.nixos.org/packages?query={searchTerms}";
+                      Alias = "@nixpkg";
+                    }
+                    {
+                      Name = "NixOS options";
+                      Description = "Search NixOS options by name or description.";
+                      inherit IconURL;
+                      URLTemplate = "https://search.nixos.org/options?query={searchTerms}";
+                      Alias = "@nixopt";
+                    }
+                    {
+                      Name = "NixOS Wiki";
+                      Description = "NixOS Wiki (en)";
+                      inherit IconURL;
+                      URLTemplate = "https://wiki.nixos.org/w/index.php?title=Special:Search&search={searchTerms}";
+                      SuggestURLTemplate = "https://wiki.nixos.org/w/api.php?action=opensearch&search={searchTerms}&namespace=0";
+                      Alias = "@nixwiki";
+                    }
+                  ]
+                );
+              };
             };
 
           programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
