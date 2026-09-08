@@ -1,7 +1,3 @@
-env {
-  ADB_SERVER_SOCKET "localfilesystem:scrcpy_adb.sock"
-}
-
 layout {
   default_tab_template {
     // the default zellij tab-bar and status bar plugins
