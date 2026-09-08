@@ -15,12 +15,12 @@ layout {
       pane name="tx" {
         start_suspended true
         command "bash"
-        args "-c" "rec -c 1 -t ogg -C -1 - | ssh reid@nixos-sbc0 sox -t ogg - -t alsa 'sysdefault:CARD=Device'"
+        args "-c" "rec -c 1 -t ogg -C -1 - | ssh -P muxed nixos-sbc0 sox -t ogg - -t alsa 'sysdefault:CARD=Device'"
       }
       pane name="rx" {
         start_suspended true
         command "bash"
-        args "-c" "ssh nixos-sbc0 sox -c 1 -t alsa 'sysdefault:CARD=Codec' -t ogg -C -1 - | play -t ogg -"
+        args "-c" "ssh -P muxed nixos-sbc0 sox -c 1 -t alsa 'sysdefault:CARD=Codec' -t ogg -C -1 - | play -t ogg -"
       }
     }
   }
@@ -28,7 +28,7 @@ layout {
     pane {
       command "ssh"
       start_suspended true
-      args "-o" "StreamLocalBindUnlink=yes" "-CN" "-L" "./scrcpy_adb.sock:localhost:5037" "-R" "27183:localhost:27183" "nixos-sbc0"
+      args "-P" "muxed" "-o" "StreamLocalBindUnlink=yes" "-CN" "-L" "./scrcpy_adb.sock:localhost:5037" "-R" "27183:localhost:27183" "nixos-sbc0"
     }
   }
   tab name="scrcpy" {
@@ -41,7 +41,7 @@ layout {
   tab name="ssh" {
     pane {
       command "ssh"
-      args "nixos-sbc0"
+      args "-P" "muxed" "nixos-sbc0"
     }
   }
   tab 

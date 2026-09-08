@@ -45,6 +45,14 @@
               agentTimeout = "1h";
             };
           };
+        connection-mux = { ... }: {
+          programs.ssh.extraConfig = ''
+            Match tagged muxed
+              ControlMaster auto
+              ControlPath /run/user/%i/ssh-master-%C
+              ControlPersist 4m
+          '';
+        };
       };
     in
     {
@@ -56,6 +64,7 @@
           imports = [
             modules.persist
             profiles.ssh-agent
+            profiles.connection-mux
           ];
         };
     };
