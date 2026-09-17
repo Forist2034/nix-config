@@ -13,7 +13,7 @@ function get_ip_addr() {
 readonly ip_addr=$(get_ip_addr)
 echo "public ip address: $ip_addr"
 
-curl "http://dynv6.com/api/update" \
+curl "https://dynv6.com/api/update" \
   --url-query "hostname=$zone" \
   --url-query "token=$DYNV6_HTTP_TOKEN" \
   --url-query "ipv6=$ip_addr"

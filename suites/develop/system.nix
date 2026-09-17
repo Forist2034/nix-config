@@ -37,10 +37,12 @@
     parts.gpg.system.default
     parts.gopass.system.default
     parts.firefox.system.default
+    parts.task.system.default
     parts.thunderbird.system.default
     parts.kwallet.system.default
 
     parts.github.system.default
+    parts.forgejo.system.default
 
     system.smart
 
@@ -72,6 +74,8 @@
             bookmarkbackups.enable = true;
           };
         };
+
+        task.default.enable = true;
       };
     };
     share-main = {
@@ -101,8 +105,6 @@
       extraGroups = [ "share-main" ];
     };
   };
-
-  services.xserver.enable = true;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -138,6 +140,8 @@
     extraConfig = lib.mkMerge [
       hosts.nixos-desktop0.sshConfig
       hosts.nixos-laptop0.sshConfig
+      hosts.nixos-sbc0.sshConfig
+      hosts.nixos-tablet0.sshConfig
     ];
   };
 

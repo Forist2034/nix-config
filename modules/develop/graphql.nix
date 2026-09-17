@@ -1,4 +1,4 @@
-{ vscode, ... }:
+{ vscodium, ... }:
 {
   home =
     {
@@ -13,7 +13,7 @@
           enable = mkEnableOption "GraphQL environment";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode GraphQL support";
+            vscodium = vscodium.mkSimpleOption "VSCodium GraphQL support";
             helix.enable = mkEnableOption "Helix GraphQL support";
             nixvim.enable = mkEnableOption "Neovim GraphQL support";
           };
@@ -25,7 +25,7 @@
           cfg = config.develop.graphql;
         in
         lib.mkIf cfg.enable {
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = with pkgs.vscode-extensions; [
               graphql.vscode-graphql
               graphql.vscode-graphql-syntax
@@ -37,11 +37,11 @@
               editor = cfg.editor;
             in
             {
-              enable = editor.vscode.enable || editor.helix.enable || editor.nixvim.enable;
+              enable = editor.vscodium.enable || editor.helix.enable || editor.nixvim.enable;
               editor = {
-                vscode = lib.mkIf editor.vscode.enable {
+                vscodium = lib.mkIf editor.vscodium.enable {
                   enable = true;
-                  profiles = vscode.profile.mkEnableConfig editor.vscode.profiles {
+                  profiles = vscodium.profile.mkEnableConfig editor.vscodium.profiles {
                     enable = true;
                     languages.graphql = true;
                   };

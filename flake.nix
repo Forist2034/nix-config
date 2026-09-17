@@ -1,10 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -16,15 +16,37 @@
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.05";
+      url = "github:nix-community/nixvim/nixos-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    microvm = {
+      url = "github:microvm-nix/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    http-capture = {
+      url = "github:Forist2034/http-capture";
+      flake = false;
+    };
+
+    task-util = {
+      url = "github:Forist2034/task-util";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    browser-utils = {
+      url = "github:Forist2034/browser-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     private-config = {
-      type = "git";
-      url = "file:///etc/nixos/private";
-      rev = "a11d299de0e5462c11d33d02bf2b90744046d49f";
+      # need to set remote to absolute path of a local git repo to make submodule
+      # relative path resolve to a absolute local directory
+      url = "path:private";
     };
+
+    self.submodules = true;
   };
 
   outputs =
@@ -122,8 +144,13 @@
               }
             )
           ];
+          nixos-tablet0 = mkConfig hosts.nixos-tablet0 [
+            ./hosts/nixos-tablet0/configuration.nix
+            nix4vscode
+            flake-keep
+          ];
         };
 
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     };
 }

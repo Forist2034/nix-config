@@ -37,12 +37,14 @@ let
           neo-tree = {
             enable = true;
             # TODO: use default document_symbols when stablized
-            sources = [
-              "filesystem"
-              "buffers"
-              "git_status"
-              "document_symbols"
-            ];
+            settings = {
+              sources = [
+                "filesystem"
+                "buffers"
+                "git_status"
+                "document_symbols"
+              ];
+            };
           };
           web-devicons.enable = true;
         };
@@ -125,7 +127,7 @@ in
   };
 
   full =
-    { ... }:
+    { inputs, ... }:
     {
       imports = [
         base
@@ -138,6 +140,8 @@ in
       ];
 
       programs.nixvim = {
+        nixpkgs.source = inputs.nixpkgs;
+
         colorschemes.catppuccin.settings = {
           integrations = {
             cmp = true;
@@ -149,6 +153,13 @@ in
             treesitter_context = true;
           };
         };
+        autoCmd = [
+          {
+            event = [ "VimLeave" ];
+            pattern = [ "*" ];
+            command = "set guicursor=a:ver25";
+          }
+        ];
       };
     };
 }

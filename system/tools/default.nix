@@ -27,6 +27,7 @@ in
         wget
         unzip
         lzip
+        file
       ];
     };
 
@@ -42,7 +43,7 @@ in
         fd
         ripgrep
         duf
-        du-dust
+        dust
         zellij
       ];
     };

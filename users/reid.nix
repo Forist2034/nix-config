@@ -12,6 +12,7 @@
               openssh.authorizedKeys.keyFiles = [
                 ./reid/nixos-desktop0_ed25519.pub
                 ./reid/nixos-laptop0_ed25519.pub
+                ./reid/nixos-tablet0_ed25519.pub
               ];
             };
           };
@@ -48,9 +49,14 @@
           {
             programs.git = {
               enable = true;
-              userName = "Jose Lane";
-              userEmail = "dariankline@outlook.com";
+              settings = {
+                user = {
+                  name = "Jose Lane";
+                  email = "dariankline@outlook.com";
+                };
+              };
               signing = {
+                format = "openpgp";
                 key = "714C3CCC60466A93";
                 signByDefault = true;
               };

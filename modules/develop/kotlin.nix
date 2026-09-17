@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -20,7 +20,7 @@
           };
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode Kotlin support";
+            vscodium = vscodium.mkSimpleOption "VSCodium Kotlin support";
             helix.enable = mkEnableOption "Helix Kotlin support";
             nixvim.enable = mkEnableOption "Nixvim Kotlin support";
           };
@@ -44,7 +44,7 @@
             ]
           );
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = pkgs.forOpenVsx [
               "fwcd.kotlin"
             ];

@@ -24,6 +24,10 @@
 
     parts.bluetooth.system.default
     parts.taskwarrior.system.default
+
+    system.dict
+
+    system.mobile-sync.android
   ];
 
   boot.loader = {
@@ -40,9 +44,6 @@
 
   persistence = {
     root = {
-      directories = [
-        "/etc/NetworkManager/system-connections"
-      ];
       bluetooth.enable = true;
       ssh = {
         enable = true;
@@ -64,18 +65,37 @@
     };
   };
 
+  hardware.rtl-sdr.enable = true;
+
   users.users = {
     reid = {
       extraGroups = [
         "networkmanager"
         "wireshark"
+        "plugdev"
+        "adbusers"
       ];
     };
   };
 
   time.timeZone = "Asia/Shanghai";
 
-  programs.wireshark.enable = true;
+  programs.wireshark = {
+    enable = true;
+    usbmon.enable = true;
+    package = pkgs.wireshark;
+  };
+
+  environment.systemPackages = with pkgs; [
+    nbd
+    glances
+
+    minicom
+
+    scrcpy
+
+    sox
+  ];
 
   home-manager.users = {
     reid =

@@ -35,10 +35,37 @@
             );
         };
       };
+
+      profiles = {
+        ssh-agent =
+          { ... }:
+          {
+            programs.ssh = {
+              startAgent = true;
+              agentTimeout = "1h";
+            };
+          };
+        connection-mux = { ... }: {
+          programs.ssh.extraConfig = ''
+            Match tagged muxed
+              ControlMaster auto
+              ControlPath /run/user/%i/ssh-master-%C
+              ControlPersist 4m
+          '';
+        };
+      };
     in
     {
-      inherit modules;
+      inherit modules profiles;
 
-      default = modules.persist;
+      default =
+        { ... }:
+        {
+          imports = [
+            modules.persist
+            profiles.ssh-agent
+            profiles.connection-mux
+          ];
+        };
     };
 }

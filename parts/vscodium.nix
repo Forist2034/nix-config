@@ -5,13 +5,17 @@ let
       name:
       { pkgs, ... }:
       {
-        programs.vscode.profiles.${name} = {
+        programs.vscodium.profiles.${name} = {
           userSettings = {
             "editor.fontLigatures" = true;
             "editor.rulers" = [ 80 ];
 
             "editor.formatOnSave" = true;
             "editor.formatOnType" = true;
+
+            "scm.defaultViewMode" = "tree";
+
+            "window.autoDetectColorScheme" = true;
 
             "terminal.integrated.cursorStyle" = "line";
 
@@ -23,7 +27,7 @@ let
       name:
       { pkgs, ... }:
       {
-        programs.vscode.profiles.${name} = {
+        programs.vscodium.profiles.${name} = {
           extensions = [ pkgs.vscode-extensions.editorconfig.editorconfig ];
         };
       };
@@ -31,7 +35,7 @@ let
       name:
       { pkgs, ... }:
       {
-        programs.vscode.profiles.${name} = {
+        programs.vscodium.profiles.${name} = {
           extensions = [ pkgs.vscode-extensions.asvetliakov.vscode-neovim ];
           userSettings = {
             "vscode-neovim.neovimExecutablePaths.linux" = "${pkgs.neovim}/bin/nvim";
@@ -43,7 +47,7 @@ let
       name:
       { pkgs, ... }:
       {
-        programs.vscode.profiles.${name} = {
+        programs.vscodium.profiles.${name} = {
           extensions = [ pkgs.vscode-extensions.streetsidesoftware.code-spell-checker ];
           userSettings = {
             "cSpell.checkOnlyEnabledFileTypes" = false;
@@ -54,7 +58,7 @@ let
       name:
       { pkgs, ... }:
       {
-        programs.vscode.profiles.${name} = {
+        programs.vscodium.profiles.${name} = {
           extensions = [ pkgs.vscode-extensions.christian-kohler.path-intellisense ];
         };
       };
@@ -75,9 +79,8 @@ in
           profiles.path-complete
         ];
 
-        programs.vscode = {
+        programs.vscodium = {
           enable = true;
-          package = pkgs.vscodium;
         };
       };
   };

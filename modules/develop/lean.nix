@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -17,7 +17,7 @@
           env.enable = options.mkDisableOption "Lean build tools";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode Lean support";
+            vscodium = vscodium.mkSimpleOption "VSCodium Lean support";
             nixvim.enable = mkEnableOption "Nixvim Lean support";
           };
         };
@@ -30,7 +30,7 @@
         lib.mkIf cfg.enable {
           home.packages = lib.mkIf cfg.env.enable [ pkgs.lean4 ];
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = pkgs.nix4vscode.forOpenVsx [
               "leanprover.lean4"
             ];

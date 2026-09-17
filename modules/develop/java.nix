@@ -2,7 +2,7 @@
   persist,
   options,
   lib,
-  vscode,
+  vscodium,
   ...
 }:
 {
@@ -40,11 +40,12 @@
           };
 
           editor = {
-            vscode = {
-              enable = mkEnableOption "VSCode Java support";
-              profiles = vscode.profile.mkOption {
-                gradle.enable = options.mkDisableOption "VSCode Gradle support";
-                maven.enable = options.mkDisableOption "VSCode Maven support";
+            vscodium = {
+              enable = mkEnableOption "VSCodium Java support";
+              profiles = vscodium.profile.mkOption {
+                enable = mkEnableOption "VSCodium support in profile";
+                gradle.enable = options.mkDisableOption "VSCodium Gradle support";
+                maven.enable = options.mkDisableOption "VSCodium Maven support";
               };
             };
             helix.enable = mkEnableOption "Helix Java support";
@@ -64,8 +65,8 @@
             (lib.mkIf cfg.env.maven.enable pkgs.maven)
           ];
 
-          programs.vscode = lib.mkIf cfg.editor.vscode.enable {
-            profiles = vscode.profile.mkConfig cfg.editor.vscode.profiles (
+          programs.vscodium = lib.mkIf cfg.editor.vscodium.enable {
+            profiles = vscodium.profile.mkConfig cfg.editor.vscodium.profiles (
               value:
               lib.mkIf value.enable {
                 extensions = with pkgs.vscode-extensions; [
@@ -87,15 +88,22 @@
 
           programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
             plugins = {
-              nvim-jdtls =
-                let
-                  home = config.home.homeDirectory;
-                in
-                {
-                  enable = true;
-                  configuration = "${home}/.cache/jdtls/config";
-                  data = "${home}/.cache/jdtls/workspace";
+              jdtls = {
+                enable = true;
+                settings = {
+                  cmd =
+                    let
+                      home = config.home.homeDirectory;
+                    in
+                    [
+                      "jdtls"
+                      "-configuration"
+                      "${home}/.cache/jdtls/config"
+                      "-data"
+                      "${home}/.cache/jdtls/workspace"
+                    ];
                 };
+              };
             };
           };
         };

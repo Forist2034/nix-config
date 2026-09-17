@@ -29,5 +29,9 @@ in
 
   home = {
     develop.configuration = import ./home.nix;
+
+    extra = {
+      http-capture = import ./http-capture.nix;
+    };
   };
 }

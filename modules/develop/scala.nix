@@ -1,7 +1,7 @@
 {
   persist,
   options,
-  vscode,
+  vscodium,
   lib,
   ...
 }:
@@ -31,7 +31,7 @@
           env.enable = options.mkDisableOption "Scala build tools";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode scala support";
+            vscodium = vscodium.mkSimpleOption "VSCodium scala support";
             nixvim.enable = mkEnableOption "Neovim scala support";
           };
         };
@@ -56,7 +56,7 @@
             ]
           );
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions =
               [
                 pkgs.vscode-extensions.scala-lang.scala

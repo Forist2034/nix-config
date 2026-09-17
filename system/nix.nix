@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   nix = {
     settings = {
@@ -13,5 +13,9 @@
     registry = builtins.mapAttrs (name: value: { flake = value; }) (
       builtins.removeAttrs inputs [ "self" ]
     );
+
+    # TODO: use stable version when develop shell was fixed (nix pr #13916,
+    # nix 2.32.0 or later
+    package = pkgs.nixVersions.latest;
   };
 }

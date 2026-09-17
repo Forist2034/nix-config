@@ -25,11 +25,13 @@ let
         ./meson.nix
         ./nickel.nix
         ./nix.nix
+        ./nushell.nix
         ./ocaml.nix
         ./prettier.nix
         ./python.nix
         ./rust.nix
         ./scala.nix
+        ./shell.nix
         ./toml.nix
         ./typescript.nix
         ./typst.nix

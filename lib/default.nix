@@ -1,6 +1,10 @@
 lib: with lib; {
   inherit lib;
 
+  containers = {
+    gui-container = import ./gui-container.nix;
+  };
+
   modules = {
     importWithLibs = libs: paths: builtins.map (p: (import p) libs) paths;
   };
@@ -78,7 +82,7 @@ lib: with lib; {
     };
   };
 
-  vscode =
+  vscodium =
     let
       profile =
         let

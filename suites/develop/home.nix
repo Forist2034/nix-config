@@ -11,19 +11,29 @@
   imports = [
     modules.develop.home
 
-    parts.vscode.home.default
+    parts.nushell.home.default
+    parts.task.home.default
+    parts.vscodium.home.default
+    parts.direnv.home.default
 
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     home.nixvim.full
     home.nixvim.complete.with-icons
     home.nixvim.gui.neovide.default
   ];
 
   develop = {
+    nickel = {
+      enable = true;
+      editor = {
+        vscodium.enable = true;
+        nixvim.enable = true;
+      };
+    };
     nix = {
       enable = true;
       editor = {
-        vscode.enable = true;
+        vscodium.enable = true;
         nixvim.enable = true;
       };
       browser.firefox = {
@@ -42,14 +52,4 @@
 
     ripgrep-all
   ];
-
-  programs.nixvim = {
-    autoCmd = [
-      {
-        event = [ "VimLeave" ];
-        pattern = [ "*" ];
-        command = "set guicursor=a:ver25";
-      }
-    ];
-  };
 }

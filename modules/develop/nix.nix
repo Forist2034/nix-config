@@ -1,7 +1,7 @@
 {
   firefox,
   options,
-  vscode,
+  vscodium,
   ...
 }:
 {
@@ -20,7 +20,7 @@
           enable = mkEnableOption "Nix environment";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode Nix support";
+            vscodium = vscodium.mkSimpleOption "VSCodium Nix support";
             helix = {
               enable = mkEnableOption "Helix nix support";
               formatter = {
@@ -45,13 +45,9 @@
                 home-manager.enable = options.mkDisableOption "Home Manager doc";
                 nixvim.enable = options.mkDisableOption "Nixvim doc";
               };
+              search.enable = options.mkDisableOption "Nix search engines";
               profiles = firefox.profile.mkOption {
                 enable = mkEnableOption "Nix firefox";
-                search = {
-                  packages = options.mkDisableOption "Nix packages search";
-                  options = options.mkDisableOption "Nix options search";
-                  wiki = options.mkDisableOption "NixOS wiki search";
-                };
               };
             };
           };
@@ -78,7 +74,7 @@
                         (lib.mkIf cfgFF.bookmarks.nix.enable [
                           {
                             name = "Nix Reference Manual";
-                            url = "${pkgs.nix.doc}/share/doc/nix/manual/index.html";
+                            url = "file://${config.nix.package.doc}/share/doc/nix/manual/index.html";
                           }
                         ])
                         (lib.mkIf cfgFF.bookmarks.nixpkgs.enable [
@@ -86,19 +82,15 @@
                             name = "Nixpkgs manual";
                             url =
                               let
-                                # TODO: use upstream package when fix is merged
-                                manual = pkgs.runCommand "nixpkgs-manual" { } ''
-                                  cp -rv --no-preserve=mode '${inputs.nixpkgs.htmlDocs.nixpkgsManual.${info.system}}' $out
-                                  ln -v $out/share/doc/nixpkgs/manual.html $out/share/doc/nixpkgs/index.html
-                                '';
+                                manual = inputs.nixpkgs.htmlDocs.nixpkgsManual.${info.system};
                               in
-                              "${manual}/share/doc/nixpkgs/index.html";
+                              "file://${manual}/share/doc/nixpkgs/index.html";
                           }
                         ])
                         (lib.mkIf cfgFF.bookmarks.nixos.enable [
                           {
                             name = "NixOS Manual";
-                            url = "${inputs.nixpkgs.htmlDocs.nixosManual.${info.system}}/share/doc/nixos/index.html";
+                            url = "file://${inputs.nixpkgs.htmlDocs.nixosManual.${info.system}}/share/doc/nixos/index.html";
                           }
                         ])
                       ];
@@ -107,7 +99,9 @@
                   (lib.mkIf cfgFF.bookmarks.home-manager.enable [
                     {
                       name = "Home Manager Manual";
-                      url = "${inputs.home-manager.packages.${info.system}.docs-html}/share/doc/home-manager/index.xhtml";
+                      url = "file://${
+                        inputs.home-manager.packages.${info.system}.docs-html
+                      }/share/doc/home-manager/index.xhtml";
                     }
                   ])
                   (lib.mkIf cfgFF.bookmarks.nixvim.enable [
@@ -122,122 +116,47 @@
                       in
                       {
                         name = "Nixvim docs";
-                        url = "${docs}/index.html";
+                        url = "file://${docs}/index.html";
                       }
                     )
                   ])
                 ];
-              };
-              profiles = firefox.profile.mkConfig (
-                value:
-                lib.mkIf value.enable {
-                  search.engines =
-                    let
-                      icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                    in
+                SearchEngines.Add = lib.mkIf cfgFF.search.enable (
+                  let
+                    IconURL = "file://${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                  in
+                  [
                     {
-
-                      "NixOS packages" = lib.mkIf value.search.packages {
-                        description = "Search NixOS packages by name or description.";
-                        urls = [
-                          {
-                            template = "https://search.nixos.org/packages";
-                            params = [
-                              {
-                                name = "query";
-                                value = "{searchTerms}";
-                              }
-                            ];
-                          }
-                        ];
-                        inherit icon;
-                        definedAliases = [ "@nixpkg" ];
-                      };
-                      "NixOS options" = lib.mkIf value.search.options {
-                        description = "Search NixOS options by name or description.";
-                        urls = [
-                          {
-                            template = "https://search.nixos.org/options";
-                            params = [
-                              {
-                                name = "query";
-                                value = "{searchTerms}";
-                              }
-                            ];
-                          }
-                        ];
-                        inherit icon;
-                        definedAliases = [ "@nixopt" ];
-                      };
-                      "NixOS Wiki" = lib.mkIf value.search.wiki {
-                        description = "NixOS Wiki (en)";
-                        urls = [
-                          {
-                            template = "https://wiki.nixos.org/w/index.php";
-                            params = [
-                              {
-                                name = "title";
-                                value = "Special:Search";
-                              }
-                              {
-                                name = "search";
-                                value = "{searchTerms}";
-                              }
-                            ];
-                          }
-                          {
-                            template = "https://wiki.nixos.org/w/api.php";
-                            params = [
-                              {
-                                name = "action";
-                                value = "opensearch";
-                              }
-                              {
-                                name = "search";
-                                value = "{searchTerms}";
-                              }
-                              {
-                                name = "namespace";
-                                value = "0";
-                              }
-                            ];
-                            type = "application/x-suggestions+json";
-                          }
-                          {
-                            template = "https://wiki.nixos.org/w/api.php";
-                            params = [
-                              {
-                                name = "action";
-                                value = "opensearch";
-                              }
-                              {
-                                name = "format";
-                                value = "xml";
-                              }
-                              {
-                                name = "search";
-                                value = "{searchTerms}";
-                              }
-                              {
-                                name = "namespace";
-                                value = "0";
-                              }
-                            ];
-                            type = "application/x-suggestions+xml";
-                          }
-                        ];
-                        inherit icon;
-                        definedAliases = [ "@nixwiki" ];
-                      };
-                    };
-                }
-              ) cfgFF.profiles;
+                      Name = "NixOS packages";
+                      Description = "Search NixOS packages by name or description.";
+                      inherit IconURL;
+                      URLTemplate = "https://search.nixos.org/packages?query={searchTerms}";
+                      Alias = "@nixpkg";
+                    }
+                    {
+                      Name = "NixOS options";
+                      Description = "Search NixOS options by name or description.";
+                      inherit IconURL;
+                      URLTemplate = "https://search.nixos.org/options?query={searchTerms}";
+                      Alias = "@nixopt";
+                    }
+                    {
+                      Name = "NixOS Wiki";
+                      Description = "NixOS Wiki (en)";
+                      inherit IconURL;
+                      URLTemplate = "https://wiki.nixos.org/w/index.php?title=Special:Search&search={searchTerms}";
+                      SuggestURLTemplate = "https://wiki.nixos.org/w/api.php?action=opensearch&search={searchTerms}&namespace=0";
+                      Alias = "@nixwiki";
+                    }
+                  ]
+                );
+              };
             };
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.jnoortheen.nix-ide ];
             userSettings = {
-              "nix.formatterPath" = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+              "nix.formatterPath" = "${pkgs.nixfmt}/bin/nixfmt";
             };
           };
 
@@ -248,7 +167,7 @@
                   name = "nix";
                   auto-format = true;
                   formatter = lib.mkIf cfg.editor.helix.formatter.enable {
-                    command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+                    command = "${pkgs.nixfmt}/bin/nixfmt";
                   };
                 }
               ];
@@ -265,7 +184,7 @@
                   formatting = {
                     nixfmt = lib.mkIf cfgVim.formatter.enable {
                       enable = true;
-                      package = pkgs.nixfmt-rfc-style;
+                      package = pkgs.nixfmt;
                     };
                   };
                 };

@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -17,7 +17,7 @@
           env.enable = options.mkDisableOption "Python build tools";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode Python support";
+            vscodium = vscodium.mkSimpleOption "VSCodium Python support";
             nixvim.enable = mkEnableOption "Nixvim Python support";
           };
         };
@@ -33,7 +33,7 @@
             pkgs.ruff
           ];
 
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = with pkgs.vscode-extensions; [
               ms-python.python
               ms-python.debugpy

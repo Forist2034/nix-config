@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -13,7 +13,7 @@
           enable = mkEnableOption "HTML environment";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode HTML support";
+            vscodium = vscodium.mkSimpleOption "VSCodium HTML support";
             helix.enable = mkEnableOption "Helix HTML support";
             nixvim.enable = mkEnableOption "Nixvim HTML support";
           };
@@ -26,11 +26,11 @@
         in
         lib.mkIf cfg.enable {
           develop.prettier = {
-            enable = cfg.editor.vscode.enable || cfg.editor.nixvim.enable;
+            enable = cfg.editor.vscodium.enable || cfg.editor.nixvim.enable;
             editor = {
-              vscode = lib.mkIf cfg.editor.vscode.enable {
+              vscodium = lib.mkIf cfg.editor.vscodium.enable {
                 enable = true;
-                profiles = vscode.profile.mkEnableConfig cfg.editor.vscode.profiles {
+                profiles = vscodium.profile.mkEnableConfig cfg.editor.vscodium.profiles {
                   enable = true;
                   languages.html = true;
                 };

@@ -1,4 +1,4 @@
-{ options, vscode, ... }:
+{ options, vscodium, ... }:
 {
   home =
     {
@@ -15,7 +15,7 @@
           env.enable = options.mkDisableOption "Verilog tools";
 
           editor = {
-            vscode = vscode.mkSimpleOption "VSCode verilog support";
+            vscodium = vscodium.mkSimpleOption "VSCodium verilog support";
             nixvim.enable = mkEnableOption "Neovim verilog support";
           };
         };
@@ -31,8 +31,8 @@
             pkgs.verilator
           ];
 
-          # TODO: add formatter in vscode
-          programs.vscode = vscode.mkSimpleConfig cfg.editor.vscode {
+          # TODO: add formatter in vscodium
+          programs.vscodium = vscodium.mkSimpleConfig cfg.editor.vscodium {
             extensions = [ pkgs.vscode-extensions.mshr-h.veriloghdl ];
           };
 
