@@ -15,12 +15,12 @@ layout {
       pane name="tx" {
         start_suspended true
         command "bash"
-        args "-c" "rec -c 1 -t ogg -C -1 - | ssh -P muxed nixos-sbc0 sox -t ogg - -t alsa 'sysdefault:CARD=Device'"
+        args "-c" "pw-record --channels 1 --rate 8000 --format opus --container oga -q 0 - | ssh -P muxed nixos-sbc0 sox -t opus - -t alsa 'sysdefault:CARD=Device'"
       }
       pane name="rx" {
         start_suspended true
         command "bash"
-        args "-c" "ssh -P muxed nixos-sbc0 sox -c 1 -t alsa 'sysdefault:CARD=Codec' -t ogg -C -1 - | play -t ogg -"
+        args "-c" "ssh -P muxed nixos-sbc0 sox -c 1 -t alsa -r 8k 'sysdefault:CARD=Codec' -t ogg -C -1 - | pw-play --container oga -"
       }
     }
   }
