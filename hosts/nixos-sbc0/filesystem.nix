@@ -133,6 +133,12 @@
 
                   "/EFI/Linux/nixos-install-${config.system.boot.loader.ukiFile}".source =
                     "${config.system.build.uki}/${config.system.boot.loader.ukiFile}";
+
+                  "/toplevel".source = pkgs.writeText "system-image-toplevel" (
+                    builtins.trace "system image toplevel: ${config.system.build.toplevel}" (
+                      builtins.toString config.system.build.toplevel
+                    )
+                  );
                 };
               repartConfig = {
                 Type = "esp";
@@ -231,6 +237,12 @@
                       root = rootFileName;
                       boot-info = bootInfoFileName;
                     }
+                  );
+
+                  "/toplevel".source = pkgs.writeText "ro-image-toplevel" (
+                    builtins.trace "ro image toplevel: ${config.system.build.toplevel}" (
+                      builtins.toString config.system.build.toplevel
+                    )
                   );
                 };
               repartConfig = {
