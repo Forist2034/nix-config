@@ -76,11 +76,11 @@ export module image {
     $out | path join "repart-output.json" | open -r | from json
   }
   def boot_info_file [out: string, output: list] {
-    let name = $output | filter {|part| $part.label == "boot-info" } | first
+    let name = $output | where {|part| $part.label == "boot-info" } | first
     $out | path join $name.split_path
   }
   def root_file [out: string, output: list] {
-    let name = $output | filter {|part| $part.label | str starts-with "sbc0-root" } | first
+    let name = $output | where {|part| $part.label | str starts-with "sbc0-root" } | first
     $out | path join $name.split_path
   }
 

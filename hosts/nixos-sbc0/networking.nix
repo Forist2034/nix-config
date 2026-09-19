@@ -15,19 +15,18 @@
 
   services.resolved = {
     enable = true;
-    extraConfig = ''
-      [Resolve]
-      DNS=${
-        builtins.concatStringsSep " " [
+    settings = {
+      Resolve = {
+        DNS = [
           "1.0.0.1"
           "1.1.1.1"
           # aliyun dns
           "223.5.5.5"
           "223.6.6.6"
-        ]
-      }
-      Domains=~.
-    '';
+        ];
+        Domains = "~.";
+      };
+    };
   };
 
   systemd.network = {

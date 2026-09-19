@@ -132,16 +132,13 @@
 
   environment.systemPackages = with pkgs; [
     coreutils
+    android-tools
 
     sox # audio tools
     iperf3 # for network performance testing
   ];
 
   hardware.alsa = {
-    enable = true;
-  };
-
-  programs.adb = {
     enable = true;
   };
 
