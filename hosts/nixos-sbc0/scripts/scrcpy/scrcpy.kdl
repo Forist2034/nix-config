@@ -10,17 +10,15 @@ layout {
     }
   }
 
-  tab name="voice" {
+  tab name="ssh-voice" {
     pane split_direction="vertical" {
       pane name="tx" {
         start_suspended true
-        command "bash"
-        args "-c" "pw-record --channels 1 --rate 8000 --format opus --container oga -q 0 - | ssh -P muxed nixos-sbc0 sox -t opus - -t alsa 'sysdefault:CARD=Device'"
+        command "sbc0-ssh-voice-tx.sh"
       }
       pane name="rx" {
         start_suspended true
-        command "bash"
-        args "-c" "ssh -P muxed nixos-sbc0 sox -c 1 -t alsa -r 8k 'sysdefault:CARD=Codec' -t ogg -C -1 - | pw-play --container oga -"
+        command "sbc0-ssh-voice-rx.sh"
       }
     }
   }
@@ -41,8 +39,8 @@ layout {
   tab name="ssh" {
     pane {
       command "ssh"
+      start_suspended true
       args "-P" "muxed" "nixos-sbc0"
     }
   }
-  tab 
 }

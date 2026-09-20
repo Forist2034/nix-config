@@ -134,8 +134,14 @@
     coreutils
     android-tools
 
-    sox # audio tools
     iperf3 # for network performance testing
+
+    # audio tools
+    opus-tools
+    flac
+
+    # experimental network voice transport
+    srt
   ];
 
   hardware.alsa = {
@@ -162,6 +168,15 @@
         x11Support = false;
       };
     })
+    (final: prev: {
+      # FIXME: use upstream package when fixed
+      opus-tools = prev.opus-tools.overrideAttrs (
+        finalAttrs: prevAttrs: {
+          # fatal error: 'opus.h' file not found
+          env.NIX_CFLAGS_COMPILE = "-I${final.libopus.dev}/include/opus -I${final.libopusenc.dev}/include/opus -I${final.opusfile.dev}/include/opus";
+        }
+      );
+    })
     # TODO: use upstream package when fixed
     (final: prev: {
       networkd-dispatcher = prev.networkd-dispatcher.overrideAttrs (
@@ -179,46 +194,13 @@
       );
     })
     (final: prev: {
-      ffmpeg = prev.ffmpeg-headless.override {
-        withAmf = false;
-        withAom = false;
-        withAss = false;
-        withBluray = false;
-        withCudaLLVM = false;
-        withCuvid = false;
-        withDav1d = false;
-        withDrm = false;
-        withFontconfig = false;
-        withFreetype = false;
-        withFribidi = false;
-        withGnutls = false;
-        withHarfbuzz = false;
-        withOpencl = false;
-        withOpenjpeg = false;
-        withOpenmpt = false;
-        withRist = false;
-        withSrt = false;
-        withSoxr = false;
-        withSpeex = false;
-        withSvtav1 = false;
-        withTheora = false;
-        withV4l2 = false;
-        withVaapi = false;
-        withVidStab = false;
-        withVorbis = false;
-        withVpx = false;
-        withVulkan = false;
-        withWebp = false;
-        withX264 = false;
-        withX265 = false;
-        withXvid = false;
-        withZimg = false;
-        withZvbi = false;
-      };
-    })
-    (final: prev: {
       alsa-utils = prev.alsa-utils.override {
         withPipewireLib = false;
+      };
+      alsa-plugins = prev.alsa-plugins.override {
+        ffmpeg = null;
+        libjack2 = null;
+        libpulseaudio = null;
       };
     })
   ];

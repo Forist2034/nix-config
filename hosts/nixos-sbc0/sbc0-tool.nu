@@ -155,7 +155,7 @@ export module system {
 
   export module rebuild {
     def remote_rebuild [op: string] {
-      nixos-rebuild $op --flake $"($flake)#($hostname)" --keep-going -j 1 --target-host $"root@($hostname)"
+      nixos-rebuild --no-reexec $op --flake $"($flake)#($hostname)" --keep-going -j 1 --target-host $"root@($hostname)"
     }
 
     export def test [] {
