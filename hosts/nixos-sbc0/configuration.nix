@@ -164,8 +164,23 @@
     })
     (final: prev: {
       # networkd-dispatcher transitively depends on it
-      cairo = prev.cairo.override {
+      gobject-introspection = prev.gobject-introspection.override {
         x11Support = false;
+        cairo = null;
+        gnome = null;
+      };
+      python3 = prev.python3.override {
+        packageOverrides = py-final: py-prev: {
+          pygobject3 =
+            (py-prev.pygobject3.override {
+              pycairo = null;
+              cairo = null;
+              gnome = null;
+            }).overrideAttrs
+              {
+                mesonFlags = [ "-Dpycairo=disabled" ];
+              };
+        };
       };
     })
     (final: prev: {
@@ -174,22 +189,6 @@
         finalAttrs: prevAttrs: {
           # fatal error: 'opus.h' file not found
           env.NIX_CFLAGS_COMPILE = "-I${final.libopus.dev}/include/opus -I${final.libopusenc.dev}/include/opus -I${final.opusfile.dev}/include/opus";
-        }
-      );
-    })
-    # TODO: use upstream package when fixed
-    (final: prev: {
-      networkd-dispatcher = prev.networkd-dispatcher.overrideAttrs (
-        finalAttrs: prevAttrs: {
-          nativeBuildInputs = with pkgs; [
-            asciidoc # for a2x
-            installShellFiles
-            wrapGAppsNoGuiHook
-          ];
-          buildInputs = with pkgs; [
-            python3Packages.wrapPython
-            python3Packages.pygobject3
-          ];
         }
       );
     })
