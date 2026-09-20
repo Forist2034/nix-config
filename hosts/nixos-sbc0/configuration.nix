@@ -52,9 +52,9 @@
     "memtest=32"
   ];
   systemd.enableEmergencyMode = false;
-  systemd.watchdog = {
-    runtimeTime = "15s";
-    rebootTime = "15s";
+  systemd.settings.Manager = {
+    RuntimeWatchdogSec = "15s";
+    RebootWatchdogSec = "15s";
   };
 
   systemd.services.set-sys-led = {
