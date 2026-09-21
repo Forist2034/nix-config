@@ -19,6 +19,7 @@
 
         pwr_led {
           label = "orangepi:green:net";
+          linux,default-trigger = "netdev";
           default-state = "off";
         };
       };

@@ -57,17 +57,27 @@
     RebootWatchdogSec = "15s";
   };
 
-  systemd.services.set-sys-led = {
-    after = [ "basic.target" ];
-    requires = [ "basic.target" ];
-    wantedBy = [ "multi-user.target" ];
-    script = ''
-      echo 1 > '/sys/class/leds/orangepi:red:sys/brightness'
-    '';
-    serviceConfig = {
-      Type = "oneshot";
+  systemd.services.set-leds =
+    let
+      net_led = "/sys/class/leds/orangepi:green:net";
+    in
+    {
+      after = [ "basic.target" ];
+      requires = [ "basic.target" ];
+      wantedBy = [ "multi-user.target" ];
+      script = ''
+        echo 1 > '/sys/class/leds/orangepi:red:sys/brightness'
+
+        # init network led
+        echo 'wlan0' > '${net_led}/device_name'
+        echo 1 > '${net_led}/link'
+        echo 1 > '${net_led}/tx'
+        echo 1 > '${net_led}/rx'
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+      };
     };
-  };
 
   networking.hostName = "nixos-sbc0";
 
@@ -212,27 +222,6 @@
           }
         else
           prev.systemd;
-    })
-    (final: prev: {
-      # networkd-dispatcher transitively depends on it
-      gobject-introspection = prev.gobject-introspection.override {
-        x11Support = false;
-        cairo = null;
-        gnome = null;
-      };
-      python3 = prev.python3.override {
-        packageOverrides = py-final: py-prev: {
-          pygobject3 =
-            (py-prev.pygobject3.override {
-              pycairo = null;
-              cairo = null;
-              gnome = null;
-            }).overrideAttrs
-              {
-                mesonFlags = [ "-Dpycairo=disabled" ];
-              };
-        };
-      };
     })
     (final: prev: {
       # FIXME: use upstream package when fixed

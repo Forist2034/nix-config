@@ -31,6 +31,9 @@ in
   boot.extraModulePackages = with config.boot.kernelPackages; [
     rtl8189fs
   ];
+  boot.kernelModules = [
+    "ledtrig_netdev"
+  ];
 
   boot.uki.settings = {
     UKI = {
