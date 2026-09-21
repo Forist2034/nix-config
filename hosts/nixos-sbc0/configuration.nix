@@ -130,6 +130,7 @@
   security.pam.services.su.forwardXAuth = lib.mkForce false;
   services.lvm.enable = false;
 
+  environment.defaultPackages = [ ];
   environment.systemPackages = with pkgs; [
     coreutils
     android-tools
@@ -155,12 +156,62 @@
       };
     })
     (final: prev: {
-      systemd = prev.systemd.override {
-        withAudit = false;
-        withFido2 = false;
-        withPasswordQuality = false;
-        withTpm2Tss = false;
-      };
+      systemd =
+        if final.stdenv.hostPlatform != final.stdenv.buildPlatform then
+          prev.systemd.override {
+            withAcl = true;
+            withAnalyze = false;
+            withApparmor = false;
+            withAudit = false;
+            withCompression = true;
+            withCoredump = true;
+            withCryptsetup = false;
+            withRepart = false;
+            withDocumentation = false;
+            withEfi = true;
+            withFido2 = false;
+            withGcrypt = false;
+            withHostnamed = false;
+            withHomed = false;
+            withHwdb = true;
+            withImportd = false;
+            withLibBPF = false;
+            withLibidn2 = false;
+            withLocaled = false;
+            withLogind = true;
+            withMachined = false;
+            withNetworkd = true;
+            withNss = true;
+            withOomd = true;
+            withOpenSSL = false;
+            withPCRE2 = true;
+            withPam = true;
+            withPolkit = false;
+            withPortabled = false;
+            withRemote = false;
+            withResolved = true;
+            withShellCompletions = true;
+            withSysupdate = false;
+            withSysusers = true;
+            withTimedated = true;
+            withTimesyncd = true;
+            withTpm2Tss = false;
+            withUserDb = false;
+            withUkify = false;
+            withBootloader = true;
+            withPasswordQuality = false;
+            withVmspawn = false;
+            withQrencode = true;
+            withLibarchive = false;
+            withVConsole = true;
+            # withKmod = false; # breaks udevCheckHook of bcache-tools
+            withFirstboot = false;
+            withKexectools = false;
+            withLibseccomp = false;
+            withNspawn = true;
+          }
+        else
+          prev.systemd;
     })
     (final: prev: {
       # networkd-dispatcher transitively depends on it

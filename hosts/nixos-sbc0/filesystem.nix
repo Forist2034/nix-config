@@ -76,19 +76,6 @@
     memoryPercent = 100;
   };
 
-  specialisation.config = {
-    configuration =
-      { ... }:
-      {
-        fileSystems = {
-          "/mnt/config".options = [
-            "noatime"
-            "rw"
-          ];
-        };
-      };
-  };
-
   image.modules = {
     system =
       {
@@ -195,7 +182,10 @@
         ukiFileName = "nixos-sbc0-${version}-${system.boot.loader.ukiFile}";
       in
       {
-        imports = [ "${modulesPath}/image/repart.nix" ];
+        imports = [
+          "${modulesPath}/image/repart.nix"
+          "${modulesPath}/profiles/perlless.nix"
+        ];
 
         fileSystems = {
           "/mnt/images" = {
