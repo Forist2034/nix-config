@@ -1,9 +1,11 @@
 { private, local-lib, ... }:
 let
   inherit (private.hosts.nixos-sbc0.ddns) hostName;
+
+  system = "armv7l-linux";
 in
 {
-  system = "armv7l-linux";
+  inherit system;
 
   ddns = {
     inherit hostName;
@@ -24,5 +26,19 @@ in
     cpu = {
       threads = 4;
     };
+  };
+
+  shells = {
+    kernelConfigEnv =
+      { nixpkgs, localSystem }:
+      (import nixpkgs {
+        inherit localSystem;
+        crossSystem = system;
+      }).linuxPackages.kernel.configEnv.overrideAttrs
+        (
+          finalAttrs: prevAttrs: {
+            env.ARCH = "arm";
+          }
+        );
   };
 }

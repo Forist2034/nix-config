@@ -40,9 +40,6 @@
     filesToInstall = [ "u-boot-sunxi-with-spl.bin" ];
   };
 
-  # TODO: fix driver for rtl8189
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
-
   boot.kernelParams = [
     "panic=1"
     "boot.panic_on_fail"

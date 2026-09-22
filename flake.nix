@@ -151,6 +151,15 @@
           ];
         };
 
+      devShells = {
+        x86_64-linux = {
+          sbc0-kernel-config = hosts.nixos-sbc0.shells.kernelConfigEnv {
+            inherit nixpkgs;
+            localSystem = "x86_64-linux";
+          };
+        };
+      };
+
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     };
 }

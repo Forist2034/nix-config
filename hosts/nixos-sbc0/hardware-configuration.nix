@@ -28,6 +28,26 @@ in
     ];
   };
 
+  boot.kernelPackages =
+    let
+      baseKernel = pkgs.linuxPackages.kernel;
+    in
+    pkgs.linuxPackagesFor (
+      pkgs.linuxManualConfig {
+        inherit (baseKernel)
+          version
+          modDirVersion
+          src
+          kernelPatches
+          ;
+        configfile = ./kernel-config;
+        features = {
+          efiBootStub = true;
+          netfilterRPFilter = true;
+        };
+      }
+    );
+  boot.initrd.includeDefaultModules = false;
   boot.extraModulePackages = with config.boot.kernelPackages; [
     rtl8189fs
   ];
