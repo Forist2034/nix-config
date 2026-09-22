@@ -140,7 +140,14 @@
   environment.defaultPackages = [ ];
   environment.systemPackages = with pkgs; [
     coreutils
-    android-tools
+    (android-tools.overrideAttrs (
+      # avoid depends on build platform protobuf
+      finalAttrs: prevAttrs: {
+        nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.buildPackages.protobuf ];
+        propagatedBuildInputs = [ ];
+        disallowedRequisites = [ pkgs.buildPackages.protobuf ];
+      }
+    ))
 
     iperf3 # for network performance testing
 
@@ -157,6 +164,17 @@
   };
 
   nixpkgs.overlays = [
+    (final: prev: {
+      protobuf =
+        if final.stdenv.hostPlatform != final.stdenv.buildPlatform then
+          prev.protobuf.overrideAttrs (
+            finalAttrs: prevAttrs: {
+              setupHook = null; # avoid depends on build platform protobuf
+            }
+          )
+        else
+          prev.protobuf;
+    })
     (final: prev: {
       dbus = prev.dbus.override {
         x11Support = false;
