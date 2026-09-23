@@ -310,11 +310,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783494382,
-        "narHash": "sha256-ShMPF+L79n/fjX0IIF6doT7amU1J+nZ6G51H0UJDWTU=",
+        "lastModified": 1790060812,
+        "narHash": "sha256-hXMSWTyF4HK9lyloi4ee4L9dwU6KG/IXHiasXhgzgm0=",
         "owner": "Forist2034",
         "repo": "task-util",
-        "rev": "a4d1fc5129ac586c130f4fba1c7742bac57ea3af",
+        "rev": "96d9666372c4185dfd9a7143107af1727de15bbb",
         "type": "github"
       },
       "original": {
