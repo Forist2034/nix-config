@@ -22,12 +22,13 @@
       options = [
         "noatime"
         "ro"
+        "noauto"
       ];
     };
 
-    "/mnt/root" = {
+    "/nix" = {
       neededForBoot = true;
-      device = lib.mkDefault "/dev/disk/by-label/sbc0-root";
+      device = lib.mkDefault "/dev/disk/by-partlabel/sbc0-sd-nix";
       fsType = lib.mkDefault "ext4";
       options = lib.mkDefault [ "noatime" ];
     };
@@ -53,14 +54,6 @@
         "noatime"
         "umask=0077"
       ];
-    };
-
-    "/nix" = {
-      neededForBoot = true;
-      depends = [ "/mnt/root" ];
-      device = "/mnt/root/nix";
-      fsType = "none";
-      options = [ "bind" ];
     };
   };
 
@@ -102,6 +95,13 @@
           };
         };
 
+        environment.etc."first-boot.sh".text = ''
+          #!${pkgs.bash}/bin/bash
+
+          nix-store --load-db < /nix/install-closure/registration
+          bootctl install
+        '';
+
         image.repart = {
           name = "system-image";
           split = true;
@@ -135,26 +135,19 @@
                 SizeMinBytes = "64M";
               };
             };
-            root = {
+            nix = {
               contents = {
-                "/etc/install-closure".source = pkgs.buildPackages.closureInfo {
+                "/install-closure".source = pkgs.buildPackages.closureInfo {
                   rootPaths = [ config.system.build.toplevel ];
                 };
-                "/etc/first-boot.sh".source = pkgs.writeText "first-boot.sh" ''
-                  #!${pkgs.bash}/bin/bash
-
-                  readonly root=/mnt/root
-
-                  nix-store --load-db < $root/etc/install-closure/registration
-                  bootctl install
-                '';
               };
               storePaths = [ config.system.build.toplevel ];
+              nixStorePrefix = "/store";
               repartConfig = {
                 Type = "root";
                 Format = "ext4";
-                Label = "sbc0-root";
-                SplitName = "root";
+                Label = "sbc0-nix";
+                SplitName = "nix";
                 Minimize = "guess";
               };
             };
@@ -177,7 +170,7 @@
         inherit (config) system;
 
         version = "${builtins.toString flake.lastModified}-${commit}";
-        rootFileName = "nixos-sbc0-${version}.root.erofs";
+        nixDataFileName = "nixos-sbc0-${version}.nix.erofs";
         bootInfoFileName = "nixos-sbc0-${version}.boot-info.erofs";
         ukiFileName = "nixos-sbc0-${version}-${system.boot.loader.ukiFile}";
       in
@@ -188,12 +181,8 @@
         ];
 
         fileSystems = {
-          "/mnt/images" = {
-            neededForBoot = true;
-          };
-          "/mnt/root" = {
-            depends = [ "/mnt/images" ];
-            device = "/mnt/images/${rootFileName}";
+          "/nix" = {
+            device = "/mnt/images/${nixDataFileName}";
             fsType = "erofs";
           };
         };
@@ -224,7 +213,7 @@
                   "/filenames.json".source = builtins.toFile "filenames.json" (
                     builtins.toJSON {
                       uki = ukiFileName;
-                      root = rootFileName;
+                      nix_data = nixDataFileName;
                       boot-info = bootInfoFileName;
                     }
                   );
@@ -244,13 +233,14 @@
                 Compression = "lz4";
               };
             };
-            root = {
+            nix = {
               storePaths = [ system.build.toplevel ];
+              nixStorePrefix = "/store";
               repartConfig = {
                 Type = "root";
                 Format = "erofs";
-                Label = "sbc0-root-${builtins.substring 0 7 commit}";
-                SplitName = "root";
+                Label = "sbc0-nix-${builtins.substring 0 7 commit}";
+                SplitName = "nix";
                 Minimize = "best";
                 Compression = "lz4";
               };

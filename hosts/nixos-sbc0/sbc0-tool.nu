@@ -5,7 +5,7 @@ const hostname = "nixos-sbc0"
 const part_esp = "/dev/disk/by-partlabel/sbc0-sd-esp"
 const part_images = "/dev/disk/by-partlabel/sbc0-sd-images"
 const part_state = "/dev/disk/by-partlabel/sbc0-sd-state"
-const part_root = "/dev/disk/by-partlabel/sbc0-sd-root"
+const part_nix = "/dev/disk/by-partlabel/sbc0-sd-nix"
 
 def nix_build [--out-dir: string, name: string, attr: string] {
   let flakeUri = $"($flake)#nixosConfigurations.($hostname).config.($attr)"
@@ -79,8 +79,8 @@ export module image {
     let name = $output | where {|part| $part.label == "boot-info" } | first
     $out | path join $name.split_path
   }
-  def root_file [out: string, output: list] {
-    let name = $output | where {|part| $part.label | str starts-with "sbc0-root" } | first
+  def nix_data_file [out: string, output: list] {
+    let name = $output | where {|part| $part.label | str starts-with "sbc0-nix" } | first
     $out | path join $name.split_path
   }
 
@@ -91,12 +91,13 @@ export module image {
     umount $esp_mount
     rm --permanent $esp_mount
   }
-  def write_image [--boot-info: string, --root: string, info_path: string] {
+  def write_image [--boot-info: string, --nix_data: string, info_path: string] {
     let image_mount = mktemp --directory 
-    mount -v $part_images $image_mount
+    mount $part_images $image_mount
+    print $"mounted ($part_images) on ($image_mount)"
     let filenames = open -r ($info_path | path join "filenames.json") | from json
     write_file $boot_info ($image_mount | path join ($filenames | get "boot-info"))
-    write_file $root ($image_mount | path join $filenames.root)
+    write_file $nix_data ($image_mount | path join $filenames.nix_data)
     umount -v  $image_mount
     rm --permanent $image_mount
   }
@@ -111,9 +112,10 @@ export module image {
     let boot_info = boot_info_file $out $repart_output
     
     let info_path = mktemp --directory 
-    mount -v $boot_info $info_path
+    mount $boot_info $info_path
+    print $"mounted ($boot_info) on ($info_path)"
     write_boot $info_path
-    write_image --boot-info $boot_info --root (root_file $out $repart_output) $info_path
+    write_image --boot-info $boot_info --nix_data  (nix_data_file $out $repart_output) $info_path
     umount -v $info_path
     rm --permanent $info_path
   }
@@ -126,14 +128,14 @@ export module image {
     let out = $env.OUT_DIR | path join $output_name
     let repart_output = repart_info $out
     let boot_info = boot_info_file $out $repart_output
-    let root = root_file $out $repart_output
+    let nix_data = nix_data_file $out $repart_output
 
     let info_path = mktemp --directory 
     erofsfuse $boot_info $info_path
 
     let filenames = $info_path | path join "filenames.json" | open -r | from json
     
-    scp $root $"root@($hostname):/mnt/images/($filenames.root)"
+    scp $nix_data $"root@($hostname):/mnt/images/($filenames.nix_data)"
     scp $boot_info $"root@($hostname):/mnt/images/($filenames | get "boot-info")"
 
     let uki_path = $"boot/EFI/Linux/($filenames.uki)"
@@ -150,7 +152,7 @@ export module system {
   }
 
   export def first-boot [] {
-    ssh $"root@($hostname)" bash "/mnt/root/etc/first-boot.sh"
+    ssh $"root@($hostname)" bash "/etc/first-boot.sh"
   }
 
   export module rebuild {
@@ -190,8 +192,8 @@ export module system {
       rm --permanent $img_path
       rm --permanent $part_path
     }
-    def write_root [out: string] {
-      write_file ($out | path join "system-image.root.raw") $part_root
+    def write_nix [out: string] {
+      write_file ($out | path join "system-image.nix.raw") $part_nix
       sync
     }
 
@@ -202,7 +204,7 @@ export module system {
 
       let out = $env.OUT_DIR | path join $output_name
       write_boot $out
-      write_root $out
+      write_nix $out
     }
   }
 }
