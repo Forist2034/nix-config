@@ -193,6 +193,18 @@
           };
         };
 
+        boot.initrd.systemd.mounts = [
+          {
+            what = "/dev/disk/by-partlabel/sbc0-sd-images";
+            where = "/mnt/images";
+            type = "ext4";
+            options = "ro,noatime";
+
+            wantedBy = [ "initrd-fs.target" ];
+            before = [ "sysroot.mount" ];
+          }
+        ];
+
         image.repart = {
           name = "ro-image";
           split = true;
