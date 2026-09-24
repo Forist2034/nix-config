@@ -3,41 +3,22 @@
 
   boot.consoleLogLevel = 7;
   boot.kernelParams = [
-    "console=ttyS0,115200n8"
-    "memtest=32"
+    "earlycon"
+    "rd.systemd.debug_shell"
+    "rd.systemd.default_debug_tty=ttyS0"
+    "rd.systemd.log_target=console"
+    "rd.systemd.log_level=debug"
+    "systemd.journald.forward_to_console=1"
+    "SYSTEMD_SULOGIN_FORCE=1"
   ];
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [
-    ./test_deploy.pub
-  ];
-
-  hardware.deviceTree.overlays = [
-    {
-      name = "debug";
-      dtsFile = ./debug.dts;
-    }
-  ];
-
-  boot.kernelPatches = [
-    {
-      name = "debug";
-      patch = null;
-      extraStructuredConfig = {
-        STRICT_DEVMEM = lib.kernel.no;
-      };
-    }
-  ];
+  systemd.enableEmergencyMode = lib.mkForce true;
+  boot.initrd.systemd.emergencyAccess = true;
 
   environment.systemPackages = with pkgs; [
     memtester
     stress-ng
   ];
-
-  systemd.services.set-sys-led = {
-    script = ''
-      echo 1 > '/sys/class/leds/debug:ready/brightness'
-    '';
-  };
 
   # disable ddns in debug environment
   services.update-dynv6.enable = lib.mkForce false;
