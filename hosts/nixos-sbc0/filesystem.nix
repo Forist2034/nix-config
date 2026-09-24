@@ -103,7 +103,7 @@
         '';
 
         image.repart = {
-          name = "system-image";
+          name = "nixos-sbc0-install";
           split = true;
           compression.enable = false;
           seed = "6dc21fbb-f6c6-4b5e-9cd6-2a36d7da683e";
@@ -169,10 +169,11 @@
         commit = flake.rev or flake.dirtyRev;
         inherit (config) system;
 
+        imageName = "nixos-sbc0-erofs";
         version = "${builtins.toString flake.lastModified}-${commit}";
-        nixDataFileName = "nixos-sbc0-${version}.nix.erofs";
-        bootInfoFileName = "nixos-sbc0-${version}.boot-info.erofs";
-        ukiFileName = "nixos-sbc0-${version}-${system.boot.loader.ukiFile}";
+        nixDataFileName = "${imageName}-${version}.nix.erofs";
+        bootInfoFileName = "${imageName}-${version}.boot-info.erofs";
+        ukiFileName = "${imageName}-${version}-${system.boot.loader.ukiFile}";
       in
       {
         imports = [
@@ -188,6 +189,7 @@
         };
 
         system = {
+          nixos.variant_id = "erofs-root";
           image = {
             inherit version;
           };
@@ -206,7 +208,7 @@
         ];
 
         image.repart = {
-          name = "ro-image";
+          name = imageName;
           split = true;
           compression.enable = false;
           seed = "5257e0f4-bcf8-4b61-8419-b64522cf4679";

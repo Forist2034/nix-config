@@ -182,7 +182,7 @@ export module system {
 
       let img_path = mktemp --directory 
       let part_path = mktemp --directory 
-      mount -v ($out | path join "system-image.esp.raw") $img_path
+      mount -v ($out | path join "nixos-sbc0-install.esp.raw") $img_path
       mount -v $part_esp $part_path
 
       copy_contents $img_path $part_path
@@ -193,7 +193,7 @@ export module system {
       rm --permanent $part_path
     }
     def write_nix [out: string] {
-      write_file ($out | path join "system-image.nix.raw") $part_nix
+      write_file ($out | path join "nixos-sbc0-install.nix.raw") $part_nix
       sync
     }
 
