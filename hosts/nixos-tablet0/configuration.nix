@@ -21,6 +21,8 @@
     parts.bluetooth.system.default
 
     system.dict
+
+    system.mobile-sync.android
   ];
 
   boot.loader = {
@@ -54,6 +56,14 @@
         };
       };
     };
+    share-main.users = {
+      reid = {
+        rust = {
+          enable = true;
+          cargo.enable = true;
+        };
+      };
+    };
   };
 
   time.timeZone = "Asia/Shanghai";
@@ -71,6 +81,10 @@
     caddy # for file sharing
 
     vlc
+
+    # mobile sync
+    scrcpy
+    ffmpeg
   ];
 
   home-manager.users = {
