@@ -57,6 +57,7 @@
         "/var/lib/systemd/catalog"
         "/var/lib/systemd/timers"
         "/var/log"
+        "/root/.cache/nix"
       ];
       files = [ "/etc/machine-id" ];
 
