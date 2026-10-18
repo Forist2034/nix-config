@@ -40,6 +40,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    proxy-cli = {
+      url = "github:Forist2034/proxy-cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     private-config = {
       # need to set remote to absolute path of a local git repo to make submodule
       # relative path resolve to a absolute local directory

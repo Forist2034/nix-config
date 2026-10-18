@@ -241,6 +241,26 @@
       },
       "parent": []
     },
+    "proxy-cli": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784012093,
+        "narHash": "sha256-OhoAraowUaqXKwxf0BW//pbVYYX56mfwmpbTMrRL7W4=",
+        "owner": "Forist2034",
+        "repo": "proxy-cli",
+        "rev": "a3ee08a4b43d0441799fee2d97fe3edeb951f2ec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Forist2034",
+        "repo": "proxy-cli",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "browser-utils": "browser-utils",
@@ -253,6 +273,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "private-config": "private-config",
+        "proxy-cli": "proxy-cli",
         "task-util": "task-util"
       }
     },

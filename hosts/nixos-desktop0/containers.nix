@@ -4,10 +4,13 @@
   services,
   info,
   local-lib,
+  suites,
   ...
 }:
 {
   imports = [
+    suites.proxy.system
+
     (local-lib.containers.gui-container {
       name = "stm32-dev";
       gpu = true;
