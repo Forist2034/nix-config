@@ -34,16 +34,47 @@
     # FIXME: bootloader entry installation doesn't work
     systemd-boot.enable = true;
   };
-  environment.etc.uboot = {
-    source = pkgs.buildUBoot {
-      defconfig = "orangepi_lite_defconfig";
-      extraMeta.platforms = [ info.system ];
-      filesToInstall = [ "u-boot-sunxi-with-spl.bin" ];
-    };
+  system.build.uboot = pkgs.buildUBoot {
+    defconfig = "orangepi_lite_defconfig";
+    extraMeta.platforms = [ info.system ];
+    filesToInstall = [ "u-boot-sunxi-with-spl.bin" ];
   };
 
-  # TODO: fix driver for rtl8189
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
+  boot.kernelParams = [
+    "panic=1"
+    "boot.panic_on_fail"
+    "nomodeset"
+
+    # some parts of memory have failed, find and disable them
+    "memtest=32"
+  ];
+  systemd.enableEmergencyMode = false;
+  systemd.settings.Manager = {
+    RuntimeWatchdogSec = "15s";
+    RebootWatchdogSec = "15s";
+  };
+
+  systemd.services.set-leds =
+    let
+      net_led = "/sys/class/leds/orangepi:green:net";
+    in
+    {
+      after = [ "basic.target" ];
+      requires = [ "basic.target" ];
+      wantedBy = [ "multi-user.target" ];
+      script = ''
+        echo 1 > '/sys/class/leds/orangepi:red:sys/brightness'
+
+        # init network led
+        echo 'wlan0' > '${net_led}/device_name'
+        echo 1 > '${net_led}/link'
+        echo 1 > '${net_led}/tx'
+        echo 1 > '${net_led}/rx'
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+      };
+    };
 
   networking.hostName = "nixos-sbc0";
 
@@ -70,6 +101,12 @@
           "ssh_host_rsa_key"
         ];
       };
+      users.reid = {
+        files = [
+          ".android/adbkey"
+          ".android/adbkey.pub"
+        ];
+      };
     };
   };
 
@@ -83,7 +120,10 @@
       };
       reid = {
         hashedPasswordFile = info.userPasswordFile "reid";
-        extraGroups = [ "adbusers" ];
+        extraGroups = [
+          "adbusers"
+          "audio"
+        ];
       };
     };
   };
@@ -95,27 +135,126 @@
 
   fonts.fontconfig.enable = false;
   security.pam.services.su.forwardXAuth = lib.mkForce false;
+  services.lvm.enable = false;
 
+  environment.defaultPackages = [ ];
   environment.systemPackages = with pkgs; [
     coreutils
+    (android-tools.overrideAttrs (
+      # avoid depends on build platform protobuf
+      finalAttrs: prevAttrs: {
+        nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.buildPackages.protobuf ];
+        propagatedBuildInputs = [ ];
+        disallowedRequisites = [ pkgs.buildPackages.protobuf ];
+      }
+    ))
+
+    iperf3 # for network performance testing
+
+    # audio tools
+    opus-tools
+    flac
+
+    # experimental network voice transport
+    srt
   ];
 
-  programs.adb = {
+  hardware.alsa = {
     enable = true;
   };
 
   nixpkgs.overlays = [
+    (final: prev: {
+      protobuf =
+        if final.stdenv.hostPlatform != final.stdenv.buildPlatform then
+          prev.protobuf.overrideAttrs (
+            finalAttrs: prevAttrs: {
+              setupHook = null; # avoid depends on build platform protobuf
+            }
+          )
+        else
+          prev.protobuf;
+    })
     (final: prev: {
       dbus = prev.dbus.override {
         x11Support = false;
       };
     })
     (final: prev: {
-      systemd = prev.systemd.override {
-        withAudit = false;
-        withFido2 = false;
-        withPasswordQuality = false;
-        withTpm2Tss = false;
+      systemd =
+        if final.stdenv.hostPlatform != final.stdenv.buildPlatform then
+          prev.systemd.override {
+            withAcl = true;
+            withAnalyze = false;
+            withApparmor = false;
+            withAudit = false;
+            withCompression = true;
+            withCoredump = true;
+            withCryptsetup = false;
+            withRepart = false;
+            withDocumentation = false;
+            withEfi = true;
+            withFido2 = false;
+            withGcrypt = false;
+            withHostnamed = false;
+            withHomed = false;
+            withHwdb = true;
+            withImportd = false;
+            withLibBPF = false;
+            withLibidn2 = false;
+            withLocaled = false;
+            withLogind = true;
+            withMachined = false;
+            withNetworkd = true;
+            withNss = true;
+            withOomd = true;
+            withOpenSSL = false;
+            withPCRE2 = true;
+            withPam = true;
+            withPolkit = false;
+            withPortabled = false;
+            withRemote = false;
+            withResolved = true;
+            withShellCompletions = true;
+            withSysupdate = false;
+            withSysusers = true;
+            withTimedated = true;
+            withTimesyncd = true;
+            withTpm2Tss = false;
+            withUserDb = false;
+            withUkify = false;
+            withBootloader = true;
+            withPasswordQuality = false;
+            withVmspawn = false;
+            withQrencode = true;
+            withLibarchive = false;
+            withVConsole = true;
+            # withKmod = false; # breaks udevCheckHook of bcache-tools
+            withFirstboot = false;
+            withKexectools = false;
+            withLibseccomp = false;
+            withNspawn = true;
+          }
+        else
+          prev.systemd;
+    })
+    (final: prev: {
+      # FIXME: use upstream package when fixed
+      opus-tools = prev.opus-tools.overrideAttrs (
+        finalAttrs: prevAttrs: {
+          # fatal error: 'opus.h' file not found
+          env.NIX_CFLAGS_COMPILE = "-I${final.libopus.dev}/include/opus -I${final.libopusenc.dev}/include/opus -I${final.opusfile.dev}/include/opus";
+        }
+      );
+    })
+    (final: prev: {
+      alsa-utils = prev.alsa-utils.override {
+        withPipewireLib = false;
+      };
+      alsa-plugins = prev.alsa-plugins.override {
+        ffmpeg = null;
+        libjack2 = null;
+        libpulseaudio = null;
       };
     })
   ];

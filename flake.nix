@@ -139,8 +139,10 @@
           nixos-sbc0 = mkConfig hosts.nixos-sbc0 [
             ./hosts/nixos-sbc0/configuration.nix
             (
-              { ... }:
+              { pkgs, ... }@args:
               {
+                system.build.source = (import ./flake-keep.nix) { inherit (inputs) self; } args;
+
                 nixpkgs.buildPlatform = {
                   system = "x86_64-linux";
                 };
@@ -153,6 +155,15 @@
             flake-keep
           ];
         };
+
+      devShells = {
+        x86_64-linux = {
+          sbc0-kernel-config = hosts.nixos-sbc0.shells.kernelConfigEnv {
+            inherit nixpkgs;
+            localSystem = "x86_64-linux";
+          };
+        };
+      };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     };
