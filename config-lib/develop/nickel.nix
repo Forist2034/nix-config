@@ -1,11 +1,13 @@
 { devLib, ... }:
 let
+  name = "nickel";
   mkEnableModule = devLib.mkEnableModule {
-    name = "nickel";
+    inherit name;
     descName = "Nickel";
   };
 in
 {
+  inherit name;
   submodules = {
     helix = mkEnableModule (
       { pkgs, ... }: {

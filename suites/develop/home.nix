@@ -6,13 +6,10 @@
   config,
   # legacy modules
   home,
-  modules,
   ...
 }:
 {
   imports = [
-    modules.develop.home
-
     parts.nushell.home.default
     parts.task.home.default
     parts.direnv.home.default

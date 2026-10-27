@@ -97,23 +97,62 @@
               let
                 cfglib = inputs.cfglib.cfglib;
                 sysConfig = config;
+                devCfg = {
+                  cfglib.develop = {
+                    agda.enable = true;
+                    cmake.enable = true;
+                    cpp.enable = true;
+                    css.enable = true;
+                    dhall.enable = true;
+                    gradle.enable = true;
+                    graphql.enable = true;
+                    haskell.enable = true;
+                    html.enable = true;
+                    java.enable = true;
+                    javascript.enable = true;
+                    json.enable = true;
+                    kotlin.enable = true;
+                    latex.enable = true;
+                    lean.enable = true;
+                    lua.enable = true;
+                    markdown.enable = true;
+                    maven.enable = true;
+                    meson.enable = true;
+                    nickel.enable = true;
+                    nix.enable = true;
+                    nushell.enable = true;
+                    ocaml.enable = true;
+                    python.enable = true;
+                    rocq.enable = true;
+                    rust.enable = true;
+                    scala.enable = true;
+                    shell.enable = true;
+                    toml.enable = true;
+                    typescript.enable = true;
+                    typst.enable = true;
+                    verilog.enable = true;
+                    zig.enable = true;
+                  };
+                };
               in
               {
                 home-manager.users.test = lib.mkMerge [
                   {
-                    imports = [ cfglib.develop.home ];
-                    cfglib.develop = {
-                      nickel.enable = true;
-                    };
+                    imports = [
+                      cfglib.develop.home
+                      devCfg
+                    ];
                   }
                   {
                     imports = [ cfglib.programs.firefox.home.default ];
 
                     cfglib.programs.firefox = { ... }: {
-                      imports = [ cfglib.develop.submodules.firefox.global ];
+                      imports = [
+                        cfglib.develop.submodules.firefox.global
+                        devCfg
+                      ];
                       cfglib.develop = {
                         nix = {
-                          enable = true;
                           manuals = {
                             nix.package = sysConfig.nix.package;
                           };
@@ -124,35 +163,30 @@
                   {
                     imports = [ cfglib.programs.helix.home.default ];
                     cfglib.programs.helix = { ... }: {
-                      imports = [ cfglib.develop.submodules.helix ];
-                      cfglib.develop = {
-                        nickel.enable = true;
-                        nix.enable = true;
-                      };
+                      imports = [
+                        cfglib.develop.submodules.helix
+                        devCfg
+                      ];
                     };
                   }
                   {
                     imports = [ cfglib.programs.nixvim.home.default ];
                     programs.nixvim.imports = [
                       {
-                        imports = [ cfglib.develop.nixvim ];
-
-                        cfglib.develop = {
-                          nickel.enable = true;
-                          nix.enable = true;
-                        };
+                        imports = [
+                          cfglib.develop.nixvim
+                          devCfg
+                        ];
                       }
                     ];
                   }
                   {
                     imports = [ cfglib.programs.vscodium.home.default ];
                     programs.vscodium.profiles.default = { ... }: {
-                      imports = [ cfglib.develop.submodules.vscodium ];
-
-                      cfglib.develop = {
-                        nickel.enable = true;
-                        nix.enable = true;
-                      };
+                      imports = [
+                        cfglib.develop.submodules.vscodium
+                        devCfg
+                      ];
                     };
                   }
                 ];

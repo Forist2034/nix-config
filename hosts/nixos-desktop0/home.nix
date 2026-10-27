@@ -4,196 +4,67 @@
   parts,
   ...
 }:
+let
+  devCfg = {
+    cfglib.develop = {
+      cmake.enable = true;
+      cpp.enable = true;
+      css.enable = true;
+      dhall.enable = true;
+      haskell.enable = true;
+      html.enable = true;
+      java.enable = true;
+      javascript.enable = true;
+      json.enable = true;
+      latex.enable = true;
+      markdown.enable = true;
+      meson.enable = true;
+      nushell.enable = true;
+      ocaml.enable = true;
+      python.enable = true;
+      rust.enable = true;
+      scala.enable = true;
+      shell.enable = true;
+      toml.enable = true;
+      typst.enable = true;
+      typescript.enable = true;
+      verilog.enable = true;
+    };
+  };
+in
 {
   imports = [
     suites.develop.home
 
     parts.taskwarrior.home.default
+    devCfg
   ];
 
-  develop = {
-    cmake = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    coq = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
+  cfglib.develop = {
     cpp = {
       enable = true;
-      env = {
-        gcc.enable = true;
-      };
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    css = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    dhall = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    haskell = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-      browser.firefox = {
-        enable = true;
-        profiles.default.enable = true;
-      };
-    };
-    html = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    java = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    javascript = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    json = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    latex = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    markdown = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    meson = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    nushell = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    ocaml = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    python = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    rust = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-      browser.firefox = {
-        enable = true;
-        profiles.default.enable = true;
-      };
-    };
-    scala = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    shell = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    toml = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    typst = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    typescript = {
-      enable = true;
-      editor = {
-        vscodium.enable = true;
-        nixvim.enable = true;
-      };
-    };
-    verilog = {
-      enable = true;
-      editor = {
-        nixvim.enable = true;
-      };
+      gcc.enable = true;
     };
   };
 
-  programs.vscodium.profiles.default = {
-    extensions = pkgs.nix4vscode.forOpenVsx [
-      # TODO: use later version when upstream fixed
-      "marus25.cortex-debug.1.12.1"
-      "mcu-debug.debug-tracker-vscode"
-      "mcu-debug.memory-view"
-      "mcu-debug.rtos-views"
-      "mcu-debug.peripheral-viewer"
-    ];
+  cfglib.programs.firefox = devCfg;
+
+  programs.nixvim = {
+    imports = [ devCfg ];
+  };
+
+  programs.vscodium = {
+    profiles.default = { ... }: {
+      imports = [ devCfg ];
+      extensions = pkgs.nix4vscode.forOpenVsx [
+        # TODO: use later version when upstream fixed
+        "marus25.cortex-debug.1.12.1"
+        "mcu-debug.debug-tracker-vscode"
+        "mcu-debug.memory-view"
+        "mcu-debug.rtos-views"
+        "mcu-debug.peripheral-viewer"
+      ];
+    };
   };
 
   home.packages = with pkgs; [

@@ -5,12 +5,14 @@
   ...
 }:
 let
+  name = "nix";
   mkEnableModule = devLib.mkEnableModule {
-    name = "nix";
+    inherit name;
     descName = "Nix";
   };
 in
 {
+  inherit name;
   submodules = {
     vscodium = mkEnableModule (
       { pkgs, ... }: {

@@ -7,6 +7,8 @@ let
   config = import ./config.nix;
 in
 {
+  inherit config;
+
   system =
     let
       modules = {
