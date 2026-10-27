@@ -1,0 +1,170 @@
+let
+  base = {
+    plugins = {
+      cmp = {
+        enable = true;
+        settings.mapping =
+          let
+            select_opts = "{behavior = cmp.SelectBehavior.Select}";
+          in
+          {
+            "<C-b>" = "cmp.mapping.scroll_docs(-4)";
+            "<C-f>" = "cmp.mapping.scroll_docs(4)";
+
+            "<Up>" = "cmp.mapping.select_prev_item(${select_opts})";
+            "<Down>" = "cmp.mapping.select_next_item(${select_opts})";
+
+            "<C-p>" = "cmp.mapping.select_prev_item(${select_opts})";
+            "<C-n>" = "cmp.mapping.select_next_item(${select_opts})";
+
+            "<C-e>" = "cmp.mapping.abort()";
+
+            "<CR>" = "cmp.mapping.confirm({ select = true })";
+          };
+      };
+    };
+  };
+  luasnip = {
+    plugins = {
+      luasnip = {
+        enable = true;
+      };
+      cmp.settings = {
+        snippet.expand = ''
+          function(args)
+            require('luasnip').lsp_expand(args.body)
+          end
+        '';
+      };
+    };
+  };
+  lsp =
+    { pkgs, ... }:
+    {
+      plugins = {
+        lsp = {
+          enable = true;
+          inlayHints = true;
+          keymaps.lspBuf = {
+            K = "hover";
+            S = "signature_help";
+            "<Leader>f" = "format";
+            "<Leader>r" = "rename";
+            gR = "references";
+            gD = "declaration";
+            gd = "definition";
+            gi = "implementation";
+            gt = "type_definition";
+            "<Leader>ca" = "code_action";
+          };
+        };
+        lsp-format.enable = true;
+        nvim-lightbulb = {
+          # show code actions
+          enable = true;
+          settings = {
+            sign.enabled = false;
+            virtualText.enabled = true;
+            autocmd.enabled = true;
+          };
+        };
+        fidget.enable = true; # show lsp notices and progress
+
+        # breadcrumb
+        barbecue.enable = true;
+        navbuddy = {
+          enable = true;
+          settings = {
+            useDefaultMapping = true;
+            lsp.autoAttach = true;
+          };
+        };
+
+        # highlight symbol
+        illuminate.enable = true;
+
+        cmp-nvim-lsp.enable = true;
+        cmp.settings.sources = [ { name = "nvim_lsp"; } ];
+      };
+
+      # code lens
+      keymaps = [
+        {
+          key = "<Leader>cl";
+          action.__raw = "vim.lsp.codelens.run";
+          mode = [ "n" ];
+        }
+        {
+          key = "<Leader>do";
+          action.__raw = "vim.diagnostic.open_float";
+          mode = [ "n" ];
+        }
+      ];
+      autoCmd = [
+        {
+          event = [
+            "CursorHold"
+            "CursorHoldI"
+          ];
+          pattern = "*";
+          callback.__raw = ''
+            function (ev)
+              for _, client in pairs(vim.lsp.get_clients({ bufnr = ev.buf })) do
+                if client and client.supports_method("textDocument/codeLens") then
+                  vim.lsp.codelens.refresh()
+                end
+              end
+            end
+          '';
+        }
+      ];
+    };
+  with-icons = {
+    plugins.lspkind = {
+      enable = true;
+    };
+  };
+  none-ls = {
+    plugins = {
+      none-ls = {
+        enable = true;
+      };
+    };
+  };
+  path = {
+    plugins = {
+      cmp-path.enable = true;
+      cmp.settings.sources = [ { name = "path"; } ];
+    };
+  };
+  buffer = {
+    plugins = {
+      cmp-buffer.enable = true;
+      cmp.settings.sources = [ { name = "buffer"; } ];
+    };
+  };
+in
+{
+  inherit
+    base
+    luasnip
+    lsp
+    none-ls
+    path
+    buffer
+    with-icons
+    ;
+
+  default =
+    { ... }:
+    {
+      imports = [
+        base
+        luasnip
+        lsp
+        none-ls
+        path
+        buffer
+      ];
+    };
+}

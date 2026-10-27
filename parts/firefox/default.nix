@@ -7,8 +7,6 @@ let
   config = import ./config.nix;
 in
 {
-  inherit config;
-
   system =
     let
       modules = {
@@ -76,6 +74,7 @@ in
     default =
       {
         inputs,
+        cfglib,
         lib,
         pkgs,
         info,
@@ -85,74 +84,38 @@ in
         firefoxBackupPath = "${args.config.home.homeDirectory}/Documents/Restore Firefox";
       in
       {
+        imports = [ cfglib.programs.firefox.home.default ];
         programs.firefox =
           let
             utils = inputs.browser-utils.packages.${info.system};
           in
           {
-            enable = true;
-
-            package = pkgs.firefox-devedition;
-
             configPath = "${args.config.xdg.configHome}/mozilla/firefox";
-            policies = lib.mkMerge [
-              config.policies.base
-              {
-                ExtensionSettings = {
-                  "@testpilot-containers" =
-                    let
-                      extension = pkgs.fetchurl {
-                        # UPDATE
-                        url = "https://addons.mozilla.org/firefox/downloads/file/4733069/multi_account_containers-8.3.7.xpi";
-                        hash = "sha256-f29e97EG0z0bmdLF5TogZdB/eEsYUv6bn3g5TptAUWU=";
-                      };
-                    in
-                    {
-                      installation_mode = "normal_installed";
-                      install_url = "file://${extension}";
-                      updates_disabled = true;
-                    };
-                };
-                SearchEngines = {
-                  Add = [ config.policies.search.bing_global ];
-                  Default = "Global Bing";
-                };
-              }
-            ];
 
             nativeMessagingHosts = [ utils.browser-utils.ext ];
 
-            profiles = {
-              default = lib.mkMerge [
-                config.profiles.default
-                {
-                  isDefault = true;
+            profiles.default = lib.mkMerge [
+              config.profiles.default
+              {
+                path = "default";
 
-                  # dev edition needs default profile name be prefixed with dev-edition
-                  name = "dev-edition-default";
-                  path = "default";
+                settings = {
+                  "xpinstall.signatures.required" = false;
 
+                  "browser.backup.location" = firefoxBackupPath;
+                };
+
+                extensions = {
+                  force = true;
+                  packages = [ utils.history-extension ];
                   settings = {
-                    "xpinstall.signatures.required" = false;
-
-                    "browser.backup.location" = firefoxBackupPath;
-                  };
-
-                  extensions = {
-                    force = true;
-                    packages = [ utils.history-extension ];
-                    settings = {
-                      "${utils.history-extension.addonId}".settings = {
-                        root = "${args.config.home.homeDirectory}/Documents/browser-utils/history";
-                      };
+                    "${utils.history-extension.addonId}".settings = {
+                      root = "${args.config.home.homeDirectory}/Documents/browser-utils/history";
                     };
                   };
-                }
-              ];
-              test = config.profiles.base // {
-                id = 1;
-              };
-            };
+                };
+              }
+            ];
           };
         systemd.user = {
           services.firefox-keep-backup = {

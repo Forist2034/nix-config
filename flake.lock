@@ -20,6 +20,32 @@
         "type": "github"
       }
     },
+    "cfglib": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "microvm": [
+          "microvm"
+        ],
+        "nix4vscode": "nix4vscode",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixvim": [
+          "nixvim"
+        ]
+      },
+      "locked": {
+        "path": "config-lib",
+        "type": "path"
+      },
+      "original": {
+        "path": "config-lib",
+        "type": "path"
+      },
+      "parent": []
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -142,6 +168,7 @@
     "nix4vscode": {
       "inputs": {
         "nixpkgs": [
+          "cfglib",
           "nixpkgs"
         ],
         "systems": "systems"
@@ -264,11 +291,11 @@
     "root": {
       "inputs": {
         "browser-utils": "browser-utils",
+        "cfglib": "cfglib",
         "home-manager": "home-manager",
         "http-capture": "http-capture",
         "impermanence": "impermanence",
         "microvm": "microvm",
-        "nix4vscode": "nix4vscode",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",

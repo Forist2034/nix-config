@@ -23,8 +23,6 @@ let
         ./lua.nix
         ./markdown.nix
         ./meson.nix
-        ./nickel.nix
-        ./nix.nix
         ./nushell.nix
         ./ocaml.nix
         ./prettier.nix

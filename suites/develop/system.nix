@@ -7,6 +7,7 @@
   services,
   suites,
   users,
+  cfglib,
   # legacy modules
   graphical,
   system,
@@ -150,13 +151,13 @@
   programs.nix-ld.enable = true; # for externally compiled binary
 
   home-manager = {
-    useGlobalPkgs = true;
     extraSpecialArgs = {
       inherit
         inputs
         parts
         suites
         users
+        cfglib
         ;
       inherit info home modules;
     };

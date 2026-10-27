@@ -10,11 +10,6 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    nix4vscode = {
-      url = "github:nix-community/nix4vscode";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixvim = {
       url = "github:nix-community/nixvim/nixos-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,6 +46,16 @@
       url = "path:private";
     };
 
+    cfglib = {
+      url = "path:config-lib";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        nixvim.follows = "nixvim";
+        microvm.follows = "microvm";
+      };
+    };
+
     self.submodules = true;
   };
 
@@ -60,6 +65,7 @@
       nixpkgs-unstable,
       home-manager,
       impermanence,
+      cfglib,
       ...
     }@inputs:
     let
@@ -71,6 +77,8 @@
       args = {
         inherit local-lib private;
         inherit (nixpkgs) lib;
+        inherit inputs;
+        inherit (cfglib) cfglib;
       };
       hosts = (import ./hosts) args;
       locations = (import ./locations) args;
@@ -108,6 +116,7 @@
                   modules
                   system
                   ;
+                inherit (cfglib) cfglib;
               };
               modules = configs;
             };
@@ -119,21 +128,14 @@
             {
               environment.etc."flake-inputs".source = flake-inputs args;
             };
-          nix4vscode =
-            { ... }:
-            {
-              nixpkgs.overlays = [ inputs.nix4vscode.overlays.forVscode ];
-            };
         in
         {
           nixos-desktop0 = mkConfig hosts.nixos-desktop0 [
             ./hosts/nixos-desktop0/configuration.nix
-            nix4vscode
             flake-keep
           ];
           nixos-laptop0 = mkConfig hosts.nixos-laptop0 [
             ./hosts/nixos-laptop0/configuration.nix
-            nix4vscode
             flake-keep
           ];
           nixos-sbc0 = mkConfig hosts.nixos-sbc0 [
@@ -151,7 +153,6 @@
           ];
           nixos-tablet0 = mkConfig hosts.nixos-tablet0 [
             ./hosts/nixos-tablet0/configuration.nix
-            nix4vscode
             flake-keep
           ];
         };
