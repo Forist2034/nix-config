@@ -15,6 +15,7 @@
     ./networking.nix
 
     suites.develop.system
+    suites.proxy.system
 
     private.hosts.nixos-tablet0.configuration
 
