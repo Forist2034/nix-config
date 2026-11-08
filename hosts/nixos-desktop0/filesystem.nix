@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   boot.initrd.luks.devices."root" = {
     device = "/dev/disk/by-uuid/13b9d01c-1099-4f04-8453-a7982ff81141";
@@ -36,6 +36,25 @@
       neededForBoot = true;
       options = [ "noatime" ];
     };
+  };
+
+  environment.systemPackages = [ pkgs.fscrypt-experimental ];
+  environment.etc."fscrypt.conf".text = builtins.toJSON {
+    allow_cross_user_metadata = false;
+    hash_costs = {
+      memory = "131072";
+      parallelism = "32";
+      time = "10927";
+      truncation_fixed = true;
+    };
+    options = {
+      contents = "AES_256_XTS";
+      filenames = "AES_256_CTS";
+      padding = "32";
+      policy_version = "2";
+    };
+    source = "custom_passphrase";
+    use_fs_keyring_for_v1_policies = false;
   };
 
   swapDevices = [ ];
