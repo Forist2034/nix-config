@@ -93,7 +93,12 @@
               system.stateVersion = lib.trivial.release;
             })
             (
-              { lib, config, ... }:
+              {
+                lib,
+                config,
+                pkgs,
+                ...
+              }:
               let
                 cfglib = inputs.cfglib.cfglib;
                 sysConfig = config;
@@ -127,6 +132,7 @@
                     rust.enable = true;
                     scala.enable = true;
                     shell.enable = true;
+                    stm32.enable = true;
                     toml.enable = true;
                     typescript.enable = true;
                     typst.enable = true;
@@ -142,6 +148,16 @@
                       cfglib.develop.home
                       devCfg
                     ];
+
+                    cfglib.develop = {
+                      stm32.packages = {
+                        cubemx = true;
+                        cubeide = true;
+                        cubeprog = true;
+                      };
+                    };
+
+                    nixpkgs.config.allowUnfree = true;
                   }
                   {
                     imports = [ cfglib.programs.firefox.home.default ];
@@ -190,6 +206,10 @@
                     };
                   }
                 ];
+
+                environment.systemPackages = [ pkgs.waypipe ];
+
+                nixpkgs.config.allowUnfree = true;
               }
             )
           ];

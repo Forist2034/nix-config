@@ -52,6 +52,7 @@ let
     ./rust.nix
     ./scala.nix
     ./shell.nix
+    ./stm32.nix
     ./toml.nix
     ./typescript.nix
     ./typst.nix
