@@ -275,11 +275,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784012093,
-        "narHash": "sha256-OhoAraowUaqXKwxf0BW//pbVYYX56mfwmpbTMrRL7W4=",
+        "lastModified": 1793801480,
+        "narHash": "sha256-9PW3oZCr/7Ir72F7y4Ut/acSyQjH+Kx0kMyV6Av4gmM=",
         "owner": "Forist2034",
         "repo": "proxy-cli",
-        "rev": "a3ee08a4b43d0441799fee2d97fe3edeb951f2ec",
+        "rev": "5ee83d02d59e7d08fb473447fef6bc3ba2794a1c",
         "type": "github"
       },
       "original": {
